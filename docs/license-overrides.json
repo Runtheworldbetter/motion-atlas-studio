@@ -1,0 +1,14 @@
+{
+  "mj-context-menu@0.6.1": {
+    "license": "Apache-2.0",
+    "reason": "The published 0.6.1 package explicitly declares Apache-2.0 (https://registry.npmjs.org/mj-context-menu/0.6.1), but its npm archive contains no LICENSE or NOTICE file. The unmodified Apache-2.0 text below is recovered from the upstream repository's license commit. No package-specific copyright holder is inferred.",
+    "files": [
+      {
+        "file": "docs/licenses/mj-context-menu-0.6.1-LICENSE.txt",
+        "source": "https://raw.githubusercontent.com/zorkow/context-menu/72e16a5713cf30b390776c89bb6c1428747472f1/LICENSE",
+        "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+        "isLicense": true
+      }
+    ]
+  }
+}

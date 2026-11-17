@@ -1,0 +1,20 @@
+node_modules/
+dist/
+.sites-runtime/
+.wrangler/
+.dev.vars
+.dev.vars.*
+.openai/*
+!.openai/hosting.json
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.local
+*.tsbuildinfo
+outputs/
+.DS_Store
+
+# Deployment identity belongs to your own hosting environment.
+.openai/
