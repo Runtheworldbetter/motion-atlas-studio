@@ -21,10 +21,12 @@ export interface MotionPlayerOptions {
   fps?: number;
   resolutionScale?: number;
   autoplay?: boolean;
+  loop?: boolean;
   background?: string;
   initialTime?: number;
   onReady?: (durationSeconds: number) => void;
   onFrame?: (seconds: number, durationSeconds: number) => void;
+  onEnded?: () => void;
   onError?: (message: string) => void;
 }
 
@@ -103,7 +105,7 @@ export function mountMotionCanvas(
   const player = new Player(
     project,
     {size, resolutionScale, fps, range: [0, Infinity], audioOffset: 0},
-    {loop: true, muted: true},
+    {loop: options.loop ?? true, muted: true},
     Math.max(0, Math.round((options.initialTime ?? 0) * fps)),
   );
   const pendingSeekFrame = () => pendingSeek === null ? null :
@@ -147,6 +149,14 @@ export function mountMotionCanvas(
     if (firstRender) {
       firstRender = false;
       options.onReady?.(durationFrames / fps);
+    }
+    // Freeze the painted final frame before Player can reset to the start.
+    // Pausing alone would leave its animation loop running in the background.
+    if (options.loop === false && wantsPlayback && ready && pendingSeek === null &&
+      durationFrames > 0 && (player.playback.finished || renderedFrame >= durationFrames)) {
+      wantsPlayback = false;
+      player.togglePlayback(false);
+      options.onEnded?.();
     }
     if (!wantsPlayback && pendingSeek === null && !disposed) player.deactivate();
   };

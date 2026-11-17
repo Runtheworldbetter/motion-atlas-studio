@@ -40,10 +40,16 @@ Append a query to the deployed entry-page URL:
 | --- | --- |
 | `?scene=parametric-knot` | Open a gallery scene |
 | `?recipe=trace&example=human-correction` | Open a recipe with a supplied preset |
+| `?recipe=cricket` | Open the cricket coaching recipe |
+| `?recipe=post-training` | Open the policy-gradient recipe |
+| `?scene=cricket-coaching` | Open the cricket gallery scene |
+| `?scene=post-training-feedback` | Open the post-training gallery scene |
 | `?scene=parametric-knot&embed=1` | Show a focused gallery preview |
 | `?recipe=trace&example=human-correction&embed=1` | Show a focused preset preview |
 
-Recipe IDs are `trace`, `waterfall`, `code`, `fourier`, and `pathfinding`. The app's **Share / embed** controls generate these links. To share edited input, download the input or a project ZIP.
+Recipe IDs are `cricket`, `post-training`, `trace`, `waterfall`, `code`, `fourier`, and `pathfinding`. The app's **Share / embed** controls generate these links. To share edited input, download the input or a project ZIP.
+
+The Cricket and Post-training recipe embeds include stage buttons that pause at the selected point. Both scenes hold their final frame when playback finishes. Allow room below the canvas for these controls; open the player in full screen when a small embed makes annotations difficult to read.
 
 ```html
 <iframe

@@ -2,9 +2,100 @@
 
 Each recipe has an editor, examples, an animated preview, and a data table. Select **Render changes** after editing. Opened files are read locally and limited to **128 KiB per file**. Each recipe also has limits to keep its animation readable and responsive.
 
+Cricket and Post-training also have stage buttons. Selecting one pauses at that point. Use the timeline to inspect nearby frames, or play to continue. Both hold their last frame at the end.
+
 Download the input or project before closing or reloading the page to keep your edits. Share links open supplied examples. Project downloads contain your edited input; review it before sharing.
 
 **Download input** saves a JSON file with the marker `motion-atlas-input-v1`, the recipe ID, the primary input, and the optional second text input. **Open file** recognizes this wrapper and restores the corresponding recipe, including a waterfall or maze whose raw input is CSV or text. You can also open a raw file in the formats below. A preference export is a separate file and belongs in the **Your picks → Import** control.
+
+## Cricket: inspect a swing
+
+The four keyframes describe Set-up, Downswing, Contact, and Follow-through, in that order:
+
+```json
+{
+  "title": "A drive, frame by frame",
+  "transitionSeconds": 2.4,
+  "contactHold": 2.1,
+  "mirror": false,
+  "showTraces": true,
+  "frames": [
+    {"grip": [35, -74], "batAngle": 223, "hip": [0, 0], "lean": -6, "frontFoot": 72},
+    {"grip": [46, -44], "batAngle": 132, "hip": [4, 0], "lean": -2, "frontFoot": 97},
+    {"grip": [61, -18], "batAngle": 72, "hip": [10, 1], "lean": 4, "frontFoot": 104},
+    {"grip": [69, -61], "batAngle": -36, "hip": [12, 0], "lean": 9, "frontFoot": 104}
+  ]
+}
+```
+
+Coordinates are synthetic two-dimensional drawing units: positive x points right and positive y points down. `batAngle` is clockwise from the rightward horizontal; 90° points down. `lean` rotates the torso in degrees. `mirror` flips the drawing horizontally. The supplied poses illustrate an annotation tool and are not measurements from a player's video.
+
+Include exactly four frames. Each needs `grip` and `batAngle`; omitted `hip`, `lean`, and `frontFoot` values use that phase's defaults. Limits are:
+
+| Field | Accepted values |
+| --- | --- |
+| `grip` | `[x, y]`, x from 0 to 90, y from −100 to −10 |
+| `batAngle` | −360° through 360° |
+| `hip` | `[x, y]`, x from −12 to 18, y from −8 to 8 |
+| `lean` | −12° through 12° |
+| `frontFoot` | 60 through 112 |
+| `transitionSeconds` | 1–4 seconds; default 2.4 |
+| `contactHold` | 0.8–4 seconds; default 2.1 |
+| `mirror`, `showTraces` | Booleans; defaults `false`, `true` |
+| `title` | Optional, 1–60 characters on one line |
+
+The input is limited to 16,000 characters. Poses that stretch an arm or leg beyond its fixed reach are rejected, including checks between keyframes.
+
+The bat stays the same length, and the two hands remain 18 drawing units apart on its handle. The ball's path is constructed so its surface touches the blade face at Contact. Stage buttons pause at each named phase; **−1 frame** and **+1 frame** move through the illustration one frame at a time at 30 fps. The contact hold makes the ball position easier to inspect, and the close-up shows both hands on the handle. Earlier bat endpoints retain their numbered phase labels. **Inspect values** reports the geometry behind the drawing.
+
+The supplied presets are:
+
+- [`drive-contact`](https://runtheworldbetter.github.io/motion-atlas-studio/?recipe=cricket&example=drive-contact): the forward-step sequence shown above.
+- [`later-grip`](https://runtheworldbetter.github.io/motion-atlas-studio/?recipe=cricket&example=later-grip): moves the grip back and makes the bat more upright at Contact.
+- [`mirrored-drive`](https://runtheworldbetter.github.io/motion-atlas-studio/?recipe=cricket&example=mirrored-drive): flips the same sequence horizontally to match the opposite camera direction.
+
+## Post-training: change what earns a reward
+
+Supply a prompt and three possible reply strategies:
+
+```json
+{
+  "title": "Reward evidence",
+  "prompt": "How should we explain agent memory?",
+  "learningRate": 0.8,
+  "rounds": 24,
+  "actions": [
+    {"label": "Guess confidently", "probability": 0.45, "reward": 0},
+    {"label": "Check evidence", "probability": 0.30, "reward": 1},
+    {"label": "Avoid answering", "probability": 0.25, "reward": -0.2}
+  ]
+}
+```
+
+The model computes a policy-gradient update for this single prompt. All three reward scores are supplied on each update. The example replies, starting probabilities, and scores are synthetic.
+
+| Field | Accepted values |
+| --- | --- |
+| `actions` | Exactly three actions with distinct labels |
+| `label` | 1–32 characters |
+| `probability` | 0.001–0.998; the three values must add up to 1 |
+| `reward` | −2 through 2 |
+| `learningRate` | 0–2; default 0.8 |
+| `rounds` | Integer 1–80; default 24 |
+| `prompt` | Required, 1–100 characters |
+| `title` | Optional, 1–72 characters |
+
+The input is limited to 12,000 characters. A zero learning rate freezes the starting policy. Giving every action the same reward also leaves its probabilities unchanged.
+
+The calculation starts with `zᵢ = log(pᵢ)`. On each update it computes `J = Σ pᵢrᵢ`, adds `learningRate × pᵢ(rᵢ − J)` to each logit `zᵢ`, then obtains the new probabilities with softmax. This is the exact gradient of the supplied expected reward for a categorical policy. [OpenAI Spinning Up](https://spinningup.openai.com/en/latest/spinningup/rl_intro3.html) explains softmax policies, policy gradients, and reward baselines.
+
+Select **Before**, **Reward**, **Update**, or **After** to pause at that stage. The 100 dots show rounded probability shares; they are allocated by largest remainder so the total stays 100. Numeric labels use the computed probabilities. **Inspect values** includes every update's probabilities, expected reward, and logit gradient.
+
+The presets keep the same starting probabilities and change the scores:
+
+- [`evidence`](https://runtheworldbetter.github.io/motion-atlas-studio/?recipe=post-training&example=evidence): checking evidence earns the highest reward.
+- [`confidence`](https://runtheworldbetter.github.io/motion-atlas-studio/?recipe=post-training&example=confidence): a confident guess earns the highest reward.
+- [`equal-reward`](https://runtheworldbetter.github.io/motion-atlas-studio/?recipe=post-training&example=equal-reward): equal scores produce no preference change.
 
 ## Trace: timestamped events
 
@@ -121,6 +212,6 @@ Preset IDs: `detour`, `openings`, `open`, `blocked`.
 
 ## Gallery data and calculations
 
-The gallery has 48 examples. Sorting, binary search, and breadth-first search run the algorithms they show. Geometric scenes use the formulas described with each scene. AI activations, attention weights, token probabilities, forecasts, and business scenarios use synthetic examples.
+The gallery has 50 examples. Sorting, binary search, and breadth-first search run the algorithms they show. Geometric scenes use the formulas described with each scene. The cricket scene uses constructed pose keyframes. The post-training scene computes probability updates from synthetic starting probabilities and reward scores. Other AI activations, attention weights, token probabilities, forecasts, and business scenarios use synthetic examples.
 
 If you use real data, include its source, units, context, and any transformations.

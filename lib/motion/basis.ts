@@ -200,6 +200,14 @@ export const sceneBases: Record<string, SceneBasis> = {
 };
 
 export function getSceneBasis(id: string): SceneBasis {
+  if (id === 'cricket-coaching') return {
+    label: 'Synthetic motion, computed geometry',
+    detail: 'Authored batting keyframes drive a jointed figure with two hands on one handle. Bat angles, traces, and ball contact are calculated from those frames. Open the Cricket recipe to edit the poses.',
+  };
+  if (id === 'post-training-feedback') return {
+    label: 'Computed policy-gradient model',
+    detail: 'A small one-prompt policy uses supplied reward scores to calculate each update. The starting probabilities and scores are examples; subsequent probabilities follow the stated learning rule. Open the Post-training recipe to change the reward.',
+  };
   return sceneBases[id] ?? {
     label: 'Animation example',
     detail: 'See the scene source for its inputs and calculations.',
