@@ -82,6 +82,7 @@ export default function App() {
   const primaryUpload = useRef<HTMLInputElement>(null);
   const secondaryUpload = useRef<HTMLInputElement>(null);
   const preferencesUpload = useRef<HTMLInputElement>(null);
+  const routeSearch = useRef(location.search);
   const recipe = recipes.find(r => r.id === recipeId)!;
   const draft = drafts[recipeId];
   const result = results[recipeId];
@@ -104,6 +105,10 @@ export default function App() {
   useEffect(() => {if (reduced) setGalleryPlaying(false);}, [reduced]);
   useEffect(() => {
     const onPop = () => {
+      // Fragment navigation can emit popstate too. Moving to a page section
+      // must preserve the edited input and the frame held for inspection.
+      if (location.search === routeSearch.current) return;
+      routeSearch.current = location.search;
       const params = new URLSearchParams(location.search);
       const found = recipes.find(r => r.id === params.get('recipe')) ?? requestedRecipe();
       if (found) {
@@ -125,6 +130,7 @@ export default function App() {
   function routeTo(id: RecipeId, exampleId: string, replace = false) {
     const url = new URL(location.href); url.search = ''; url.hash = ''; url.searchParams.set('recipe', id);
     if (exampleId) url.searchParams.set('example', exampleId);
+    routeSearch.current = url.search;
     history[replace ? 'replaceState' : 'pushState']({}, '', url);
   }
   function selectRecipe(id: RecipeId) {setRecipeId(id); setActiveTab('explain'); routeTo(id, drafts[id].exampleId);}
@@ -200,7 +206,7 @@ export default function App() {
     } catch (e) {setNotice(e instanceof Error ? e.message : 'Project download failed.');} finally {setBusy(false);}
   }
   function exportInput() {download(JSON.stringify({format: 'motion-atlas-input-v1', recipe: recipeId, input: draft.input, secondary: draft.secondary}, null, 2), `motion-atlas-${recipeId}-input.json`, 'application/json'); setNotice('Input downloaded. Open this file to restore it later.');}
-  function openScene(id: string) {setSelectedScene(id); const url = new URL(location.href); url.search = ''; url.hash = ''; url.searchParams.set('scene', id); history.pushState({}, '', url);}
+  function openScene(id: string) {setSelectedScene(id); const url = new URL(location.href); url.search = ''; url.hash = ''; url.searchParams.set('scene', id); routeSearch.current = url.search; history.pushState({}, '', url);}
   function closeScene() {setSelectedScene(null); routeTo(recipeId, draft.exampleId, true);}
   async function viewSceneSource(id: string) {const path = sourcePath(id); const text = await sourceLoaders[`../${path}`]?.(); setSourceModal({path, text: String(text ?? 'Source unavailable.')});}
   const filtered = useMemo(() => specs.filter(s =>
