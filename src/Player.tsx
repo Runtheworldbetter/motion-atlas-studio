@@ -72,13 +72,16 @@ export function MotionPlayer({id, factory, title, compact = false, autoplay = tr
         onFrame: (seconds, total) => {
           if (cancelled || compact) return;
           const now = performance.now();
-          if (now - lastUpdate > 80 || seconds === 0) {setTime(seconds); setDuration(total); lastUpdate = now;}
+          if (!playbackState.current.playing || now - lastUpdate > 80 || seconds === 0) {setTime(seconds); setDuration(total); lastUpdate = now;}
         },
         onError: message => {if (!cancelled) setError(message);},
         onEnded: () => {if (!cancelled) setPlaying(false);},
       });
       handle.current = instance;
       instance.setSpeed(startSpeed);
+      // A fresh Motion Canvas scene recalculates its timeline after mounting.
+      // Queue the retained frame so that recalculation cannot reset it.
+      if (previous) instance.seek(startTime);
       setPlaying(startPlaying);
       instance.canvas.setAttribute('aria-label', title);
     }).catch(e => {if (!cancelled) setError(e instanceof Error ? e.message : 'The player could not load.');});
