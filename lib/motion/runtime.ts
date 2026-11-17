@@ -99,17 +99,22 @@ export function mountMotionCanvas(
   // Keep the latest requested time until that frame has actually been painted.
   // Player captures its seek at the start of an asynchronous update, so a seek
   // queued during rendering must survive that older render completing.
-  let pendingSeek: number | null = null;
+  const initialTime = typeof options.initialTime === 'number' && Number.isFinite(options.initialTime)
+    ? Math.max(0, options.initialTime) : 0;
+  let pendingSeek: number | null = initialTime;
   let errorReported = false;
 
   const player = new Player(
     project,
     {size, resolutionScale, fps, range: [0, Infinity], audioOffset: 0},
     {loop: options.loop ?? true, muted: true},
-    Math.max(0, Math.round((options.initialTime ?? 0) * fps)),
+    Math.round(initialTime * fps),
   );
-  const pendingSeekFrame = () => pendingSeek === null ? null :
-    Math.max(0, Math.min(durationFrames, Math.round(pendingSeek * fps)));
+  const pendingSeekFrame = () => {
+    if (pendingSeek === null) return null;
+    const target = Math.max(0, Math.round(pendingSeek * fps));
+    return ready ? Math.min(durationFrames, target) : target;
+  };
 
   // Motion Canvas's transparent layout frame measures the animation's text.
   // Its intermediate strings are implementation detail, not accessible content.
@@ -142,14 +147,18 @@ export function mountMotionCanvas(
     const seekFrame = pendingSeekFrame();
     // At playback speeds above 1, Motion Canvas advances in larger frame
     // steps and may land just beyond the requested integer frame.
-    if (seekFrame !== null && renderedFrame >= seekFrame &&
+    if (ready && seekFrame !== null && renderedFrame >= seekFrame &&
       renderedFrame - seekFrame < player.playback.speed) {
       pendingSeek = null;
     }
-    if (firstRender) {
+    currentFrame = renderedFrame;
+    if (ready && pendingSeek === null && firstRender) {
       firstRender = false;
       options.onReady?.(durationFrames / fps);
     }
+    // An older asynchronous render must not replace the requested scrub time.
+    // Publish the settled frame here, after its pixels and pending seek agree.
+    if (ready && pendingSeek === null) options.onFrame?.(renderedFrame / fps, durationFrames / fps);
     // Freeze the painted final frame before Player can reset to the start.
     // Pausing alone would leave its animation loop running in the background.
     if (options.loop === false && wantsPlayback && ready && pendingSeek === null &&
@@ -178,7 +187,6 @@ export function mountMotionCanvas(
   };
   const onFrame = (frame: number) => {
     currentFrame = frame;
-    if (!disposed) options.onFrame?.(frame / fps, durationFrames / fps);
   };
   const onRecalculated = () => {
     if (disposed) {
@@ -211,7 +219,9 @@ export function mountMotionCanvas(
       return durationFrames / fps;
     },
     get time() {
-      return currentFrame / fps;
+      // Preserve a requested frame even if a new scene replaces this player
+      // before the asynchronous seek has reached and painted that frame.
+      return (pendingSeekFrame() ?? currentFrame) / fps;
     },
     play() {
       wantsPlayback = true;
