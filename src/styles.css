@@ -45,6 +45,7 @@
 .frame-step-controls button{padding:7px 10px;min-height:34px;border:1px solid #394a4e;border-radius:5px;background:#192329;color:#d4e2db;font-size:12px}
 .frame-step-controls>span{font-size:11px;color:#8fa89d}
 .recipe-tabs{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+.cricket-view-controls{grid-column:1/-1;margin:0 24px 12px;padding:13px 14px;background:#eef2e9;border:1px solid var(--line);border-radius:8px}.cricket-view-label{display:block;font-size:11px;font-weight:600;margin-bottom:8px}.batting-mode{display:flex;gap:6px}.batting-mode button{flex:1;min-height:40px;padding:8px;border:1px solid #cad4c6;border-radius:6px;background:var(--surface,#fff);color:#425344;font:inherit;font-size:12px;cursor:pointer}.batting-mode button[aria-pressed=true]{background:#294734;border-color:#294734;color:#fff}.camera-flip{display:flex;align-items:center;gap:8px;margin-top:11px;font-size:12px;cursor:pointer}.camera-flip input{accent-color:#294734;width:16px;height:16px}.cricket-view-controls p{font-size:11px;line-height:1.6;margin:9px 0 0;color:#647362}@media(max-width:1150px){.cricket-view-controls{margin-inline:16px}}@media(max-width:860px){.cricket-view-controls{margin-inline:0}}@media(max-width:600px){.batting-mode button{min-height:44px}.camera-flip{min-height:36px}}
 .recipe-tabs>button{min-width:0;white-space:normal;font-size:12px;gap:7px}
 .motion-player:fullscreen .canvas-wrap{min-height:0;max-height:none;flex:1}
 .motion-player:fullscreen .chapter-controls{flex:0 0 auto;width:100%;max-width:1200px;margin-inline:auto}

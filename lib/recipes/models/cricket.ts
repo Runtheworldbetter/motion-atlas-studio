@@ -1,4 +1,5 @@
 export type Point = [number, number];
+export type CricketHandedness = 'left' | 'right';
 export const CRICKET_PHASES = ['Set-up', 'Downswing', 'Contact', 'Follow-through'] as const;
 export const BAT = {knob: -22, upperHand: -9, lowerHand: 9, blade: 26, contact: 86, toe: 110} as const;
 export const LIMBS = {upperArm: 55, forearm: 55, thigh: 76, shin: 78} as const;
@@ -13,11 +14,19 @@ export interface CricketFrame {
 }
 export interface CricketInput {
   title: string;
+  handedness: CricketHandedness;
   frames: CricketFrame[];
   transitionSeconds: number;
   contactHold: number;
   mirror: boolean;
   showTraces: boolean;
+}
+
+/** Anatomical labels in a side view. Camera mirroring never changes these. */
+export function cricketAnatomy(handedness: CricketHandedness) {
+  const front = handedness === 'left' ? 'right' : 'left';
+  const back = handedness === 'left' ? 'left' : 'right';
+  return {topHand: front, bottomHand: back, frontFoot: front, backFoot: back} as const;
 }
 export interface BatGeometry {
   grip: Point;
@@ -105,7 +114,9 @@ export function sampleCricket(input: CricketInput, rawPhase: number): CricketPos
   return {
     frame, bat, shoulders, hips, ankles,
     head: body(0, -121), neck: body(0, -101),
-    elbows: [joint(shoulders[0], bat.upperHand, LIMBS.upperArm, LIMBS.forearm, 1), joint(shoulders[1], bat.lowerHand, LIMBS.upperArm, LIMBS.forearm, 1)],
+    // The front arm holds the top of the handle; the back arm holds below it.
+    // Array order remains [back, front], matching shoulders, hips and legs.
+    elbows: [joint(shoulders[0], bat.lowerHand, LIMBS.upperArm, LIMBS.forearm, 1), joint(shoulders[1], bat.upperHand, LIMBS.upperArm, LIMBS.forearm, 1)],
     knees: [joint(hips[0], ankles[0], LIMBS.thigh, LIMBS.shin, 1), joint(hips[1], ankles[1], LIMBS.thigh, LIMBS.shin, -1)],
     toes: [[-35, 129], [frame.frontFoot + 26, 129 - lift]],
   };
@@ -181,9 +192,12 @@ export function parseCricket(input: string): CricketInput {
   });
   const title = data.title === undefined ? 'A drive, frame by frame' : data.title;
   if (typeof title !== 'string' || !title.trim() || title.trim().length > 60 || /[\r\n\t]/.test(title)) throw new Error('Use a title of 1–60 characters on one line.');
+  if (data.handedness !== undefined && data.handedness !== 'left' && data.handedness !== 'right') throw new Error('handedness must be "left" or "right".');
   for (const key of ['mirror', 'showTraces']) if (data[key] !== undefined && typeof data[key] !== 'boolean') throw new Error(`${key} must be true or false.`);
   const model: CricketInput = {
-    title: title.trim(), frames,
+    // Older exported inputs omit handedness. Their default is right-handed;
+    // the current presets specify their own handedness explicitly.
+    title: title.trim(), handedness: data.handedness === 'left' ? 'left' : 'right', frames,
     transitionSeconds: data.transitionSeconds === undefined ? 2.4 : number(data.transitionSeconds, 'transitionSeconds', 1, 4),
     contactHold: data.contactHold === undefined ? 2.1 : number(data.contactHold, 'contactHold', .8, 4),
     mirror: data.mirror === true, showTraces: data.showTraces !== false,

@@ -10,11 +10,16 @@ Download the input or project before closing or reloading the page to keep your 
 
 ## Cricket: inspect a swing
 
+Use **Left-handed** or **Right-handed** above the input. The grip close-up names the top and bottom hands, and the main figure labels the front and back feet. A left-handed batter has the right hand on top and right foot in front; a right-handed batter has the left hand on top and left foot in front. **Flip camera view** changes screen direction independently. The front arm connects to the top hand in both modes.
+
+Mode changes keep your edited poses, current frame, play/pause state, and playback speed. Fix an invalid input before switching modes. Preset selection keeps your handedness; the reversed-view preset changes the camera direction. Share links and recipe embeds include both settings. For example, append `&handedness=right&mirror=0` to a cricket recipe link to choose a right-handed batter with the bowler to the right. Input and project downloads also retain these settings.
+
 The four keyframes describe Set-up, Downswing, Contact, and Follow-through, in that order:
 
 ```json
 {
   "title": "A drive, frame by frame",
+  "handedness": "left",
   "transitionSeconds": 2.4,
   "contactHold": 2.1,
   "mirror": false,
@@ -41,6 +46,7 @@ Include exactly four frames. Each needs `grip` and `batAngle`; omitted `hip`, `l
 | `frontFoot` | 60 through 112 |
 | `transitionSeconds` | 1–4 seconds; default 2.4 |
 | `contactHold` | 0.8–4 seconds; default 2.1 |
+| `handedness` | `"left"` or `"right"`; presets use `"left"`, omitted values in older inputs use `"right"` |
 | `mirror`, `showTraces` | Booleans; defaults `false`, `true` |
 | `title` | Optional, 1–60 characters on one line |
 

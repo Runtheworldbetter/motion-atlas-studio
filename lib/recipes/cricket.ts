@@ -4,12 +4,12 @@ import {P, label, stage} from '../motion/shared';
 import type {RecipeDefinition} from './types';
 import {
   BALL_RADIUS, BAT, CRICKET_PHASES, DEFAULT_CRICKET_FRAMES, batGeometry,
-  contactGeometry, cricketBall, cricketTiming, parseCricket, projectedBatAngle,
+  contactGeometry, cricketAnatomy, cricketBall, cricketTiming, parseCricket, projectedBatAngle,
   sampleCricket, type CricketFrame, type Point,
 } from './models/cricket.ts';
 
 const inputFor = (title: string, frames: CricketFrame[], mirror = false) => JSON.stringify({
-  title, frames, transitionSeconds: 2.4, contactHold: 2.1, mirror, showTraces: true,
+  title, handedness: 'left', frames, transitionSeconds: 2.4, contactHold: 2.1, mirror, showTraces: true,
 }, null, 2);
 
 const laterFrames = DEFAULT_CRICKET_FRAMES.map((frame, i) => ({
@@ -19,32 +19,35 @@ const laterFrames = DEFAULT_CRICKET_FRAMES.map((frame, i) => ({
 
 export const cricketRecipe: RecipeDefinition = {
   id: 'cricket', title: 'Read the contact frame', subtitle: 'Follow the grip, blade, and ball.',
-  description: 'Scrub a jointed batting schematic, pause at contact, and compare labeled bat positions. Edit the four poses to make a different sequence.',
+  description: 'Choose a left- or right-handed batter, pause at contact, and compare labeled bat positions. Edit the four poses to make a different sequence.',
   inputLabel: 'Swing keyframes', inputFormat: 'JSON', accept: '.json,application/json', color: P.teal,
   examples: [
     {id: 'drive-contact', name: 'A drive to contact', description: 'A forward step, two hands on the handle, and a hold at contact.', input: inputFor('A drive to contact', DEFAULT_CRICKET_FRAMES)},
     {id: 'later-grip', name: 'A contact-frame variation', description: 'The grip is farther back and the bat is more upright at contact. Compare the authored geometry.', input: inputFor('A contact-frame variation', laterFrames)},
     {id: 'mirrored-drive', name: 'Reverse the side view', description: 'The same motion flipped horizontally; useful when matching a camera view.', input: inputFor('A drive, reversed side view', DEFAULT_CRICKET_FRAMES, true)},
   ],
-  help: 'Supply four frames in this order: Set-up, Downswing, Contact, Follow-through. Each needs grip [x,y] and batAngle in degrees; optional hip [x,y], lean, and frontFoot use the example defaults. Coordinates are drawing units; +x is right and +y is down. Angles run clockwise from right, so 90° points down. transitionSeconds is 1–4, contactHold is 0.8–4, and mirror/showTraces are true or false. Poses that would stretch a limb are rejected.',
+  help: 'Supply four frames in this order: Set-up, Downswing, Contact, Follow-through. Each needs grip [x,y] and batAngle in degrees; optional hip [x,y], lean, and frontFoot use the example defaults. handedness is "left" or "right"; older inputs that omit it use "right". The presets specify "left". mirror flips the camera direction and keeps anatomical labels unchanged. Coordinates are drawing units; +x is towards the bowler before mirroring and +y is down. Angles run clockwise from right, so 90° points down. transitionSeconds is 1–4, contactHold is 0.8–4, and mirror/showTraces are true or false. Poses that would stretch a limb are rejected.',
   basis: 'An authored 2D coaching schematic. The torso, limbs, bat, and hand spacing retain their lengths; elbows and knees are solved from the fixed endpoints. Bat angles take the shorter rotation between poses. The ball is constructed to touch the blade surface at Contact. Angles below are projections in this side view, not measurements from footage.',
   compile(input) {
     const model = parseCricket(input), timing = cricketTiming(model);
     const contact = contactGeometry(model);
+    const anatomy = cricketAnatomy(model.handedness);
+    const handedTitle = model.handedness === 'left' ? 'Left-handed' : 'Right-handed';
     const fmt = (n: number) => Number(n.toFixed(1)).toString();
     return {
       title: model.title,
-      summary: `Four authored poses · ${fmt(timing.duration)} seconds · contact held for ${fmt(model.contactHold)} seconds`,
+      summary: `${handedTitle} · four authored poses · ${fmt(timing.duration)} seconds · contact held for ${fmt(model.contactHold)} seconds`,
       duration: timing.duration, checkpoints: timing.checkpoints, loop: false, frameStep: true,
       rows: [
         {label: 'Example type', value: 'Authored 2D motion', detail: 'A coaching interaction with synthetic positions; no video or body measurements are used.'},
+        {label: 'Batting mode', value: handedTitle, detail: `Top hand: ${anatomy.topHand}. Bottom hand: ${anatomy.bottomHand}. Front foot: ${anatomy.frontFoot}. Back foot: ${anatomy.backFoot}. Front and back describe position relative to the bowler.`},
         ...model.frames.map((frame, i) => ({
           label: `${i + 1}. ${CRICKET_PHASES[i]}`, value: `${fmt(projectedBatAngle(frame))}° from vertical`,
           detail: `Grip (${frame.grip.map(fmt).join(', ')}); bat direction ${fmt(frame.batAngle)}° clockwise from right. ${i < 3 ? `Trace ${i * 2 + 1}: grip. Trace ${i * 2 + 2}: bat toe.` : 'The final pose remains on screen.'}`,
         })),
         {label: 'Grip', value: 'Two separate hands on one handle', detail: 'The hand centers stay 18 drawing units apart, aligned with the handle, throughout the swing.'},
         {label: 'Contact', value: `${fmt(projectedBatAngle(model.frames[2]))}° from vertical`, detail: `Ball center (${contact.ballCenter.map(fmt).join(', ')}). Its surface meets the blade face; both the ball and pose hold still for inspection.`},
-        {label: 'View', value: model.mirror ? 'Horizontally reversed' : 'Facing right', detail: 'Reversing the drawing matches the other camera direction. It does not infer anatomical handedness.'},
+        {label: 'View', value: model.mirror ? 'Bowler to the left' : 'Bowler to the right', detail: 'Camera flip changes horizontal screen direction. Hand and foot labels stay tied to the selected batting mode.'},
       ],
       factory: function* (view) {
         stage(view);
@@ -58,8 +61,8 @@ export const cricketRecipe: RecipeDefinition = {
         }));
         // Keep accepted high-backlift poses below the title and their numbered
         // trace badges inside the canvas, while preserving body proportions.
-        const scale = Math.min(1.16, 337 / (132 - minY));
-        const origin: Point = [model.mirror ? -130 : -220, 207 - 132 * scale];
+        const scale = Math.min(1.16, 320 / (132 - minY));
+        const origin: Point = [model.mirror ? -130 : -220, 190 - 132 * scale];
         const world = (p: Point): Point => [origin[0] + p[0] * scale * direction, origin[1] + p[1] * scale];
         const offset = (p: Point, q: Point, amount: number): Point => [p[0] + q[0] * amount, p[1] + q[1] * amount];
         const visibleHistory = (i: number) => model.showTraces && phase() > i + .03 ? Math.min(1, (phase() - i) / .18) : 0;
@@ -67,7 +70,7 @@ export const cricketRecipe: RecipeDefinition = {
 
         label(view, 'CRICKET · CONTACT STUDY', -197, -236, P.teal, 20);
         view.add(new Txt({text: () => CRICKET_PHASES[currentIndex()], position: [-197, -201], fontFamily: 'Arial', fontWeight: 600, fontSize: 31, fill: P.ink}));
-        label(view, 'Authored side view', -197, -173, P.muted, 17);
+        label(view, `${handedTitle} · side view`, -197, -173, P.muted, 17);
 
         // The pitch and crease stay fixed while the front foot steps forward.
         const floor = world([0, 132])[1];
@@ -98,8 +101,8 @@ export const cricketRecipe: RecipeDefinition = {
         limb(() => [pose().neck, [(pose().shoulders[0][0] + pose().shoulders[1][0]) / 2, (pose().shoulders[0][1] + pose().shoulders[1][1]) / 2]], 8, P.ink);
         view.add(new Circle({position: () => world(pose().head), size: 37, fill: P.bg, stroke: P.ink, lineWidth: 3}));
         view.add(new Line({points: () => [[13, -4], [20, 1], [13, 5]].map(([x, y]) => world([pose().head[0] + x, pose().head[1] + y])), stroke: P.ink, lineWidth: 2.5, lineCap: 'round', lineJoin: 'round'}));
-        limb(() => [pose().shoulders[0], pose().elbows[0], pose().bat.upperHand], 8, P.muted);
-        limb(() => [pose().shoulders[1], pose().elbows[1], pose().bat.lowerHand], 9, P.ink);
+        limb(() => [pose().shoulders[0], pose().elbows[0], pose().bat.lowerHand], 8, P.muted);
+        limb(() => [pose().shoulders[1], pose().elbows[1], pose().bat.upperHand], 9, P.ink);
         for (const part of ['shoulders', 'hips', 'elbows', 'knees'] as const) for (let i = 0; i < 2; i++) {
           view.add(new Circle({position: () => world(pose()[part][i]), size: 7.5, fill: P.bg, stroke: P.ink, lineWidth: 1.8}));
         }
@@ -109,6 +112,9 @@ export const cricketRecipe: RecipeDefinition = {
           return [offset(b.blade, b.normal, 4.5), offset(b.toe, b.normal, 6.5), offset(b.toe, b.normal, -6.5), offset(b.blade, b.normal, -4.5)].map(world);
         }, closed: true, fill: '#244944', stroke: P.teal, lineWidth: 2.5, lineJoin: 'round'}));
         for (const hand of ['upperHand', 'lowerHand'] as const) view.add(new Circle({position: () => world(pose().bat[hand]), size: 13.5, fill: P.bg, stroke: P.ink, lineWidth: 2.4}));
+        for (const [index, name, side] of [[0, 'Back', anatomy.backFoot], [1, 'Front', anatomy.frontFoot]] as const) {
+          view.add(new Txt({text: `${name}: ${side}`, position: () => [world(pose().ankles[index])[0] + direction * 12, floor + 23], fontFamily: 'Arial', fontSize: 16, fill: index ? P.ink : P.muted}));
+        }
         view.add(new Circle({position: () => world(cricketBall(model, phase())), size: BALL_RADIUS * 2 * scale, fill: P.orange}));
         view.add(new Circle({position: world(contact.ballCenter), size: 41, stroke: P.orange, lineWidth: 1.5, opacity: contactActive}));
         view.add(new Txt({text: 'Contact', position: [world(contact.ballCenter)[0] + direction * 63, world(contact.ballCenter)[1] - 4], fontFamily: 'Arial', fontSize: 19, fill: P.orange, opacity: contactActive}));
@@ -138,11 +144,11 @@ export const cricketRecipe: RecipeDefinition = {
         view.add(new Circle({position: gripCenter, size: 166, fill: P.panel, stroke: P.grid, lineWidth: 1.5}));
         view.add(new Line({points: () => [gripPoint(-27), gripPoint(44)], stroke: P.ink, lineWidth: 8, lineCap: 'round'}));
         view.add(new Line({points: () => [gripPoint(29), gripPoint(46)], stroke: P.teal, lineWidth: 21, lineCap: 'round'}));
-        for (const [distance, name] of [[BAT.upperHand, 'U'], [BAT.lowerHand, 'L']] as const) {
+        for (const [distance, name] of [[BAT.upperHand, anatomy.topHand[0].toUpperCase()], [BAT.lowerHand, anatomy.bottomHand[0].toUpperCase()]] as const) {
           view.add(new Circle({position: () => gripPoint(distance), size: 27, fill: P.bg, stroke: P.ink, lineWidth: 2}));
           view.add(new Txt({text: name, position: () => gripPoint(distance), fontFamily: 'Arial', fontSize: 17, fill: P.ink}));
         }
-        label(view, 'U: upper hand   L: lower hand', 293, -13, P.muted, 18);
+        label(view, `Top: ${anatomy.topHand} · Bottom: ${anatomy.bottomHand}`, 293, -13, P.muted, 18);
 
         label(view, 'Earlier positions', 289, 28, P.ink, 22);
         label(view, 'Frame', 226, 64, P.muted, 16);

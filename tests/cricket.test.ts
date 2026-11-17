@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
   BALL_RADIUS, BAT, DEFAULT_CRICKET_FRAMES, LIMBS, batGeometry, contactGeometry,
-  cricketBall, cricketTiming, distance, parseCricket, projectedBatAngle, sampleCricket,
+  cricketAnatomy, cricketBall, cricketTiming, distance, parseCricket, projectedBatAngle, sampleCricket,
   type CricketInput, type Point,
 } from '../lib/recipes/models/cricket.ts';
 
@@ -21,7 +21,7 @@ test('the bat, both hands, arms, and legs retain their lengths between all keyfr
     near((lower[0] - upper[0]) * p.bat.direction[1] - (lower[1] - upper[1]) * p.bat.direction[0], 0);
     for (let side = 0; side < 2; side++) {
       near(distance(p.shoulders[side], p.elbows[side]), LIMBS.upperArm);
-      near(distance(p.elbows[side], side ? lower : upper), LIMBS.forearm);
+      near(distance(p.elbows[side], side ? upper : lower), LIMBS.forearm);
       near(distance(p.hips[side], p.knees[side]), LIMBS.thigh);
       near(distance(p.knees[side], p.ankles[side]), LIMBS.shin);
     }
@@ -67,8 +67,10 @@ test('independently known projected angles and checkpoint timings are preserved'
 test('a valid pair of keyframes with an unreachable intermediate hand is rejected', () => {
   const swing = model();
   const frame = {...swing.frames[0], grip: [80, -80] as Point};
-  swing.frames[0] = {...frame, batAngle: -90};
-  swing.frames[1] = {...frame, batAngle: 90};
+  // The back arm holds the lower hand. Both vertical endpoint poses fit;
+  // the halfway bat direction points right and takes that hand beyond reach.
+  swing.frames[0] = {...frame, batAngle: 90};
+  swing.frames[1] = {...frame, batAngle: -90};
   assert.doesNotThrow(() => sampleCricket(swing, 0));
   assert.doesNotThrow(() => sampleCricket(swing, 1));
   assert.throws(() => sampleCricket(swing, .5), /reach/);
@@ -80,6 +82,7 @@ test('bad input is bounded and rejected with an actionable message', () => {
   const variants: Record<string, unknown>[] = [
     {...input(), transitionSeconds: 0}, {...input(), contactHold: 8}, {...input(), mirror: 'yes'},
     {...input(), showTraces: 1}, {...input(), title: '\n'}, {...input(), title: 'x'.repeat(61)},
+    {...input(), handedness: 'lefty'}, {...input(), handedness: true}, {...input(), handedness: null},
   ];
   for (const v of variants) assert.throws(() => parseCricket(JSON.stringify(v)));
   const badFrame = input(); badFrame.frames[0].grip = [90, -10];
@@ -94,5 +97,29 @@ test('omitted optional fields use bounded defaults and mirror leaves the underly
   const reversed = parseCricket(JSON.stringify(minimal)), standard = model();
   assert.equal(reversed.mirror, true);
   assert.equal(reversed.showTraces, true);
+  assert.equal(reversed.handedness, 'right');
   assert.deepEqual(sampleCricket(reversed, 1.5), sampleCricket(standard, 1.5));
+});
+
+test('batting handedness labels the top hand and front foot independently of camera direction', () => {
+  assert.deepEqual(cricketAnatomy('left'), {topHand: 'right', bottomHand: 'left', frontFoot: 'right', backFoot: 'left'});
+  assert.deepEqual(cricketAnatomy('right'), {topHand: 'left', bottomHand: 'right', frontFoot: 'left', backFoot: 'right'});
+  const base = model();
+  for (const handedness of ['left', 'right'] as const) for (const mirror of [false, true]) {
+    const swing = parseCricket(JSON.stringify({...input(), handedness, mirror}));
+    assert.equal(swing.handedness, handedness);
+    assert.equal(swing.mirror, mirror);
+    for (const phase of [0, .5, 1, 1.5, 2, 2.5, 3]) assert.deepEqual(sampleCricket(swing, phase), sampleCricket(base, phase));
+    assert.deepEqual(contactGeometry(swing), contactGeometry(base));
+  }
+});
+
+test('the front arm reaches the top hand and the back arm reaches the bottom hand', () => {
+  const swing = model();
+  for (const phase of [0, .5, 1, 1.5, 2, 2.5, 3]) {
+    const p = sampleCricket(swing, phase);
+    assert.ok(p.shoulders[1][0] > p.shoulders[0][0]);
+    near(distance(p.elbows[1], p.bat.upperHand), LIMBS.forearm);
+    near(distance(p.elbows[0], p.bat.lowerHand), LIMBS.forearm);
+  }
 });

@@ -41,6 +41,8 @@ Append a query to the deployed entry-page URL:
 | `?scene=parametric-knot` | Open a gallery scene |
 | `?recipe=trace&example=human-correction` | Open a recipe with a supplied preset |
 | `?recipe=cricket` | Open the cricket coaching recipe |
+| `?recipe=cricket&handedness=left&mirror=0` | Left-handed batter, bowler to the right |
+| `?recipe=cricket&handedness=right&mirror=1` | Right-handed batter, flipped camera view |
 | `?recipe=post-training` | Open the policy-gradient recipe |
 | `?scene=cricket-coaching` | Open the cricket gallery scene |
 | `?scene=post-training-feedback` | Open the post-training gallery scene |

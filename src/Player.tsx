@@ -15,9 +15,10 @@ export function useReducedMotion() {
   return reduced;
 }
 
-export function MotionPlayer({id, factory, title, compact = false, autoplay = true, posterTime = 0, loop = true, checkpoints = [], frameStep = false, onSnapshot}: {
+export function MotionPlayer({id, factory, title, compact = false, autoplay = true, posterTime = 0, loop = true, checkpoints = [], frameStep = false, preservePlayback = false, onSnapshot}: {
   id: string; factory: SceneFactory; title: string; compact?: boolean; autoplay?: boolean; posterTime?: number;
   loop?: boolean; checkpoints?: RecipeCheckpoint[]; frameStep?: boolean;
+  preservePlayback?: boolean;
   onSnapshot?: (canvas: HTMLCanvasElement) => void;
 }) {
   const container = useRef<HTMLDivElement>(null);
@@ -33,6 +34,9 @@ export function MotionPlayer({id, factory, title, compact = false, autoplay = tr
   const [time, setTime] = useState(0);
   const [speed, setSpeed] = useState(1);
   const [visible, setVisible] = useState(!compact);
+  const playbackState = useRef({playing, speed});
+  playbackState.current = {playing, speed};
+  const retained = useRef<{id: string; time: number; playing: boolean; speed: number} | null>(null);
 
   useEffect(() => {
     if (!compact || !frame.current) return;
@@ -51,16 +55,20 @@ export function MotionPlayer({id, factory, title, compact = false, autoplay = tr
     let cancelled = false;
     let instance: MotionPlayerHandle | null = null;
     let lastUpdate = 0;
-    setReady(false); setError(''); setTime(0); setDuration(0); setSpeed(1);
-    setPlaying(playbackPolicy.current);
+    const previous = preservePlayback && retained.current?.id === id ? retained.current : null;
+    const startTime = previous?.time ?? posterTime;
+    const startPlaying = previous ? previous.playing && !reduced : playbackPolicy.current;
+    const startSpeed = previous?.speed ?? 1;
+    setReady(false); setError(''); setTime(startTime); setDuration(0); setSpeed(startSpeed);
+    setPlaying(startPlaying);
     import('../lib/motion/runtime').then(({mountMotionCanvas}) => {
       if (cancelled || !container.current) return;
       instance = mountMotionCanvas(container.current, id, factory, {
-        autoplay: playbackPolicy.current,
+        autoplay: startPlaying,
         loop,
         resolutionScale: compact ? 0.55 : 1,
-        initialTime: posterTime,
-        onReady: seconds => {if (!cancelled) {setReady(true); setDuration(seconds);}},
+        initialTime: startTime,
+        onReady: seconds => {if (!cancelled) {setReady(true); setDuration(seconds); if (startTime > seconds) instance?.seek(seconds);}},
         onFrame: (seconds, total) => {
           if (cancelled || compact) return;
           const now = performance.now();
@@ -70,11 +78,16 @@ export function MotionPlayer({id, factory, title, compact = false, autoplay = tr
         onEnded: () => {if (!cancelled) setPlaying(false);},
       });
       handle.current = instance;
-      setPlaying(playbackPolicy.current);
+      instance.setSpeed(startSpeed);
+      setPlaying(startPlaying);
       instance.canvas.setAttribute('aria-label', title);
     }).catch(e => {if (!cancelled) setError(e instanceof Error ? e.message : 'The player could not load.');});
-    return () => {cancelled = true; instance?.dispose(); handle.current = null;};
-  }, [id, factory, visible, compact, posterTime, loop]);
+    return () => {
+      cancelled = true;
+      if (instance) retained.current = {id, time: instance.time, ...playbackState.current};
+      instance?.dispose(); handle.current = null;
+    };
+  }, [id, factory, visible, compact, posterTime, loop, preservePlayback]);
 
   useEffect(() => {
     if (!autoplay || reduced) {handle.current?.pause(); setPlaying(false);}

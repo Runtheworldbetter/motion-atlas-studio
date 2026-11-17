@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import {recipes} from '../lib/recipes/catalog';
 import type {RecipeDefinition, RecipeId, RecipeResult} from '../lib/recipes/types';
+import {cricketViewFromParams, patchCricketView, readCricketView, setCricketViewParams, type CricketView} from '../lib/recipes/models/cricket-view';
 import {specs, scenes} from '../lib/motion/catalog';
 import {appliedRecipes, appliedResults} from '../lib/motion/applied';
 import {getSceneBasis} from '../lib/motion/basis';
@@ -35,7 +36,8 @@ function startingDraft(recipe: RecipeDefinition): Draft {
   const params = new URLSearchParams(location.search);
   const example = (params.get('recipe') === recipe.id && recipe.examples.find(e => e.id === params.get('example'))) || recipe.examples[0];
   const custom = initialRecipe?.recipe === recipe.id && !params.has('example') ? initialRecipe : null;
-  const input = custom?.input ?? example.input;
+  const baseInput = custom?.input ?? example.input;
+  const input = recipe.id === 'cricket' && params.get('recipe') === 'cricket' ? patchCricketView(baseInput, cricketViewFromParams(params)) : baseInput;
   const secondary = custom?.secondary ?? example.secondary ?? '';
   return {input, secondary, exampleId: custom ? '' : example.id, renderedInput: input, renderedSecondary: secondary};
 }
@@ -83,6 +85,8 @@ export default function App() {
   const secondaryUpload = useRef<HTMLInputElement>(null);
   const preferencesUpload = useRef<HTMLInputElement>(null);
   const routeSearch = useRef(location.search);
+  const draftsRef = useRef(drafts);
+  draftsRef.current = drafts;
   const recipe = recipes.find(r => r.id === recipeId)!;
   const draft = drafts[recipeId];
   const result = results[recipeId];
@@ -91,6 +95,7 @@ export default function App() {
   const embed = new URLSearchParams(location.search).get('embed') === '1';
   const activeExample = recipe.examples.find(e => e.id === draft.exampleId);
   const recipePreference = preferences[`recipe:${recipeId}`];
+  const cricketView = recipeId === 'cricket' ? readCricketView(draft.input) ?? readCricketView(draft.renderedInput) : null;
 
   useEffect(() => {
     const sync = (event: StorageEvent) => {
@@ -114,7 +119,17 @@ export default function App() {
       if (found) {
         setRecipeId(found.id);
         const ex = found.examples.find(e => e.id === params.get('example'));
-        if (ex) loadPreset(found, ex.id, false);
+        if (found.id === 'cricket' && ex) loadPreset(found, ex.id, false, cricketViewFromParams(params));
+        else if (found.id === 'cricket') {
+          // A route without a preset may belong to imported or edited input.
+          // Restore only its view settings, keeping the current document.
+          const saved = draftsRef.current.cricket;
+          const view = readCricketView(saved.input), changes = cricketViewFromParams(params);
+          if (view && Object.entries(changes).some(([key, value]) => view[key as keyof CricketView] !== value)) {
+            renderDraft('cricket', {...saved, input: patchCricketView(saved.input, changes)});
+          }
+        }
+        else if (ex) loadPreset(found, ex.id, false);
       }
       const id = params.get('scene'); setSelectedScene(id && specs.some(s => s.id === id) ? id : null);
     };
@@ -127,9 +142,10 @@ export default function App() {
     return () => {cancelled = true;};
   }, [recipeId, activeTab]);
 
-  function routeTo(id: RecipeId, exampleId: string, replace = false) {
+  function routeTo(id: RecipeId, exampleId: string, replace = false, input = drafts[id].input) {
     const url = new URL(location.href); url.search = ''; url.hash = ''; url.searchParams.set('recipe', id);
     if (exampleId) url.searchParams.set('example', exampleId);
+    if (id === 'cricket') setCricketViewParams(url.searchParams, readCricketView(input));
     routeSearch.current = url.search;
     history[replace ? 'replaceState' : 'pushState']({}, '', url);
   }
@@ -141,13 +157,21 @@ export default function App() {
       setResults(current => ({...current, [id]: compiled}));
       setDrafts(current => ({...current, [id]: {...next, renderedInput: next.input, renderedSecondary: next.secondary}}));
       setErrors(current => ({...current, [id]: ''}));
-    } catch (e) {setErrors(current => ({...current, [id]: e instanceof Error ? e.message : 'Please check this input.'}));}
+      return true;
+    } catch (e) {setErrors(current => ({...current, [id]: e instanceof Error ? e.message : 'Please check this input.'})); return false;}
   }
-  function loadPreset(definition: RecipeDefinition, exampleId: string, navigate = true) {
+  function loadPreset(definition: RecipeDefinition, exampleId: string, navigate = true, cricketOverrides?: Partial<CricketView>) {
     const example = definition.examples.find(e => e.id === exampleId) ?? definition.examples[0];
-    const next = {input: example.input, secondary: example.secondary ?? '', exampleId: example.id, renderedInput: example.input, renderedSecondary: example.secondary ?? ''};
+    const input = definition.id === 'cricket' ? patchCricketView(example.input, cricketOverrides ?? {handedness: readCricketView(drafts.cricket.input)?.handedness ?? 'left'}) : example.input;
+    const next = {input, secondary: example.secondary ?? '', exampleId: example.id, renderedInput: input, renderedSecondary: example.secondary ?? ''};
     setRecipeId(definition.id); setDrafts(current => ({...current, [definition.id]: next})); renderDraft(definition.id, next);
-    if (navigate) routeTo(definition.id, example.id);
+    if (navigate) routeTo(definition.id, example.id, false, input);
+  }
+  function changeCricketView(changes: Partial<CricketView>) {
+    try {
+      const next = {...draft, input: patchCricketView(draft.input, changes)};
+      if (renderDraft('cricket', next)) routeTo('cricket', next.exampleId, true, next.input);
+    } catch (e) {setErrors(current => ({...current, cricket: e instanceof Error ? e.message : 'Please check this input.'}));}
   }
   function updateDraft(value: string, secondary = false) {
     setDrafts(current => ({...current, [recipeId]: {...current[recipeId], [secondary ? 'secondary' : 'input']: value}}));
@@ -168,7 +192,7 @@ export default function App() {
       } catch (e) {if (e instanceof Error && e.message === 'Invalid input export.') throw e;}
       if (imported) {
         const next = {...drafts[imported.recipe], input: imported.input, secondary: imported.secondary ?? '', exampleId: ''};
-        setRecipeId(imported.recipe); setDrafts(current => ({...current, [imported!.recipe]: next})); renderDraft(imported.recipe, next); routeTo(imported.recipe, '');
+        setRecipeId(imported.recipe); setDrafts(current => ({...current, [imported!.recipe]: next})); renderDraft(imported.recipe, next); routeTo(imported.recipe, '', false, next.input);
       } else {
         const next = {...draft, [secondary ? 'secondary' : 'input']: text};
         setDrafts(current => ({...current, [recipeId]: next})); renderDraft(recipeId, next);
@@ -187,6 +211,7 @@ export default function App() {
   function linkFor(kind: 'recipe' | 'scene', id: string, embedded = false) {
     const url = new URL(location.origin + location.pathname); url.searchParams.set(kind, id);
     if (kind === 'recipe' && drafts[id as RecipeId].exampleId) url.searchParams.set('example', drafts[id as RecipeId].exampleId);
+    if (kind === 'recipe' && id === 'cricket') setCricketViewParams(url.searchParams, readCricketView(drafts.cricket.input) ?? readCricketView(drafts.cricket.renderedInput));
     if (embedded) url.searchParams.set('embed', '1'); return url.href;
   }
   async function copy(text: string, message = 'Copied to clipboard.') {
@@ -252,6 +277,12 @@ export default function App() {
           <div className="input-panel">
             <div className="panel-heading"><span><Code2 size={15}/> EDIT THE INPUT</span><span className="format-badge">{recipe.inputFormat}</span></div>
             <div className="preset-select"><label htmlFor="preset">Start with an example</label><div><select id="preset" value={draft.exampleId} onChange={e => loadPreset(recipe, e.target.value)}>{!draft.exampleId && <option value="">Your imported example</option>}{recipe.examples.map(example => <option key={example.id} value={example.id}>{example.name}</option>)}</select><ChevronDown size={15}/></div><p>{activeExample?.description ?? 'Imported input.'}</p></div>
+            {cricketView && <div className="cricket-view-controls">
+              <span className="cricket-view-label">Batter</span>
+              <div className="batting-mode" role="group" aria-label="Batting handedness">{(['left', 'right'] as const).map(hand => <button key={hand} type="button" aria-pressed={cricketView.handedness === hand} onClick={() => changeCricketView({handedness: hand})}>{hand === 'left' ? 'Left-handed' : 'Right-handed'}</button>)}</div>
+              <label className="camera-flip"><input type="checkbox" checked={cricketView.mirror} onChange={e => changeCricketView({mirror: e.target.checked})}/> Flip camera view</label>
+              <p>Hand and foot labels follow the batter. Flip the view to match your camera.</p>
+            </div>}
             <div className="editor-label"><label>{recipe.inputLabel}</label><button className="text-button" onClick={() => primaryUpload.current?.click()}><FolderOpen size={14}/> Open file</button></div>
             <CodeEditor label={recipe.inputLabel} value={draft.input} onChange={value => updateDraft(value)} onRun={() => renderDraft(recipeId)} compact={!!recipe.secondaryLabel}/>
             {recipe.secondaryLabel && <><div className="editor-label"><label>{recipe.secondaryLabel}</label><button className="text-button" onClick={() => secondaryUpload.current?.click()}><FolderOpen size={14}/> Open file</button></div><CodeEditor label={recipe.secondaryLabel} value={draft.secondary} onChange={value => updateDraft(value, true)} onRun={() => renderDraft(recipeId)} compact/></>}
@@ -265,7 +296,7 @@ export default function App() {
 
           <div className="output-panel">
             <div className="panel-heading"><span><span className="status-dot"/> LIVE PREVIEW</span><a className="format-badge" href={MOTION_CANVAS_PROJECT} target="_blank" rel="noreferrer" aria-label="Motion Canvas animation engine on GitHub">MOTION CANVAS ↗</a></div>
-            <MotionPlayer key={recipeId} id={`recipe-${recipeId}`} factory={result.factory} title={result.title} autoplay={!reduced} loop={result.loop} checkpoints={result.checkpoints} frameStep={result.frameStep} onSnapshot={canvas => downloadSnapshot(canvas, recipeId)}/>
+            <MotionPlayer key={recipeId} id={`recipe-${recipeId}`} factory={result.factory} title={result.title} autoplay={!reduced} loop={result.loop} checkpoints={result.checkpoints} frameStep={result.frameStep} preservePlayback={recipeId === 'cricket'} onSnapshot={canvas => downloadSnapshot(canvas, recipeId)}/>
             <div className="preview-description"><div><h2>{result.title}</h2><p>{result.summary}</p></div><VoteButtons preference={recipePreference} title={recipeNames[recipeId]} onVote={vote => setPreference(`recipe:${recipeId}`, {vote})}/></div>
             <div className="result-tabs" role="tablist" aria-label="Recipe details"><button role="tab" aria-selected={activeTab === 'explain'} onClick={() => setActiveTab('explain')}><BookOpen size={14}/> How it works</button><button role="tab" aria-selected={activeTab === 'data'} onClick={() => setActiveTab('data')}><Layers3 size={14}/> Inspect values <span>{result.rows.length}</span></button><button role="tab" aria-selected={activeTab === 'source'} onClick={() => setActiveTab('source')}><Code2 size={14}/> Recipe source</button></div>
             <div className="result-details">

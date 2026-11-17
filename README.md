@@ -16,7 +16,7 @@ Each recipe starts with an example you can edit:
 
 | Recipe | Input | What it explains |
 | --- | --- | --- |
-| Cricket | JSON pose keyframes | Bat and grip positions through a swing, with a two-hand close-up |
+| Cricket | JSON pose keyframes | Left/right batting modes, labeled hands and feet, and a two-hand close-up |
 | Post-training | JSON probabilities and reward scores | How a supplied scoring rule changes a small policy |
 | Trace | JSON events | Who did what, when, including handoffs and corrections |
 | Waterfall | CSV contributions | How positive and negative changes produce a total |
@@ -27,6 +27,8 @@ Each recipe starts with an example you can edit:
 Choose an example, edit it or open a local file, then select **Render changes**. Inputs are checked in the browser. Code examples are displayed as text and never executed. [Recipe documentation](docs/recipes.md) describes the formats, limits, and calculations.
 
 Cricket and Post-training have stage buttons. Select a stage to pause at that point, then scrub or play from there. These two explanations hold their final frame when playback ends. Cricket uses constructed poses; Post-training computes each probability update from the supplied reward scores. The **Inspect values** tab shows the underlying numbers.
+
+Cricket has **Left-handed** and **Right-handed** controls and a separate **Flip camera view** option. Hand and foot labels follow the selected batter. Changing modes preserves the current frame, playback speed, and edited poses. Recipe share links, embeds, and downloads retain the batting mode and camera direction.
 
 Share a link or embed a gallery scene or recipe preset. To keep or share your edits, download the input or a project ZIP. The ZIP contains the app source and opens with your edited input. You can also save the current frame as a PNG image.
 
