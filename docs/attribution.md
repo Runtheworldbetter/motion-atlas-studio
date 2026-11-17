@@ -1,6 +1,10 @@
 # Attribution and third-party notices
 
-Motion Atlas is an RTWB project built with [Motion Canvas](https://github.com/motion-canvas/motion-canvas). Its application code, gallery scenes, recipes, and examples use the [MIT license](../LICENSE). Dependencies keep their own licenses, listed below.
+## Motion Canvas
+
+[Motion Canvas](https://github.com/motion-canvas/motion-canvas) provides the animation engine used throughout Motion Atlas. Thank you to its creators and contributors for building and maintaining it. Its [documentation](https://motioncanvas.io/docs/) explains how to build your own animations.
+
+RTWB maintains the Motion Atlas editor, gallery scenes, recipes, and examples. That code uses the [MIT license](../LICENSE). Dependencies keep their own licenses, listed below.
 
 ## Direct runtime dependencies
 

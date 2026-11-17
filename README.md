@@ -1,6 +1,10 @@
 # Motion Atlas
 
-Motion Atlas is a browser editor for animated event traces, waterfalls, code diffs, waveforms, and pathfinding. It includes five editable recipes and 48 gallery examples, built by RTWB with [Motion Canvas](https://motioncanvas.io/).
+## Built with [Motion Canvas](https://github.com/motion-canvas/motion-canvas)
+
+Motion Canvas is the open source animation engine used throughout Motion Atlas. Thank you to its creators and contributors. Visit the [Motion Canvas website](https://motioncanvas.io/) and [documentation](https://motioncanvas.io/docs/) to use it in your own projects.
+
+RTWB maintains this browser editor, its five editable recipes, and 48 gallery examples. The recipes cover event traces, waterfalls, code diffs, waveforms, and pathfinding.
 
 [Open Motion Atlas](https://runtheworldbetter.github.io/motion-atlas-studio/) · [Source on GitHub](https://github.com/Runtheworldbetter/motion-atlas-studio) · [Input formats](docs/recipes.md) · [Contributing](CONTRIBUTING.md)
 
@@ -82,7 +86,5 @@ Publish updates with **Actions → Deploy to GitHub Pages → Run workflow** on 
 ## Versions and attribution
 
 The public app is version **0.2.0**. Direct runtime dependencies are Motion Canvas core/2d **3.17.2**, React/React DOM **19.2.6**, and Lucide React **1.31.0**. The build uses Vite **8.0.13** and TypeScript **5.9.3**; `package.json` and `package-lock.json` are the authoritative version records.
-
-Motion Canvas provides the animation engine. RTWB maintains the gallery, recipes, and editor in this repository. See the [Motion Canvas source](https://github.com/motion-canvas/motion-canvas) and [documentation](https://motioncanvas.io/docs/).
 
 Motion Atlas code and examples use the [MIT license](LICENSE). Dependency licenses and attribution are included in [third-party notices](public/third-party-notices.txt). [Attribution](docs/attribution.md) explains how those notices are collected and checked.

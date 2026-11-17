@@ -16,6 +16,8 @@ import {CodeEditor, Dialog, VoteButtons} from './components';
 import initialRecipe from './initial-recipe';
 
 const REPOSITORY = 'https://github.com/Runtheworldbetter/motion-atlas-studio';
+const MOTION_CANVAS_PROJECT = 'https://github.com/motion-canvas/motion-canvas';
+const MOTION_CANVAS_DOCS = 'https://motioncanvas.io/docs/';
 const FILE_LIMIT = 128 * 1024;
 const recipeIcons = {trace: GitBranch, waterfall: BarChart3, code: Braces, fourier: AudioLines, pathfinding: Route};
 const recipeNames = {trace: 'Event trace', waterfall: 'Waterfall', code: 'Code diff', fourier: 'Harmonics', pathfinding: 'Pathfinder'};
@@ -208,7 +210,7 @@ export default function App() {
 
   if (embed) {
     const id = selectedSpec?.id ?? recipeId;
-    return <main className="embed-shell"><MotionPlayer id={`embed-${id}`} factory={selectedSpec ? scenes[selectedSpec.id] : result.factory} title={selectedSpec?.title ?? result.title} autoplay={!reduced}/><div className="embed-caption"><a href={linkFor(selectedSpec ? 'scene' : 'recipe', id)} target="_blank" rel="noreferrer">{selectedSpec?.title ?? result.title} <ExternalLink size={13}/></a><span>Motion Atlas / Motion Canvas</span></div></main>;
+    return <main className="embed-shell"><MotionPlayer id={`embed-${id}`} factory={selectedSpec ? scenes[selectedSpec.id] : result.factory} title={selectedSpec?.title ?? result.title} autoplay={!reduced}/><div className="embed-caption"><a href={linkFor(selectedSpec ? 'scene' : 'recipe', id)} target="_blank" rel="noreferrer">{selectedSpec?.title ?? result.title} <ExternalLink size={13}/></a><span className="embed-credit">Built with <a href={MOTION_CANVAS_PROJECT} target="_blank" rel="noreferrer">Motion Canvas <ExternalLink size={11}/></a></span></div></main>;
   }
 
   return <>
@@ -217,6 +219,18 @@ export default function App() {
 
     <main>
       <section className="intro page-width"><div><p className="eyebrow"><span className="status-dot"/> MOTION CANVAS EXAMPLES & EDITOR</p><h1>Animate your <em>data and code.</em></h1><p className="intro-copy">Choose an example, edit the input, and render the animation.</p></div><div className="intro-aside"><span className="local-badge"><ShieldCheck size={15}/> Runs in your browser</span><p>Your files are processed on your device.<br/>Download a project to keep editing.</p></div></section>
+
+      <section className="upstream-credit page-width" aria-labelledby="motion-canvas-credit">
+        <div>
+          <h2 id="motion-canvas-credit">Built with <a href={MOTION_CANVAS_PROJECT} target="_blank" rel="noreferrer">Motion Canvas</a></h2>
+          <p>Motion Canvas provides the open source animation engine. RTWB built this gallery and editor.</p>
+          <p className="upstream-thanks">Thank you to the Motion Canvas creators and contributors.</p>
+        </div>
+        <div className="upstream-links">
+          <a href={MOTION_CANVAS_PROJECT} target="_blank" rel="noreferrer"><Code2 size={16}/> Motion Canvas on GitHub <ExternalLink size={13}/></a>
+          <a href={MOTION_CANVAS_DOCS} target="_blank" rel="noreferrer"><BookOpen size={16}/> Motion Canvas docs <ExternalLink size={13}/></a>
+        </div>
+      </section>
 
       <section id="studio" className="studio page-width" aria-label="Recipe editor">
         <div className="section-heading"><div className="section-kicker"><span>01</span> EDITOR</div></div>
@@ -240,7 +254,7 @@ export default function App() {
           </div>
 
           <div className="output-panel">
-            <div className="panel-heading"><span><span className="status-dot"/> LIVE PREVIEW</span><span className="format-badge">MOTION CANVAS</span></div>
+            <div className="panel-heading"><span><span className="status-dot"/> LIVE PREVIEW</span><a className="format-badge" href={MOTION_CANVAS_PROJECT} target="_blank" rel="noreferrer" aria-label="Motion Canvas animation engine on GitHub">MOTION CANVAS ↗</a></div>
             <MotionPlayer key={recipeId} id={`recipe-${recipeId}`} factory={result.factory} title={result.title} autoplay={!reduced} onSnapshot={canvas => downloadSnapshot(canvas, recipeId)}/>
             <div className="preview-description"><div><h2>{result.title}</h2><p>{result.summary}</p></div><VoteButtons preference={recipePreference} title={recipeNames[recipeId]} onVote={vote => setPreference(`recipe:${recipeId}`, {vote})}/></div>
             <div className="result-tabs" role="tablist" aria-label="Recipe details"><button role="tab" aria-selected={activeTab === 'explain'} onClick={() => setActiveTab('explain')}><BookOpen size={14}/> How it works</button><button role="tab" aria-selected={activeTab === 'data'} onClick={() => setActiveTab('data')}><Layers3 size={14}/> Inspect values <span>{result.rows.length}</span></button><button role="tab" aria-selected={activeTab === 'source'} onClick={() => setActiveTab('source')}><Code2 size={14}/> Recipe source</button></div>
@@ -267,7 +281,7 @@ export default function App() {
       <section id="guide" className="guide page-width"><div className="section-kicker"><span>03</span> QUICK START</div><h2>Using the <em>editor.</em></h2><div className="guide-grid"><article><span className="guide-number">01</span><h3>Edit an example</h3><p>Choose a recipe and edit its text, or open a local file.</p></article><article><span className="guide-number">02</span><h3>Preview the animation</h3><p>Click Render changes. Pause or scrub the timeline, and use Inspect values to check the numbers.</p></article><article><span className="guide-number">03</span><h3>Save or share</h3><p>Download your input, a runnable project, or a PNG. Share links and embeds open the selected preset.</p></article></div><div className="open-source-banner"><div><p className="eyebrow">SOURCE CODE</p><h3>Run the editor locally</h3><p>Install Node.js 22.13 or newer, download the source, and run:</p></div><div><code>npm ci<br/>npm run dev</code><div className="banner-links"><a className="secondary-button" href="./motion-atlas-source.zip" download><ArrowDownToLine size={15}/> Download source</a><a className="text-button" href={REPOSITORY} target="_blank" rel="noreferrer">GitHub <ExternalLink size={14}/></a></div></div></div></section>
     </main>
 
-    <footer className="site-footer page-width"><a className="brand footer-brand" href="https://runtheworldbetter.com" target="_blank" rel="noreferrer">RTWB <ArrowRight size={16}/></a><div><a href="https://motioncanvas.io" target="_blank" rel="noreferrer">Motion Canvas</a><a href="./third-party-notices.txt" target="_blank" rel="noreferrer">Licenses & credits</a><button className="text-button" onClick={() => setPreferencesOpen(true)}>Your local data</button></div></footer>
+    <footer className="site-footer page-width"><a className="brand footer-brand" href="https://runtheworldbetter.com" target="_blank" rel="noreferrer">RTWB <ArrowRight size={16}/></a><div><a href={MOTION_CANVAS_PROJECT} target="_blank" rel="noreferrer">Built with Motion Canvas</a><a href="./third-party-notices.txt" target="_blank" rel="noreferrer">Licenses & credits</a><button className="text-button" onClick={() => setPreferencesOpen(true)}>Your local data</button></div></footer>
 
     {selectedSpec && <Dialog title={selectedSpec.title} wide onClose={closeScene}><p className="eyebrow">{selectedSpec.category}</p><h2 className="dialog-title">{selectedSpec.title}</h2><MotionPlayer id={`view-${selectedSpec.id}`} factory={scenes[selectedSpec.id]} title={selectedSpec.title} autoplay={!reduced} onSnapshot={canvas => downloadSnapshot(canvas, selectedSpec.id)}/><div className="scene-description"><p>{selectedSpec.description}</p><VoteButtons title={selectedSpec.title} preference={preferences[selectedSpec.id]} onVote={vote => setPreference(selectedSpec.id, {vote})}/></div><div className="basis-note"><Info size={17}/><p><strong>{getSceneBasis(selectedSpec.id).label}.</strong> {getSceneBasis(selectedSpec.id).detail}</p></div><p className="scene-technique">{selectedSpec.technique}</p><label className="note-label" htmlFor="scene-note">Your notes <span>Saved in this browser</span></label><textarea id="scene-note" className="note-input" placeholder="Add a note…" maxLength={1200} value={preferences[selectedSpec.id]?.note ?? ''} onChange={e => setPreference(selectedSpec.id, {note: e.target.value})}/><div className="dialog-actions"><button className="secondary-button" onClick={() => viewSceneSource(selectedSpec.id)}><Code2 size={15}/> View source</button><button className="text-button" onClick={() => copy(linkFor('scene', selectedSpec.id), 'Scene link copied.')}><Link2 size={15}/> Copy link</button><button className="text-button" onClick={() => copy(`<iframe src="${linkFor('scene', selectedSpec.id, true)}" title="${selectedSpec.title.replaceAll('"', '&quot;')}" style="width:100%;aspect-ratio:16/10;border:0" loading="lazy" allowfullscreen></iframe>`, 'Embed code copied.')}><Code2 size={15}/> Copy embed</button></div></Dialog>}
 
