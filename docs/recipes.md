@@ -1,8 +1,8 @@
 # Editable recipes
 
-Each recipe has a browser editor, supplied presets, an animated preview, and an inspectable data view. Apply edited input to rebuild the preview. Uploaded files are read locally and limited to **128 KiB per file**; the smaller recipe limits below keep the result readable and responsive.
+Each recipe has an editor, examples, an animated preview, and a data table. Select **Render changes** after editing. Opened files are read locally and limited to **128 KiB per file**. Each recipe also has limits to keep its animation readable and responsive.
 
-Drafts live in page memory. Download input or a customized source project before closing or reloading. A scene/preset link does not contain your changes. A project download includes your chosen input and should be reviewed before you share it.
+Download the input or project before closing or reloading the page to keep your edits. Share links open supplied examples. Project downloads contain your edited input; review it before sharing.
 
 **Download input** saves a JSON file with the marker `motion-atlas-input-v1`, the recipe ID, the primary input, and the optional second text input. **Open file** recognizes this wrapper and restores the corresponding recipe, including a waterfall or maze whose raw input is CSV or text. You can also open a raw file in the formats below. A preference export is a separate file and belongs in the **Your picks → Import** control.
 
@@ -24,11 +24,11 @@ Use JSON with an `events` array:
 
 `time` is elapsed seconds, from 0 through 86,400. Use 2–18 events and at most four distinct actors. Actor names may contain up to 32 characters, labels 140, details 400, and the optional title 72. The input is limited to 20,000 characters. `status` defaults to `info`; accepted values are `info`, `working`, `success`, `warning`, and `error`.
 
-Events sort by time, with input order preserved for ties. Timeline spacing reflects supplied timestamps, while playback gives each event equal reading time. A 20-second gap in the trace is not a requirement to wait 20 seconds during playback. No missing event, causal connection, or outcome is inferred. Full text remains in the data view when a canvas label is shortened.
+Events sort by time, with input order preserved for ties. Timeline spacing follows the supplied timestamps; playback gives each event equal reading time. The animation shows the events you supply. The data table keeps the full text when a canvas label is shortened.
 
 The supplied traces are fictional examples. Preset IDs: `human-correction`, `incident-response`, `ci-pipeline`.
 
-## Waterfall: changes that reconcile
+## Waterfall: changes to a running total
 
 Use CSV with the header `label,value,type`:
 
@@ -42,11 +42,11 @@ Closing balance,,total
 
 Use 3–12 data rows. The first row must be `start`, the last `total`, and at least one row must be a `change`. Only the first row can be `start`. A `total` row is a checkpoint: it does not add its value to the running balance. Intermediate totals are allowed.
 
-Leave a total value blank to compute it, or supply the expected total to validate it. A mismatch is reported rather than silently changing the data. Values must be finite numbers, optionally decimals or scientific notation; omit currency symbols and thousands separators. Negative balances and changes are supported. Keep labels within 120 characters and the input within 20,000 characters. Quote CSV labels containing commas and represent an embedded quotation mark as `""`.
+Leave a total value blank to compute it, or supply the expected total to check it. A mismatch produces an error. Values must be finite numbers, optionally decimals or scientific notation; omit currency symbols and thousands separators. Negative balances and changes are supported. Keep labels within 120 characters and the input within 20,000 characters. Quote CSV labels containing commas and represent an embedded quotation mark as `""`.
 
-The bars and data table come from arithmetic on the input. Supplied presets use illustrative quantities with no implied company, currency, or measured business outcome. Preset IDs: `monthly-cash`, `product-revenue`, `negative-balance`.
+The bars and data table use the values you supply. Presets use fictional quantities in unspecified units. Preset IDs: `monthly-cash`, `product-revenue`, `negative-balance`.
 
-## Before / after: explain a text change
+## Code diff: compare two versions
 
 Enter the original text in **Before** and the revision in **After**. For example:
 
@@ -66,7 +66,7 @@ def average(values):
 
 Each version may contain up to 18 lines, 90 display columns per line, and 6,000 characters. Tabs display as four spaces. One version may be empty to show a pure addition or deletion; both cannot be empty.
 
-Motion Canvas animates the text transition. A deterministic longest-common-subsequence comparison supplies the added, removed, and unchanged lines in the data view. Input is never executed. The comparison does not prove that two programs behave the same, improve performance, or preserve security properties.
+Motion Canvas animates the text change. A longest-common-subsequence comparison identifies added, removed, and unchanged lines in the data table. Code is displayed as text and never executed.
 
 Preset IDs: `python-guard`, `js-async`, `python-extract`.
 
@@ -84,7 +84,7 @@ Or supply a custom set of harmonics:
 
 ```json
 {
-  "title": "A three-note mixture",
+  "title": "Three harmonics",
   "harmonics": [
     {"frequency": 1, "amplitude": 1},
     {"frequency": 2, "amplitude": 0.45, "phase": 1.57},
@@ -95,9 +95,9 @@ Or supply a custom set of harmonics:
 
 Use 1–16 harmonics with distinct integer frequencies from 1 through 64, amplitudes from −10 through 10, and phases from −2π through 2π radians. Phase defaults to 0. An optional title may contain up to 72 characters. Choose a preset or a custom harmonics array; do not mix preset parameters with a custom array.
 
-The visualization computes the finite sum `Σ amplitude × sin(frequency × angle + phase)`. Square and sawtooth presets use standard sine-series coefficients. A finite approximation has rounded transitions and can overshoot near a discontinuity; that is part of the construction. No audio is generated.
+The visualization computes the finite sum `Σ amplitude × sin(frequency × angle + phase)`. Square and sawtooth presets use standard sine-series coefficients. Using a finite number of terms rounds the transitions and can produce overshoot near a jump.
 
-**The drawing scale fits its coefficients.** Use the coefficient/data table to compare amplitudes across examples, rather than comparing pixel heights of separately auto-scaled previews.
+Each preview scales to fit its coefficients. Use the data table to compare amplitudes across examples.
 
 Preset IDs: `square`, `saw`, `sine`, `custom`.
 
@@ -113,14 +113,14 @@ Preset IDs: `square`, `saw`, `sine`, `custom`.
 
 Use `S` for the start, `G` for the goal, `#` for a wall, and `.` for an open cell. Include exactly one start and one goal. All rows must have the same width: 2–24 columns and 2–16 rows. Lowercase `s`/`g` and Windows line endings are accepted; surrounding row whitespace is trimmed.
 
-The model runs actual breadth-first search with four equal-cost neighbors, considered in the order right, down, left, up. A cell is queued once; expansion proceeds in increasing distance from the start. The search stops when the goal is removed from the queue, and parent links reconstruct a shortest route. Several shortest routes may exist; the fixed neighbor order makes the chosen route repeatable.
+Breadth-first search checks four equal-cost neighbors in the order right, down, left, up. Each cell is queued once, and cells are explored in increasing distance from the start. The search stops when the goal is removed from the queue, then traces parent links back to the start to find a shortest route. When several shortest routes exist, the fixed neighbor order determines which one is shown.
 
-The data view exposes the expansion order, queue/frontier, distances, and result. Coordinates use `(row, column)`, starting at 1. An unreachable goal is a valid result, not a parsing error. This recipe does not support diagonal movement or weighted paths.
+The data table shows the exploration order, queue, distances, and result. Coordinates use `(row, column)`, starting at 1. A maze with an unreachable goal is accepted and shows that result. Movement is horizontal or vertical, with one unit of cost per step.
 
 Preset IDs: `detour`, `openings`, `open`, `blocked`.
 
-## Gallery scenes and scientific claims
+## Gallery data and calculations
 
-The 48 gallery scenes are independent authored demonstrations. Sorting, binary search, and breadth-first search compute algorithm traces. Many geometric scenes use explicit mathematical constructions. AI activations, attention weights, token probabilities, forecasts, and business scenarios are illustrative rather than measurements from a trained model or operating company.
+The gallery has 48 examples. Sorting, binary search, and breadth-first search run the algorithms they show. Geometric scenes use the formulas described with each scene. AI activations, attention weights, token probabilities, forecasts, and business scenarios use synthetic examples.
 
-If you replace supplied data with real observations, keep the source, units, context, and transformations with your example. An attractive animation does not by itself establish a causal relationship, calibrated uncertainty, or measured improvement.
+If you use real data, include its source, units, context, and any transformations.

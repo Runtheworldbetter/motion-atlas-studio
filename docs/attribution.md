@@ -1,6 +1,6 @@
 # Attribution and third-party notices
 
-Motion Atlas is an independent RTWB project built with [Motion Canvas](https://github.com/motion-canvas/motion-canvas). The application, gallery scenes, recipes, and supplied sample inputs are covered by the root [MIT license](../LICENSE). This does not replace the licenses of dependencies or imply endorsement by their authors.
+Motion Atlas is an RTWB project built with [Motion Canvas](https://github.com/motion-canvas/motion-canvas). Its application code, gallery scenes, recipes, and examples use the [MIT license](../LICENSE). Dependencies keep their own licenses, listed below.
 
 ## Direct runtime dependencies
 
@@ -12,7 +12,7 @@ Motion Atlas is an independent RTWB project built with [Motion Canvas](https://g
 | `react-dom` | 19.2.6 | MIT |
 | `lucide-react` | 1.31.0 | ISC |
 
-Their dependency tree also includes packages such as MathJax, CodeMirror, Lezer, chroma.js, and syntax-grammar utilities. Some of those packages contain additional third-party code with its own notices. The complete source texts are preserved in [public/third-party-notices.txt](../public/third-party-notices.txt), which is served with the built site.
+Dependencies also include MathJax, CodeMirror, Lezer, chroma.js, and syntax grammars. Some packages include other third-party code with its own notices. Full license and notice texts are in [public/third-party-notices.txt](../public/third-party-notices.txt), included with the built site.
 
 ## Reproduce the notices
 
@@ -24,16 +24,16 @@ node scripts/generate-notices.mjs --check
 
 The generator follows the installed dependency graph from `package.json`'s production dependencies, including installed peers and optional dependencies, and verifies versions against `package-lock.json`. It includes all `LICENSE`, `COPYING`, copyright, and `NOTICE` files it finds at package roots or in their notice directories. Full upstream notice files are retained, including the grammar attributions distributed by `@wooorm/starry-night` and Oniguruma attribution distributed by `vscode-oniguruma`.
 
-This is a conservative inventory of the complete production dependency closure. It can include packages or grammar assets removed by a particular browser build's tree shaking. Development-only tools are not listed as browser runtime dependencies; their licenses remain in their installed packages. Do not use this browser-distribution inventory as a blanket license for a separate distribution of `node_modules` or build-tool binaries.
+The list covers all installed production dependencies, including code the browser build may remove as unused. Development tools have their licenses in their installed packages. If you distribute `node_modules` or build-tool binaries separately, include the licenses for that distribution too.
 
-Output is deterministic and contains no build timestamp or machine-specific path. `--check` reads the same evidence without changing the generated file. Missing packages, stale versions, missing license metadata/text, stale override records, or differing notices in duplicate package versions fail the check.
+The same installed dependencies produce the same output. `--check` validates the generated file without changing it. The check fails for missing packages or license text, version mismatches, outdated overrides, or conflicting notices for the same package version.
 
 ## A package without a license file
 
-Do not manufacture a copyright notice or assume that a package's short license label contains all its attribution requirements. Investigate the exact installed version and retain the published source of any recovered text.
+Find the license text for the exact installed version and record its source. A package's short license label may omit copyright or attribution requirements.
 
-A reviewed, version-specific recovery can be recorded in `docs/license-overrides.json`. Each entry names the declared license, explains why it is needed, and lists files under `docs/licenses/` with their source URLs and SHA-256 checksums. The generator verifies the checksums, checks that the entry matches the installed version/license, and fails when an override becomes unused. The recovery is included visibly in the generated notice file.
+Record recovered license text in `docs/license-overrides.json`. Each entry names the license, explains the missing text, and lists files under `docs/licenses/` with source URLs and SHA-256 checksums. The generator checks the files, version, and license, reports unused overrides as errors, and includes the source details in the generated notices.
 
-The current exception is `mj-context-menu@0.6.1`, a MathJax dependency. Its [published version metadata](https://registry.npmjs.org/mj-context-menu/0.6.1) explicitly declares `Apache-2.0`, but that npm archive omits a license file. The standard Apache-2.0 text is retained from the [upstream license commit](https://github.com/zorkow/context-menu/blob/72e16a5713cf30b390776c89bb6c1428747472f1/LICENSE). The published archive has no separate `NOTICE` file, and no package-specific copyright holder has been invented.
+The current exception is `mj-context-menu@0.6.1`, a MathJax dependency. Its [published version metadata](https://registry.npmjs.org/mj-context-menu/0.6.1) declares `Apache-2.0`, but the npm archive omits the license file. The standard Apache-2.0 text comes from the [upstream license commit](https://github.com/zorkow/context-menu/blob/72e16a5713cf30b390776c89bb6c1428747472f1/LICENSE). The published archive has no separate `NOTICE` file.
 
-Review the override explanation and upstream terms again when changing that package version. An unresolved provenance question should remain a visible release issue until it is resolved or the dependency is removed.
+Review the override and upstream terms when changing the package version. Resolve missing attribution before release, or remove the dependency.

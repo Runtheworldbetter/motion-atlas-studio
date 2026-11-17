@@ -56,7 +56,7 @@ export function parseFourier(input: string): FourierModel {
       return {frequency, amplitude: amplitude * coefficient, phase: 0};
     });
   }
-  const titles = {square: 'Build a square wave', saw: 'Build a sawtooth wave', sine: 'One circle, one sine wave', custom: 'Your harmonic mixture'};
+  const titles = {square: 'Square wave approximation', saw: 'Sawtooth wave approximation', sine: 'Sine wave', custom: 'Custom waveform'};
   return {
     title: typeof data.title === 'string' && data.title.trim() ? data.title.trim() : titles[wave],
     wave,

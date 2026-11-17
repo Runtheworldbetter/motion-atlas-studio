@@ -5,18 +5,18 @@ import {P, stage, label, line, dot, mix, TAU} from './shared';
 
 const C = 'Systems & AI' as const;
 export const systemsSpecs:SceneSpec[] = [
-  {id:'neural-signal',title:'A neural-network motif',category:C,description:'Authored pulses travel through a layered diagram, illustrating the visual language of network propagation.',technique:'Authored pulses · layered graph · reactive signals',tags:['AI','networks','propagation'],color:P.teal},
-  {id:'attention-matrix',title:'A causal attention mask',category:C,description:'Synthetic, row-normalized weights illustrate which earlier tokens a causal attention row can use.',technique:'Synthetic heatmap · causal masking · row normalization',tags:['AI','heatmaps','attention'],color:P.purple},
-  {id:'token-stream',title:'Illustrating tokens and choices',category:C,description:'A designed word split and invented choice probabilities demonstrate a sequence-animation pattern.',technique:'Staggered typography · illustrative labels · animated bars',tags:['AI','typography','probability'],color:P.orange},
-  {id:'agent-handoff',title:'The work changes hands',category:C,description:'A task moves between a human, a planner, a specialist, and a reviewer in a readable work trail.',technique:'Swimlanes · path tracing · state transitions',tags:['agents','workflow','handoff'],color:P.blue},
-  {id:'semantic-memory',title:'A context graph sketch',category:C,description:'An authored path connects example facts to an illustrative source card.',technique:'Authored traversal · selective emphasis · example card',tags:['memory','graphs','retrieval'],color:P.lime},
-  {id:'causal-graph',title:'An intervention story',category:C,description:'A hypothetical diagram connects inspection, idle time, and availability; its outcome values are authored.',technique:'Illustrative relationships · authored outcome · directed edges',tags:['causality','systems','explanation'],color:P.pink},
-  {id:'sorting-race',title:'Two sorting walkthroughs',category:C,description:'Actual bubble-sort and insertion-sort swap traces play over the same duration, with independent pacing.',technique:'Computed traces · normalized playback · actual swap counts',tags:['algorithms','walkthrough','sorting'],color:P.yellow},
+  {id:'neural-signal',title:'Signals through a network',category:C,description:'Scripted pulses move through the layers of an example network.',technique:'Scripted pulses · layered graph · reactive signals',tags:['AI','networks','propagation'],color:P.teal},
+  {id:'attention-matrix',title:'A causal attention mask',category:C,description:'A causal mask limits each row to the current and earlier tokens. Synthetic weights sum to one in each row.',technique:'Synthetic heatmap · causal masking · row normalization',tags:['AI','heatmaps','attention'],color:P.purple},
+  {id:'token-stream',title:'Tokens and possible actions',category:C,description:'An example sentence splits into labeled words, followed by invented probabilities for three actions.',technique:'Staggered typography · illustrative labels · animated bars',tags:['AI','typography','probability'],color:P.orange},
+  {id:'agent-handoff',title:'The work changes hands',category:C,description:'A task passes from a human to a planner, specialist, and reviewer.',technique:'Swimlanes · path tracing · state transitions',tags:['agents','workflow','handoff'],color:P.blue},
+  {id:'semantic-memory',title:'A context graph',category:C,description:'A highlighted path connects example facts to their source card.',technique:'Preset path · highlighted nodes · example card',tags:['memory','graphs','retrieval'],color:P.lime},
+  {id:'causal-graph',title:'Inspection and idle time',category:C,description:'An illustrative diagram links faster inspection to fewer idle days and greater availability.',technique:'Hypothetical relationships · synthetic outcome · directed edges',tags:['causality','systems','explanation'],color:P.pink},
+  {id:'sorting-race',title:'Bubble sort and insertion sort',category:C,description:'Bubble sort and insertion sort run on the same array. Their steps are fitted to the same playback duration.',technique:'Computed traces · adjusted playback · swap counts',tags:['algorithms','walkthrough','sorting'],color:P.yellow},
   {id:'pathfinding',title:'A path through the maze',category:C,description:'Breadth-first search explores reachable cells before revealing a shortest route.',technique:'Breadth-first search · grid animation · path reveal',tags:['algorithms','routing','grids'],color:P.teal},
-  {id:'binary-search',title:'Cut the search in half',category:C,description:'A sorted array narrows to its target through real binary-search comparisons.',technique:'Array state · interval masking · decision steps',tags:['algorithms','search','explanation'],color:P.orange},
-  {id:'mesh-network',title:'A rerouting storyboard',category:C,description:'A packet follows two authored routes as an illustrated relay goes offline.',technique:'Illustrative state · authored alternative paths · packet motion',tags:['networks','resilience','routing'],color:P.blue},
-  {id:'event-pipeline',title:'Events become action',category:C,description:'Packets move through ingestion, validation, planning, and execution, with one event sent for review.',technique:'Queue motion · routing branches · synchronized states',tags:['events','automation','workflow'],color:P.purple},
-  {id:'vehicle-lifecycle',title:'Keep the vehicle moving',category:C,description:'A vehicle returns from a lease, passes through inspection and service, then enters its next deployment.',technique:'Lifecycle path · active states · vector vehicle',tags:['fleet','lifecycle','orchestration'],color:P.lime},
+  {id:'binary-search',title:'Cut the search in half',category:C,description:'Each binary-search comparison narrows a sorted array to the half that could contain the target.',technique:'Array state · interval masking · decision steps',tags:['algorithms','search','explanation'],color:P.orange},
+  {id:'mesh-network',title:'A packet changes route',category:C,description:'A packet switches between two preset routes when a relay is shown as offline.',technique:'Illustrative state · preset paths · packet motion',tags:['networks','resilience','routing'],color:P.blue},
+  {id:'event-pipeline',title:'An event pipeline',category:C,description:'Packets move through ingestion, validation, planning, and execution, with one event sent for review.',technique:'Queue motion · routing branches · synchronized states',tags:['events','automation','workflow'],color:P.purple},
+  {id:'vehicle-lifecycle',title:'A vehicle lifecycle',category:C,description:'A vehicle returns from a lease, passes through inspection and service, and begins its next lease.',technique:'Lifecycle path · active states · vector vehicle',tags:['fleet','lifecycle','orchestration'],color:P.lime},
 ];
 
 function text(view:View2D,value:string,x:number,y:number,size=23,color=P.ink){return label(view,value,x,y,color,size);}
@@ -42,7 +42,7 @@ const neural:SceneFactory=function*(view){
     view.add(new Circle({position:p,size:()=>9+12*pulse(),fill:k===4?P.orange:P.teal,opacity:()=>.25+.75*pulse()}));
   }));
   text(view,'INPUT',-350,-210,19,P.muted);text(view,'FEATURES',0,-210,19,P.muted);text(view,'OUTPUT',350,-210,19,P.muted);
-  label(view,'Illustrative pulses · no model inference',0,220);yield* t(1,10,linear);
+  label(view,'Scripted network pulses',0,220);yield* t(1,10,linear);
 };
 
 const attention:SceneFactory=function*(view){
@@ -72,7 +72,7 @@ const tokens:SceneFactory=function*(view){
   arrow(view,[[0,-12],[0,26]],P.orange);text(view,'Possible next action',-225,61,23,P.muted);
   const options=[['inspect',.64,P.teal],['service',.23,P.blue],['redeploy',.13,P.purple]] as const;
   options.forEach(([name,p,color],i)=>{const y=106+i*43;text(view,name,-260,y,24);box(view,65,y,340,22,P.grid,P.grid,6);view.add(new Rect({position:()=>[-105+170*p*clamp((t()-.18)*2.4),y],size:()=>[340*p*clamp((t()-.18)*2.4),22],radius:6,fill:color}));view.add(new Txt({text:()=>Math.round(100*p*clamp((t()-.18)*2.4))+'%',position:[290,y],fontSize:24,fill:color,fontFamily:'Arial'}));});
-  label(view,'Invented labels and probabilities · sequence design example',0,246,P.muted,18);yield* t(1,9,linear);
+  label(view,'Example word labels and probabilities',0,246,P.muted,18);yield* t(1,9,linear);
 };
 
 const handoff:SceneFactory=function*(view){
@@ -95,7 +95,7 @@ const memory:SceneFactory=function*(view){
   box(view,280,5,250,240,P.panel,P.grid,18);text(view,'EXAMPLE FACT',280,-82,17,P.lime);
   text(view,'Lease ends',280,-28,26);text(view,'Friday',280,10,38,P.ink);text(view,'Inspection booked',280,58,19,P.muted);text(view,'Source · event 42',280,95,18,P.muted);
   view.add(new Rect({position:[280,5],size:[250,240],radius:18,stroke:P.lime,lineWidth:2,opacity:()=>clamp((t()-.38)*3)}));
-  label(view,'Illustrative retrieval path and source card',0,220);yield* t(1,10,linear);
+  label(view,'Example graph path and source card',0,220);yield* t(1,10,linear);
 };
 
 const causal:SceneFactory=function*(view){
@@ -105,7 +105,7 @@ const causal:SceneFactory=function*(view){
   const p=()=>clamp((t()-.16)*1.5);box(view,-275,132,218,52,P.panel,P.teal,26);text(view,'Faster inspection',-275,132,19,P.teal);
   view.add(new Circle({position:()=>[mix(-220,225,p()),-105],size:14,fill:P.pink,opacity:()=>t()<.85?1:0}));
   text(view,'Illustrative outcome',220,139,19,P.muted);view.add(new Txt({text:()=>`${Math.round(8-5*p())} idle days`,position:[220,179],fontSize:32,fill:P.teal,fontFamily:'Arial'}));
-  text(view,'AN INTERVENTION STORY',0,-210,19,P.muted);label(view,'Hypothetical relationships · authored outcome',0,235,P.muted,19);yield* t(1,10,linear);
+  text(view,'INSPECTION AND IDLE TIME',0,-210,19,P.muted);label(view,'Hypothetical relationships and values',0,235,P.muted,19);yield* t(1,10,linear);
 };
 
 type SortFrame={values:number[];a:number;b:number;swaps:number};
@@ -122,7 +122,7 @@ const sorting:SceneFactory=function*(view){
     line(view,[[-375,bottom],[375,bottom]],P.grid,2);
     for(let i=0;i<10;i++){const x=-315+i*70;view.add(new Rect({position:()=>[x,bottom-get().values[i]*10/2],size:()=>[48,get().values[i]*10],radius:6,fill:()=>get().a===i||get().b===i?colors[k]:P.muted,opacity:()=>get().a===i||get().b===i?1:.65}));view.add(new Txt({text:()=>String(get().values[i]),position:[x,bottom+19],fontSize:20,fill:P.ink,fontFamily:'Arial'}));}
     view.add(new Txt({text:()=>`${get().swaps} swaps`,position:[280,bottom-152],fontSize:22,fill:P.muted,fontFamily:'Arial'}));
-  });label(view,'Synchronized walkthroughs · playback timing is normalized',0,240,P.muted,19);yield* t(1,11,linear);
+  });label(view,'Steps fitted to the same playback duration',0,240,P.muted,19);yield* t(1,11,linear);
 };
 
 function bfs(){const cols=15,rows=9;const key=(x:number,y:number)=>y*cols+x;const walls=new Set<number>();for(let y=0;y<7;y++)walls.add(key(4,y));for(let y=2;y<9;y++)walls.add(key(9,y));for(let x=1;x<4;x++)walls.add(key(x,5));for(let x=11;x<14;x++)walls.add(key(x,6));const start=key(0,4),goal=key(14,4),queue=[start],seen=new Set([start]),parent=new Map<number,number>();let pos=0;while(pos<queue.length){const n=queue[pos++];if(n===goal)break;const x=n%cols,y=Math.floor(n/cols);for(const [dx,dy] of [[1,0],[0,1],[-1,0],[0,-1]]){const xx=x+dx,yy=y+dy,nn=key(xx,yy);if(xx<0||xx>=cols||yy<0||yy>=rows||walls.has(nn)||seen.has(nn))continue;seen.add(nn);parent.set(nn,n);queue.push(nn);}}const path=[goal];while(path[0]!==start&&parent.has(path[0]))path.unshift(parent.get(path[0])!);return {cols,rows,walls,start,goal,queue,path};}
@@ -130,7 +130,7 @@ const pathfinding:SceneFactory=function*(view){
   stage(view);const t=createSignal(0);const map=bfs();const step=40;const xy=(i:number):[number,number]=>[-280+(i%15)*step,-170+Math.floor(i/15)*step];
   for(let i=0;i<map.cols*map.rows;i++){const visit=map.queue.indexOf(i),route=map.path.indexOf(i);view.add(new Rect({position:xy(i),size:34,radius:5,fill:()=>i===map.start?P.orange:i===map.goal?P.pink:map.walls.has(i)?'#3c4b52':route>=0&&t()>.72&&route/Math.max(1,map.path.length-1)<(t()-.72)/.28?P.teal:visit>=0&&visit/map.queue.length<t()/.72?P.blue:P.panel,opacity:()=>map.walls.has(i)?1:visit>=0&&visit/map.queue.length<t()/.72?.9:.65}));}
   text(view,'S',...xy(map.start),22,P.bg);text(view,'G',...xy(map.goal),22,P.bg);
-  text(view,'BREADTH-FIRST SEARCH',0,-222,20,P.muted);view.add(new Txt({text:()=>t()<.72?'Explore the reachable frontier':'Trace a shortest route',position:[0,218],fontSize:23,fill:()=>t()<.72?P.blue:P.teal,fontFamily:'Arial'}));yield* t(1,11,linear);
+  text(view,'BREADTH-FIRST SEARCH',0,-222,20,P.muted);view.add(new Txt({text:()=>t()<.72?'Explore reachable cells':'Trace a shortest route',position:[0,218],fontSize:23,fill:()=>t()<.72?P.blue:P.teal,fontFamily:'Arial'}));yield* t(1,11,linear);
 };
 
 const binary:SceneFactory=function*(view){
@@ -148,7 +148,7 @@ const mesh:SceneFactory=function*(view){
   view.add(new Line({points:()=>t()<.42?upper:lower,stroke:()=>t()<.42?P.blue:P.teal,lineWidth:4}));
   pts.forEach((p,i)=>{view.add(new Circle({position:p,size:i===0||i===6?58:42,fill:P.panel,stroke:()=>i===3&&t()>.42?P.pink:i===0||i===6?P.ink:P.blue,lineWidth:3,opacity:()=>i===3&&t()>.42?.45:1}));if(i===3)view.add(new Txt({text:()=>t()>.42?'×':'',position:p,fontSize:36,fill:P.pink,fontFamily:'Arial'}));});
   view.add(new Circle({position:()=>atPath(t()<.42?upper:lower,t()<.42?fract(t()*5):fract((t()-.42)*3.5)),size:16,fill:()=>t()<.42?P.blue:P.teal}));
-  text(view,'SEND',-355,63,19,P.muted);text(view,'RECEIVE',370,63,19,P.muted);view.add(new Txt({text:()=>t()<.42?'Relay route available':'Relay offline · alternate route',position:[0,-205],fontSize:25,fill:()=>t()<.42?P.blue:P.teal,fontFamily:'Arial'}));label(view,'Illustrative route change · paths are authored',0,215);yield* t(1,11,linear);
+  text(view,'SEND',-355,63,19,P.muted);text(view,'RECEIVE',370,63,19,P.muted);view.add(new Txt({text:()=>t()<.42?'Relay route available':'Relay offline · alternate route',position:[0,-205],fontSize:25,fill:()=>t()<.42?P.blue:P.teal,fontFamily:'Arial'}));label(view,'Example with two preset routes',0,215);yield* t(1,11,linear);
 };
 
 const pipeline:SceneFactory=function*(view){
@@ -158,7 +158,7 @@ const pipeline:SceneFactory=function*(view){
   box(view,155,132,165,65,P.panel,P.orange,12);text(view,'Review',155,132,24,P.orange);
   xs.forEach((x,i)=>{box(view,x,-35,150,90,P.panel,colors[i],15);text(view,names[i],x,-35,24,colors[i]);text(view,String(i+1).padStart(2,'0'),x,-115,18,P.muted);});
   for(let n=0;n<6;n++){const flagged=n===2;const p=()=>fract(t()*1.5+n/6);const points:[number,number][]=flagged?[[-430,-35],[-110,-35],[-110,132],[155,132]]:[[-430,-35],[-325,-35],[-110,-35],[105,-35],[320,-35],[430,-35]];view.add(new Rect({position:()=>atPath(points,p()),size:14,radius:4,fill:flagged?P.orange:P.teal,rotation:()=>p()*90,opacity:()=>p()<.03||p()>.97?.3:1}));}
-  text(view,'EVENT → DECISION → ACTION',0,-205,22,P.muted);label(view,'An exception takes a different path',0,225);yield* t(1,10,linear);
+  text(view,'EVENT → DECISION → ACTION',0,-205,22,P.muted);label(view,'The flagged event goes to review',0,225);yield* t(1,10,linear);
 };
 
 const lifecycle:SceneFactory=function*(view){
@@ -167,7 +167,7 @@ const lifecycle:SceneFactory=function*(view){
   const places:[number,number,string,number][]=[[-330,-100,'Lease',0],[-110,-100,'Return',1],[110,-100,'Inspect',2],[330,-100,'Service',3],[110,110,'Redeploy',5],[-330,110,'Next lease',7]];
   places.forEach(([x,y,name,idx])=>{view.add(new Circle({position:[x,y],size:22,fill:()=>t()>=idx/8?P.lime:P.muted}));text(view,name,x,y+(y<0?-42:44),24,idx===5?P.lime:P.ink);});
   const car=new Rect({position:()=>atPath(pts,t()),size:[64,34],radius:10,fill:P.lime,stroke:P.bg,lineWidth:3});view.add(car);car.add(new Rect({size:[23,24],radius:4,fill:P.bg}));
-  text(view,'ONE CONTINUOUS VEHICLE RECORD',0,-217,20,P.muted);text(view,'Lease → return → inspect → service → redeploy',0,220,22,P.muted);yield* t(1,12,linear);
+  text(view,'VEHICLE LIFECYCLE',0,-217,20,P.muted);text(view,'Lease → return → inspect → service → redeploy',0,220,22,P.muted);yield* t(1,12,linear);
 };
 
 export const systemsScenes:Record<string,SceneFactory>={

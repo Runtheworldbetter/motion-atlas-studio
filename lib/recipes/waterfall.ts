@@ -8,9 +8,9 @@ import {wrapLabel} from './models/text';
 
 export const waterfallRecipe:RecipeDefinition = {
   id:'waterfall',
-  title:'Make the changes add up',
-  subtitle:'An opening balance, a sequence of changes, a closing total.',
-  description:'Turn a short CSV into an animated waterfall. Positive and negative changes move the running total; subtotal bars check it without adding it twice.',
+  title:'Track changes in a total',
+  subtitle:'Opening balance, changes, and closing total.',
+  description:'Plot a CSV as a waterfall chart. Each bar shows an increase, a decrease, or a total.',
   inputLabel:'Waterfall data',
   inputFormat:'CSV',
   accept:'.csv,text/csv,text/plain',
@@ -18,25 +18,25 @@ export const waterfallRecipe:RecipeDefinition = {
   examples:[
     {
       id:'monthly-cash',
-      name:'A month of cash movement',
-      description:'Synthetic cash figures in thousands. A quoted label demonstrates a comma inside one CSV field.',
+      name:'Monthly cash flow',
+      description:'Synthetic cash figures in thousands. The payroll label shows how to include a comma in a CSV field.',
       input:'label,value,type\nOpening cash,120,start\nCustomer receipts,84,change\n"Payroll, benefits",-61,change\nCloud services,-14,change\nOther costs,-19,change\nClosing cash,,total',
     },
     {
       id:'product-revenue',
-      name:'Revenue expansion and contraction',
-      description:'Synthetic recurring-revenue bridge with a checked subtotal and a computed closing total.',
+      name:'Revenue changes',
+      description:'Synthetic recurring revenue, with a subtotal to check and a closing total to calculate.',
       input:'label,value,type\nStarting revenue,100,start\nNew customers,28,change\nExpansion,17,change\nGross revenue,145,total\nContraction,-9,change\nChurn,-12,change\nEnding revenue,,total',
     },
     {
       id:'negative-balance',
-      name:'A balance crosses below zero',
-      description:'Synthetic project balance: spending turns the total negative and a later payment partly recovers it.',
+      name:'A negative balance',
+      description:'Synthetic project costs exceed the opening balance. A later payment covers part of the shortfall.',
       input:'label,value,type\nOpening balance,24,start\nEquipment,-31,change\nOvertime,-8,change\nClient payment,9,change\nAdjustment,-2,change\nClosing balance,-8,total',
     },
   ],
-  help:'CSV header: label,value,type. Use 3–12 data rows. The first row is start with a numeric opening value; changes use signed numbers; the last row is total. Leave a total value blank to calculate it, or supply a value to check conservation. Intermediate total rows are allowed and do not change the running balance. Quote labels containing commas and escape inner quotes as "". Values can be decimals or scientific notation, without currency symbols or thousands separators. Full labels and exact values appear in the data view.',
-  basis:'Arithmetic on your CSV. Each change starts at the previous cumulative value. A total is a checkpoint, not another contribution.',
+  help:'CSV header: label,value,type. Use 3–12 data rows. The first row is start with a numeric opening value; changes use signed numbers; the last row is total. Leave a total value blank to calculate it, or supply a value to check against the running balance. You can include total rows between changes to show subtotals. Quote labels containing commas and escape inner quotes as "". Values can be decimals or scientific notation, without currency symbols or thousands separators. Full labels and exact values appear in the data view.',
+  basis:'Adds each change to the running balance and checks any totals you supply. Subtotal rows leave the balance unchanged.',
   compile(input) {
     const model = parseWaterfall(input);
     const duration = 9;
@@ -77,11 +77,11 @@ export const waterfallRecipe:RecipeDefinition = {
         }));
         view.add(new Txt({text:wrapLabel(row.label,step * 0.9,labelSize),position:[xAt(i),191],fontSize:labelSize,lineHeight:labelSize * 1.3,fontFamily:'Arial',fill:P.ink,textAlign:'center'}));
       });
-      view.add(new Txt({text:'Every change connects. Totals reconcile.',position:[0,242],fontSize:18,fontFamily:'Arial',fill:P.muted}));
+      view.add(new Txt({text:'OPENING + CHANGES = CLOSING',position:[0,242],fontSize:18,fontFamily:'Arial',fill:P.muted}));
       yield* progress(1,duration,linear);
     };
     return {
-      factory,title:'A waterfall from your numbers',duration,
+      factory,title:'Waterfall chart',duration,
       summary:`Opening ${formatWaterfallValue(model.opening)} + net changes ${formatWaterfallValue(model.netChange)} = closing ${formatWaterfallValue(model.closing)}.`,
       rows:model.rows.map(row => ({
         label:row.label,

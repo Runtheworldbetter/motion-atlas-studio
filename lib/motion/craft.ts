@@ -10,18 +10,18 @@ import {P, TAU, grid, label, mix, stage} from './shared';
 
 const category = 'Motion craft' as const;
 export const craftSpecs: SceneSpec[] = [
-  {id:'morphing-path',title:'One shape, many identities',category,description:'A single vector path flows from a polygon into a star, a circle and a soft square.',technique:'Path morphing · color interpolation',tags:['morphing','vector','minimal'],color:P.teal},
-  {id:'bezier-lab',title:'The Bézier playground',category,description:'Moving control handles bend the curve while a little traveler follows its tangent.',technique:'CubicBezier · reactive control points',tags:['curves','geometry','explainers'],color:P.orange},
-  {id:'spring-comparison',title:'Three kinds of spring',category,description:'Compare a quiet settle, a little overshoot and a wonderfully bouncy arrival.',technique:'Signals · analytic spring motion',tags:['physics','easing','comparison'],color:P.lime},
-  {id:'easing-race',title:'The easing race',category,description:'Five objects cover the same distance in the same time with completely different personalities.',technique:'Timing functions · parallel animation',tags:['easing','comparison','motion'],color:P.pink},
-  {id:'kinetic-type',title:'Make ideas move',category,description:'Letters ripple, lift and rotate in three tightly composed lines of moving type.',technique:'Txt · per-letter reactive transforms',tags:['typography','editorial','playful'],color:P.lime},
-  {id:'text-mask',title:'Color inside the letters',category,description:'A moving field of color is revealed only through the shapes of giant letters.',technique:'Cached nodes · source-in compositing',tags:['typography','masking','color'],color:P.purple},
-  {id:'camera-zoom',title:'A camera for ideas',category,description:'Travel from an overview into one room, across to another, and back out to the system.',technique:'Camera · centerOn · zoom',tags:['camera','systems','exploration'],color:P.blue},
-  {id:'perspective-grid',title:'Into the wireframe',category,description:'A rotating wireframe cube floats above a moving perspective grid.',technique:'2D projection · reactive line geometry',tags:['perspective','geometry','depth'],color:P.purple},
-  {id:'concentric-tunnel',title:'The endless portal',category,description:'Concentric frames open and turn into a layered geometric tunnel.',technique:'Rect · scale · rotation · opacity',tags:['generative','depth','loop'],color:P.teal},
-  {id:'staggered-tiles',title:'A wave through the grid',category,description:'A pulse crosses a precise tile field, changing scale, angle and color as it passes.',technique:'Signals · spatial staggering',tags:['grid','stagger','pattern'],color:P.lime},
-  {id:'particle-burst',title:'A small explosion of joy',category,description:'Three bursts fan into colorful particles with curved paths and fading trails.',technique:'Deterministic particles · transforms',tags:['particles','celebration','playful'],color:P.orange},
-  {id:'code-evolution',title:'Watch the code evolve',category,description:'A Python loop becomes a comprehension, then a reusable function, with animated diffs.',technique:'Code · diff interpolation · selection',tags:['code','teaching','transformation'],color:P.blue},
+  {id:'morphing-path',title:'Morphing shapes',category,description:'A vector path changes from a triangle to a star, circle, and rounded square.',technique:'Path morphing · color interpolation',tags:['morphing','vector','minimal'],color:P.teal},
+  {id:'bezier-lab',title:'Bézier control points',category,description:'Control points bend a curve while a marker follows its position and direction.',technique:'CubicBezier · reactive control points',tags:['curves','geometry','explainers'],color:P.orange},
+  {id:'spring-comparison',title:'Comparing spring motion',category,description:'Compare three spring responses with different amounts of overshoot and oscillation.',technique:'Signals · analytic spring motion',tags:['physics','easing','comparison'],color:P.lime},
+  {id:'easing-race',title:'The easing race',category,description:'Five easing functions move objects over the same distance and duration.',technique:'Timing functions · parallel animation',tags:['easing','comparison','motion'],color:P.pink},
+  {id:'kinetic-type',title:'Moving letters',category,description:'Each letter changes position, angle, and scale with a small timing offset.',technique:'Txt · per-letter reactive transforms',tags:['typography','editorial','playful'],color:P.lime},
+  {id:'text-mask',title:'Color inside the letters',category,description:'Moving colors are clipped to the shapes of the letters.',technique:'Cached nodes · source-in compositing',tags:['typography','masking','color'],color:P.purple},
+  {id:'camera-zoom',title:'Camera pan and zoom',category,description:'The camera zooms into a card, pans between cards, and returns to the overview.',technique:'Camera · centerOn · zoom',tags:['camera','systems','exploration'],color:P.blue},
+  {id:'perspective-grid',title:'A rotating wireframe',category,description:'A rotating wireframe cube floats above a moving perspective grid.',technique:'2D projection · reactive line geometry',tags:['perspective','geometry','depth'],color:P.purple},
+  {id:'concentric-tunnel',title:'A geometric tunnel',category,description:'Repeating rectangles grow and rotate to create a tunnel effect.',technique:'Rect · scale · rotation · opacity',tags:['generative','depth','loop'],color:P.teal},
+  {id:'staggered-tiles',title:'A wave through the grid',category,description:'Tiles change size, angle, and color in a wave across the grid.',technique:'Signals · spatial staggering',tags:['grid','stagger','pattern'],color:P.lime},
+  {id:'particle-burst',title:'Particle bursts',category,description:'Three particle bursts follow curved paths and fade.',technique:'Deterministic particles · transforms',tags:['particles','celebration','playful'],color:P.orange},
+  {id:'code-evolution',title:'A Python refactor',category,description:'A Python loop becomes a comprehension, then a reusable function, with animated diffs.',technique:'Code · diff interpolation · selection',tags:['code','teaching','transformation'],color:P.blue},
 ];
 
 function polygonPath(count: number, outer: number, inner = outer): string {
@@ -67,7 +67,7 @@ const bezierLab: SceneFactory = function* (view) {
   view.add(curve);
   [a,b,c,d].forEach((point,i)=>view.add(new Circle({position:point,size:i===0||i===3?15:20,fill:i===0||i===3?P.orange:P.bg,stroke:P.ink,lineWidth:2})));
   view.add(new Rect({size:[33,21],radius:5,fill:P.lime,position:()=>curve.getPointAtPercentage((clock()*2)%1).position,rotation:()=>curve.getPointAtPercentage((clock()*2)%1).tangent.degrees}));
-  label(view,'CONTROL POINTS BEND THE JOURNEY',0,220,P.muted,18);
+  label(view,'CONTROL POINTS SET THE CURVE',0,220,P.muted,18);
   yield* clock(1,10,linear);
 };
 
@@ -89,7 +89,7 @@ const springComparison: SceneFactory = function* (view) {
     view.add(new Line({points:[[210,y-28],[210,y+28]],stroke:P.muted,lineWidth:1,lineDash:[4,4]}));
     view.add(new Circle({size:31,fill:colors[i],y,x:()=>Math.floor(time()/5)%2===0?mix(-235,210,response(i)):mix(210,-235,response(i))}));
   }
-  label(view,'SAME TARGET. DIFFERENT SETTLING.',0,215,P.muted,18);
+  label(view,'THREE SPRING RESPONSES',0,215,P.muted,18);
   yield* time(10,10,linear);
 };
 
@@ -106,7 +106,7 @@ const easingRace: SceneFactory = function* (view) {
     view.add(new Rect({x:()=>-240+easings[i](phase())*250,y,width:()=>Math.max(2,easings[i](phase())*500),height:3,fill:colors[i],opacity:0.35}));
     view.add(new Circle({size:26,fill:colors[i],x:()=>-240+easings[i](phase())*500,y}));
   }
-  label(view,'FIVE WAYS TO CROSS THE SAME DISTANCE',0,220,P.muted,18);
+  label(view,'SAME DISTANCE AND DURATION',0,220,P.muted,18);
   yield* phase(1,3.4,linear);yield* waitFor(1);
   yield* phase(0,3.4,linear);yield* waitFor(0.8);
 };
@@ -114,7 +114,7 @@ const easingRace: SceneFactory = function* (view) {
 const kineticType: SceneFactory = function* (view) {
   stage(view);
   const time=createSignal(0);
-  const words=['MAKE','IDEAS','MOVE'];
+  const words=['WORDS','IN','MOTION'];
   const colors=[P.ink,P.lime,P.ink];
   words.forEach((word,row)=>{
     [...word].forEach((char,i)=>{
@@ -137,7 +137,7 @@ const textMask: SceneFactory = function* (view) {
   }
   stencil.add(ink);view.add(stencil);
   view.add(new Line({points:[[-330,125],[330,125]],lineWidth:1,stroke:P.grid}));
-  label(view,'MOVING COLOR. FIXED LETTERFORMS.',0,192,P.muted,18);
+  label(view,'COLOR CLIPPED TO THE LETTERS',0,192,P.muted,18);
   yield* time(10,10,linear);
 };
 
@@ -159,7 +159,7 @@ const cameraZoom: SceneFactory = function* (view) {
     for(let j=0;j<6;j++)card.add(new Circle({size:12,position:[-48+(j%3)*48,10+Math.floor(j/3)*24],fill:colors[i],opacity:0.45+j*.08}));
     world.add(card);cards.push(card);
   });
-  label(view,'OVERVIEW → DETAIL → CONNECTIONS',0,224,P.muted,18);
+  label(view,'ZOOM IN, PAN, AND ZOOM OUT',0,224,P.muted,18);
   yield* waitFor(1);
   yield* all(camera.centerOn(cards[0],1.8),camera.zoom(2.15,1.8));
   yield* waitFor(.7);
@@ -230,7 +230,7 @@ const particleBurst: SceneFactory = function* (view) {
       return [origins[burst][0]+Math.cos(angle)*distance,origins[burst][1]+Math.sin(angle)*distance+a*a*14];
     },rotation:()=>i*41+age()*(i%2?95:-110),scale:()=>Math.max(.05,1-age()*.19),opacity:()=>Math.max(0,Math.min(1,(3.2-age())/1.1))}));
   }
-  label(view,'A LITTLE DELIGHT GOES A LONG WAY',0,230,P.muted,18);
+  label(view,'CURVED PATHS, ROTATION, AND FADING',0,230,P.muted,18);
   yield* t(11.1,11.1,linear);
 };
 
@@ -257,9 +257,9 @@ const codeEvolution: SceneFactory = function* (view) {
   yield* waitFor(1.2);
   yield* code.selection(code.findFirstRange('squares.append(x * x)'),.7);
   yield* waitFor(.5);
-  yield* all(code.code('squares = [x * x for x in range(8)]',1.5),code.selection(DEFAULT,0.4),caption.text('EXPRESS THE TRANSFORMATION',.4));
+  yield* all(code.code('squares = [x * x for x in range(8)]',1.5),code.selection(DEFAULT,0.4),caption.text('USE A LIST COMPREHENSION',.4));
   yield* waitFor(1.2);
-  yield* all(code.code('def square(values):\n    return [x * x for x in values]\n\nsquares = square(range(8))',1.6),caption.text('GIVE IT A REUSABLE NAME',.4));
+  yield* all(code.code('def square(values):\n    return [x * x for x in values]\n\nsquares = square(range(8))',1.6),caption.text('EXTRACT A FUNCTION',.4));
   yield* waitFor(1.3);
   yield* code.selection(code.findFirstRange('square'),.5);
   yield* waitFor(1.2);

@@ -33,7 +33,7 @@ function normalizeSnippet(input: string, name: string): string {
   }
   const normalized = input.replace(/\r\n?/g, '\n').replace(/\n+$/, '');
   const lines = normalized.split('\n');
-  if (lines.length > CODE_LIMITS.lines) throw new Error(`${name}: use a focused snippet of 18 lines or fewer.`);
+  if (lines.length > CODE_LIMITS.lines) throw new Error(`${name}: use 18 lines or fewer.`);
   const longLine = lines.findIndex(line => codeColumns(line) > CODE_LIMITS.columns);
   if (longLine >= 0) throw new Error(`${name}, line ${longLine + 1}: wrap the line to 90 display columns or fewer.`);
   return normalized;

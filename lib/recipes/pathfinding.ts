@@ -6,18 +6,18 @@ import {cellCoordinates, parseMaze, solveMaze} from './pathfinding-model.ts';
 
 const examples = [
   {id: 'detour', name: 'A short detour', description: 'The shortest route bends around several walls.', input: '###########\n#S..#....G#\n#.#.#.###.#\n#.#...#...#\n#.#####.#.#\n#.......#.#\n###########'},
-  {id: 'openings', name: 'Find the openings', description: 'Two long walls force a journey through their gaps.', input: '....#..........\n....#..........\n....#....#.....\n....#....#.....\nS...#....#....G\n.####....#.....\n....#....#.###.\n.........#.....\n.........#.....'},
+  {id: 'openings', name: 'Find the openings', description: 'The route passes through gaps in two long walls.', input: '....#..........\n....#..........\n....#....#.....\n....#....#.....\nS...#....#....G\n.####....#.....\n....#....#.###.\n.........#.....\n.........#.....'},
   {id: 'open', name: 'Open field', description: 'See why BFS expands in distance layers.', input: '.............\n.S...........\n.............\n.........G...\n.............'},
-  {id: 'blocked', name: 'No route', description: 'An unreachable goal is a valid result, not an error.', input: '###########\n#S...#...G#\n#....#....#\n#....#....#\n###########'},
+  {id: 'blocked', name: 'No route', description: 'Walls block every route to the goal.', input: '###########\n#S...#...G#\n#....#....#\n#....#....#\n###########'},
 ];
 
 export const pathfindingRecipe: RecipeDefinition = {
-  id: 'pathfinding', title: 'Explore a shortest path', subtitle: 'Edit a maze. Follow the search.',
-  description: 'Edit the text grid, then watch a real breadth-first search explore its queue and reconstruct a shortest route.',
+  id: 'pathfinding', title: 'Find a shortest path', subtitle: 'Edit the maze and run the search.',
+  description: 'Change the text grid and watch breadth-first search visit cells and find a shortest route.',
   inputLabel: 'Maze', inputFormat: 'Text grid', accept: '.txt,text/plain', color: P.teal,
   examples,
   help: 'Use S for the start, G for the goal, # for a wall, and . for an open cell. Include exactly one S and one G. All rows must have the same width: 2–24 columns and 2–16 rows. Movement is one cell up/down/left/right, with equal cost. Coordinates below are (row, column), starting at 1.',
-  basis: 'Actual breadth-first search on an unweighted grid. A cell enters the queue once; cells are expanded in increasing distance. Neighbors are considered right, down, left, up. Search stops when G is removed from the queue; parent links reconstruct a shortest path.',
+  basis: 'Breadth-first search visits cells in order of distance from the start. Each cell enters the queue once. Neighbors are checked right, down, left, up. When G leaves the queue, the recorded parent links give a shortest path.',
   compile(input) {
     const result = solveMaze(parseMaze(input));
     const {maze, steps, path, distance} = result;
@@ -25,7 +25,7 @@ export const pathfindingRecipe: RecipeDefinition = {
     const explorationTime = Math.min(12, Math.max(5, steps.length * .085));
     const duration = explorationTime + (path.length ? 1.8 : 0) + 1.4;
     return {
-      title: distance === null ? 'This goal is unreachable' : `A shortest route in ${distance} moves`,
+      title: distance === null ? 'No route to the goal' : `Shortest route: ${distance} moves`,
       summary: `${maze.width} × ${maze.height} grid · ${steps.length} cells expanded · ${distance === null ? 'no route' : `${distance} moves`}`,
       duration,
       rows: [

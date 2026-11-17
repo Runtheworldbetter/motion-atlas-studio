@@ -29,4 +29,4 @@ for (const [name, content] of Object.entries(files)) {
   await writeFile(destination, content);
 }
 await writeFile('dist/motion-atlas-source.zip', createZip(files));
-console.log(`Packaged ${Object.keys(files).length} public source files; no deployment identity or local data included.`);
+console.log(`Packaged ${Object.keys(files).length} public source files.`);

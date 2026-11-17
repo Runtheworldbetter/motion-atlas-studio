@@ -6,18 +6,18 @@ import {spiralPoint, spiralVelocity} from './gallery-models.ts';
 
 const spec=(id:string,title:string,description:string,technique:string,tags:string[],color:string):SceneSpec=>({id,title,description,technique,tags,color,category:'Math & nature'});
 export const mathSpecs:SceneSpec[]=[
-  spec('orbital-resonance','Three turns meet two','Two prescribed circular motions trace a woven pattern as their frequencies meet in a 3:2 ratio.','Reactive positions · synchronized signals',['orbits','patterns','geometry'],P.teal),
-  spec('fourier-epicycles','Circles make a square wave','Four rotating circles add together, turning simple oscillations into a surprisingly sharp waveform.','Nested signals · live line geometry',['waves','fourier','explanation'],P.orange),
-  spec('lissajous','Lissajous loom','A 3:2 frequency ratio weaves a ribbon that changes shape as its phase drifts.','Parametric curves · animated phase',['curves','symmetry','loops'],P.purple),
-  spec('wave-interference','When waves meet','Two coherent sources create islands of reinforcement and cancellation across a field.','Signal-driven particles · wave superposition',['waves','particles','physics'],P.pink),
-  spec('pendulum-wave','A roomful of oscillators','Prescribed pendulum-like motions fall into patterns, scatter, and gather again.','Choreographed oscillators · geometry',['rhythm','motion','patterns'],P.lime),
-  spec('phyllotaxis','Nature’s golden angle','Seeds placed 137.508° apart build the interlocking spirals seen in sunflower heads.','Procedural layout · staggered motion',['nature','golden angle','particles'],P.yellow),
-  spec('strange-attractor','Order inside chaos','A numerical Lorenz trajectory loops through two wings while a marker follows its path.','Numerical integration · projected paths',['chaos','trajectories','science'],P.orange),
-  spec('vector-field','Follow the current','A field of arrows guides luminous particles into a spiraling sink.','Vector arrows · procedural trajectories',['flow','particles','fields'],P.teal),
-  spec('polar-rose','A garden of equations','Three tiny changes to a polar equation produce flowers with three, five, and seven petals.','Polar coordinates · curve tracing',['geometry','symmetry','flowers'],P.pink),
+  spec('orbital-resonance','Circular motion at 3:2','Two points circle at a 3:2 frequency ratio, tracing a pattern between them.','Reactive positions · synchronized signals',['orbits','patterns','geometry'],P.teal),
+  spec('fourier-epicycles','Circles make a square wave','Four rotating circles add four odd harmonics to approximate a square wave.','Nested signals · live line geometry',['waves','fourier','explanation'],P.orange),
+  spec('lissajous','Lissajous curves','A curve with a 3:2 frequency ratio changes shape as its phase changes.','Parametric curves · animated phase',['curves','symmetry','loops'],P.purple),
+  spec('wave-interference','When waves meet','Two wave sources reinforce or cancel each other at different points.','Signal-driven particles · wave superposition',['waves','particles','physics'],P.pink),
+  spec('pendulum-wave','Pendulum patterns','Fifteen pendulum shapes swing at different rates and move in and out of alignment.','Choreographed oscillators · geometry',['rhythm','motion','patterns'],P.lime),
+  spec('phyllotaxis','The golden angle','Seeds placed 137.508° apart build the interlocking spirals seen in sunflower heads.','Procedural layout · staggered motion',['nature','golden angle','particles'],P.yellow),
+  spec('strange-attractor','The Lorenz attractor','A marker follows a calculated Lorenz trajectory through its two lobes.','Numerical integration · projected paths',['chaos','trajectories','science'],P.orange),
+  spec('vector-field','A spiral vector field','Particles spiral toward the center, following the direction of the arrows.','Vector arrows · procedural trajectories',['flow','particles','fields'],P.teal),
+  spec('polar-rose','Polar roses','Change k in r = cos(kθ) to draw three, five, or seven petals.','Polar coordinates · curve tracing',['geometry','symmetry','flowers'],P.pink),
   spec('wave-surface','A trigonometric surface','A projected wireframe traces a changing surface defined by a product of sine and cosine.','Projected 3D geometry · reactive polylines',['surface','3D projection','waves'],P.blue),
-  spec('standing-wave','Two travelers, one standing wave','Waves moving in opposite directions add up to a pattern with fixed nodes.','Superposition · synchronized waveforms',['waves','explanation','physics'],P.lime),
-  spec('parametric-knot','The endless knot','A torus knot turns in space while bright markers reveal the continuity of its path.','Parametric 3D projection · depth cues',['knots','3D projection','geometry'],P.purple),
+  spec('standing-wave','Standing waves','Waves moving in opposite directions add up to a pattern with fixed nodes.','Superposition · synchronized waveforms',['waves','explanation','physics'],P.lime),
+  spec('parametric-knot','A torus knot','A torus knot rotates while markers follow its path.','Parametric 3D projection · depth cues',['knots','3D projection','geometry'],P.purple),
 ];
 
 export const mathScenes:Record<string,SceneFactory>={
@@ -32,7 +32,7 @@ export const mathScenes:Record<string,SceneFactory>={
       view.add(new Circle({position:()=>[r*Math.cos(TAU*n*t()),cy+r*Math.sin(TAU*n*t())],size:40,stroke:c,lineWidth:2,opacity:0.25}));
     }
     label(view,'3 : 2',-350,-120,P.ink,42);label(view,'FREQUENCY RATIO',-350,-75,P.muted,14);
-    label(view,'A shared rhythm leaves a geometric trace',0,220);
+    label(view,'Two circular paths at a 3:2 frequency ratio',0,220);
     yield* t(1,10,linear);
   },
   'fourier-epicycles':function*(view){
@@ -79,7 +79,7 @@ export const mathScenes:Record<string,SceneFactory>={
       view.add(new Circle({position:point,size:22,fill:[P.lime,P.teal,P.blue][i%3]}));
       dot(view,x,-174,3,P.muted);
     }
-    label(view,'15 timed oscillators · choreographed periods',0,222);
+    label(view,'15 oscillators with preset periods',0,222);
     yield* t(1,12,linear);
   },
   'phyllotaxis':function*(view){
@@ -91,7 +91,7 @@ export const mathScenes:Record<string,SceneFactory>={
       root.add(new Circle({position:()=>[Math.cos(a)*r*ripple(),Math.sin(a)*r*ripple()],width:11,height:16,rotation:a*180/Math.PI+90,fill:[P.yellow,P.lime,P.teal][Math.floor(i/40)%3],opacity:()=>0.65+0.35*Math.sin(i/15-t()*TAU*2)**2}));
     }
     label(view,'137.508°',-335,-40,P.yellow,31);label(view,'GOLDEN ANGLE',-335,0,P.muted,14);
-    label(view,'One placement rule. Interlocking spirals.',0,222);
+    label(view,'Each seed is placed at the golden angle',0,222);
     yield* t(1,10,linear);
   },
   'strange-attractor':function*(view){

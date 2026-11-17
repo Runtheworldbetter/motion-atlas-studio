@@ -7,17 +7,17 @@ import {fourierValue, fourierVectors, parseFourier} from './fourier-model.ts';
 const examples = [
   {id: 'square', name: 'Square wave', description: 'Five odd harmonics with their exact Fourier coefficients.', input: JSON.stringify({wave: 'square', terms: 5, amplitude: 1}, null, 2)},
   {id: 'saw', name: 'Sawtooth wave', description: 'Eight integer harmonics with alternating coefficients.', input: JSON.stringify({wave: 'saw', terms: 8, amplitude: 1}, null, 2)},
-  {id: 'sine', name: 'Single sine', description: 'The simplest case: one rotating vector.', input: JSON.stringify({wave: 'sine', terms: 1, amplitude: 1}, null, 2)},
-  {id: 'custom', name: 'Mix your own', description: 'Edit frequencies, signed amplitudes, and phases in radians.', input: JSON.stringify({title: 'A three-note mixture', harmonics: [{frequency: 1, amplitude: 1}, {frequency: 2, amplitude: 0.45, phase: 1.57}, {frequency: 5, amplitude: 0.2}]}, null, 2)},
+  {id: 'sine', name: 'Single sine', description: 'One rotating vector traces a sine wave.', input: JSON.stringify({wave: 'sine', terms: 1, amplitude: 1}, null, 2)},
+  {id: 'custom', name: 'Mix your own', description: 'Edit frequencies, signed amplitudes, and phases in radians.', input: JSON.stringify({title: 'Three harmonics', harmonics: [{frequency: 1, amplitude: 1}, {frequency: 2, amplitude: 0.45, phase: 1.57}, {frequency: 5, amplitude: 0.2}]}, null, 2)},
 ];
 
 export const fourierRecipe: RecipeDefinition = {
-  id: 'fourier', title: 'Build a waveform', subtitle: 'Circles become a signal',
-  description: 'Change the harmonic count or supply your own frequencies and amplitudes. The circles and waveform use exactly the same sum.',
+  id: 'fourier', title: 'Build a waveform', subtitle: 'Add sine waves with different frequencies.',
+  description: 'Change the number of harmonics or enter your own frequencies and amplitudes. The waveform shows their sum.',
   inputLabel: 'Waveform specification', inputFormat: 'JSON', accept: '.json,application/json', color: P.orange,
   examples,
-  help: 'Preset: {"wave":"square"|"saw"|"sine","terms":1–16,"amplitude":0–10}. A sine uses one term. Custom: {"harmonics":[{"frequency":1–64,"amplitude":-10–10,"phase":0}]}. Frequencies must be distinct integers; phase is in radians from −2π to 2π. The vertical scale fits the coefficients, so compare amplitudes in the coefficient table, not between auto-scaled previews.',
-  basis: 'Computed finite Fourier sum. Square and sawtooth presets use their standard sine-series coefficients. Truncation produces a smooth approximation and overshoot near jumps. No audio is generated.',
+  help: 'Preset: {"wave":"square"|"saw"|"sine","terms":1–16,"amplitude":0–10}. A sine uses one term. Custom: {"harmonics":[{"frequency":1–64,"amplitude":-10–10,"phase":0}]}. Frequencies must be distinct integers; phase is in radians from −2π to 2π. Each preview scales automatically. Use the coefficient table to compare amplitudes.',
+  basis: 'Adds a finite set of sine waves using Fourier coefficients. Square and sawtooth presets use the standard coefficients for those waves. The finite sum overshoots near sudden changes.',
   compile(input) {
     const model = parseFourier(input);
     const count = model.harmonics.length;
@@ -29,7 +29,7 @@ export const fourierRecipe: RecipeDefinition = {
     ];
     return {
       title: model.title,
-      summary: `${count} ${count === 1 ? 'harmonic' : 'harmonics'} · RMS ${model.rms.toFixed(3)} · coefficients listed below`,
+      summary: `${count} ${count === 1 ? 'harmonic' : 'harmonics'} · RMS amplitude ${model.rms.toFixed(3)}`,
       rows, duration: 10,
       factory: function* (view) {
         stage(view);

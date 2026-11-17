@@ -1,8 +1,8 @@
 # Contributing to Motion Atlas
 
-Useful contributions make an idea easier to understand: a clearer animation, a well-scoped recipe, a better explanation of its data, or a fix that makes the editor usable by more people.
+Contributions can improve an animation, add a recipe, explain its data, or fix the editor.
 
-## Start with a small, reviewable change
+## Submit a change
 
 Describe the problem and expected behavior in an issue or pull request. For a new recipe, include a short input example and explain why animation helps. Follow [README](README.md) for local setup, then run:
 
@@ -13,27 +13,27 @@ node scripts/generate-notices.mjs --check
 npm run build
 ```
 
-Include the relevant validation result and a screenshot or short recording when the visible behavior changes. A passing build does not establish that an explanation is accurate or that a scene is readable.
+Include relevant test results and a screenshot or short recording when the visible behavior changes. Check the explanation's accuracy and the scene's readability in a browser.
 
 ## Inputs and evidence
 
-Keep parsing and model calculations independent of Motion Canvas so they can be tested without a browser. Validate shape, bounds, finite numbers, string lengths, and resource limits before creating a scene. Show actionable input errors and retain a usable previous preview when validation fails. Treat uploaded code as text; do not add evaluation of arbitrary JavaScript or Python.
+Keep parsing and calculations independent of Motion Canvas so they can be tested without a browser. Check the input format, numeric bounds, string lengths, and resource limits before creating a scene. Error messages should explain how to fix the input. Keep the previous preview when validation fails. Handle opened code files as text; never execute them.
 
-Each recipe should say whether its output is computed from input, mathematically constructed, or illustrative. Show the quantities behind a chart in text as well as in motion. Preserve units, sign, order, and totals. Add a meaningful test when a change could alter a calculation or reject/accept the wrong input; test an edge case or an independently known result rather than repeating the implementation.
+Each recipe should describe its calculation or label its data as illustrative. Show chart values in a text or table view. Preserve units, signs, order, and totals. Add tests when a change affects calculations or input validation, using edge cases or independently known results.
 
-Use synthetic examples or data you have permission to redistribute. Identify synthetic examples in the interface and documentation. Do not present a staged agent trace as an actual execution log, an authored probability as a model prediction, or a simulated change as a measured business result. Include sources and transformation notes for any real public dataset.
+Use synthetic examples or data you have permission to redistribute. Label synthetic examples in the interface and documentation, including staged agent traces, invented probabilities, and simulated business results. Include sources and transformation notes for real public datasets.
 
 ## Animation and accessibility
 
-Keep scenes finite, with sensible start/end states, readable labels, and controls that work at different playback speeds. Verify pause, replay, scrubbing, and reduced-motion behavior. Check keyboard navigation and visible focus, labels on icon buttons, readable contrast, and a narrow viewport. Use text, shape, or labels in addition to color. An equivalent text/table explanation is especially useful for recipes whose meaning would otherwise exist only in a canvas.
+Give scenes clear start and end states, readable labels, and controls that work at different playback speeds. Check pause, replay, scrubbing, reduced motion, keyboard navigation, visible focus, icon-button labels, contrast, and a narrow viewport. Use text or shape alongside color, and provide a text or table explanation of the calculation.
 
-Avoid gratuitous flashes and constant animation outside visible previews. Keep input processing bounded and check that a large but valid example remains responsive. A new scene should not keep rendering after its player is closed.
+Avoid flashes, pause offscreen previews, and stop rendering when a player closes. Keep input processing bounded and check that the largest valid example remains responsive.
 
 ## Local data and sharing
 
-The public app's preferences are local to a browser, and recipe drafts are local to the page. Keep share links limited to scene/preset selection. Do not place custom input or notes in URLs, analytics events, remote requests, or logs. If a proposed feature changes this behavior, explain the concrete storage and sharing behavior before implementing it and update the privacy documentation and visible UI together.
+Votes and notes are saved in the browser; recipe drafts stay in the open page. Share links contain only scene or preset selections. Keep custom input and notes out of URLs, analytics events, remote requests, and logs. If a feature changes where data is stored or sent, explain the change before implementing it and update the interface and privacy documentation.
 
-Downloads must include only the material the visitor chose to export. Source/project archives must not pick up local environment files, credentials, browser preferences, dependency folders, or private hosting configuration.
+Downloads must include only the material the visitor chose to export. Exclude environment files, credentials, browser preferences, dependency folders, and private hosting configuration from source/project archives.
 
 ## Attribution and dependencies
 
@@ -46,4 +46,4 @@ node scripts/generate-notices.mjs
 node scripts/generate-notices.mjs --check
 ```
 
-Review the resulting notices, including bundled `NOTICE` files. The generator deliberately fails on missing license text. Resolve gaps with a version-specific, documented upstream source in `docs/license-overrides.json`; do not invent copyright attribution or silently skip a package. See [Attribution](docs/attribution.md).
+Review the resulting notices, including bundled `NOTICE` files. Missing license text fails the check. Resolve gaps using an upstream source for the exact package version, recorded in `docs/license-overrides.json`. See [Attribution](docs/attribution.md).
