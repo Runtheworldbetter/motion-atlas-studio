@@ -16,15 +16,16 @@ import {createZip} from '../lib/zip';
 import {MotionPlayer, useReducedMotion} from './Player';
 import {CodeEditor, Dialog, VoteButtons} from './components';
 import initialRecipe from './initial-recipe';
+import {CricketStroke} from './CricketStroke';
 
 const REPOSITORY = 'https://github.com/Runtheworldbetter/motion-atlas-studio';
 const MOTION_CANVAS_PROJECT = 'https://github.com/motion-canvas/motion-canvas';
-const MOTION_CANVAS_DOCS = 'https://motioncanvas.io/docs/';
+const ATLAS_DOCS = './docs/index.html';
 const FILE_LIMIT = 128 * 1024;
 const recipeIcons = {trace: GitBranch, waterfall: BarChart3, code: Braces, fourier: AudioLines, pathfinding: Route, cricket: Activity, 'post-training': BrainCircuit};
 const recipeNames = {trace: 'Event trace', waterfall: 'Waterfall', code: 'Code diff', fourier: 'Harmonics', pathfinding: 'Pathfinder', cricket: 'Cricket', 'post-training': 'Post-training'};
 const validPreferenceIds = new Set([...specs.map(s => s.id), ...recipes.map(r => `recipe:${r.id}`)]);
-const sourceLoaders = import.meta.glob('../lib/{recipes,motion}/*.ts', {query: '?raw', import: 'default'});
+const sourceLoaders = import.meta.glob('../lib/{recipes,motion,cricket}/**/*.ts', {query: '?raw', import: 'default'});
 type Draft = {input: string; secondary: string; exampleId: string; renderedInput: string; renderedSecondary: string};
 type Inputs = {recipe: RecipeId; input: string; secondary?: string};
 
@@ -50,6 +51,7 @@ function downloadSnapshot(canvas: HTMLCanvasElement, name: string) {
   canvas.toBlob(blob => {if (blob) download(blob, `motion-atlas-${name}.png`, 'image/png');}, 'image/png');
 }
 function sourcePath(id: string) {
+  if (id === 'cricket-coaching') return 'lib/cricket/pose.ts';
   if (appliedRecipes[id]) return `lib/recipes/${appliedRecipes[id].id}.ts`;
   const category = specs.find(s => s.id === id)?.category;
   const group = category === 'Math & nature' ? 'math' : category === 'Systems & AI' ? 'systems' : category === 'Data stories' ? 'data' : 'craft';
@@ -58,6 +60,7 @@ function sourcePath(id: string) {
 
 export default function App() {
   const [recipeId, setRecipeId] = useState<RecipeId>(() => requestedRecipe().id);
+  const [fullStroke, setFullStroke] = useState(() => {const example = new URLSearchParams(location.search).get('example'); return example === 'full-stroke' || (!example && initialRecipe?.recipe !== 'cricket');});
   const [drafts, setDrafts] = useState<Record<RecipeId, Draft>>(() => Object.fromEntries(recipes.map(r => [r.id, startingDraft(r)])) as Record<RecipeId, Draft>);
   const [results, setResults] = useState<Record<RecipeId, RecipeResult>>(() => Object.fromEntries(recipes.map(r => {const d = startingDraft(r); return [r.id, r.compile(d.input, d.secondary)];})) as Record<RecipeId, RecipeResult>);
   const [errors, setErrors] = useState<Partial<Record<RecipeId, string>>>({});
@@ -118,6 +121,7 @@ export default function App() {
       const found = recipes.find(r => r.id === params.get('recipe')) ?? requestedRecipe();
       if (found) {
         setRecipeId(found.id);
+        if (found.id === 'cricket') setFullStroke(!params.get('example') || params.get('example') === 'full-stroke');
         const ex = found.examples.find(e => e.id === params.get('example'));
         if (found.id === 'cricket' && ex) loadPreset(found, ex.id, false, cricketViewFromParams(params));
         else if (found.id === 'cricket') {
@@ -149,7 +153,7 @@ export default function App() {
     routeSearch.current = url.search;
     history[replace ? 'replaceState' : 'pushState']({}, '', url);
   }
-  function selectRecipe(id: RecipeId) {setRecipeId(id); setActiveTab('explain'); routeTo(id, drafts[id].exampleId);}
+  function selectRecipe(id: RecipeId) {setRecipeId(id); setActiveTab('explain'); if (id === 'cricket') setFullStroke(true); routeTo(id, id === 'cricket' ? 'full-stroke' : drafts[id].exampleId);}
   function renderDraft(id: RecipeId, next = drafts[id]) {
     const definition = recipes.find(r => r.id === id)!;
     try {
@@ -162,6 +166,7 @@ export default function App() {
   }
   function loadPreset(definition: RecipeDefinition, exampleId: string, navigate = true, cricketOverrides?: Partial<CricketView>) {
     const example = definition.examples.find(e => e.id === exampleId) ?? definition.examples[0];
+    if (definition.id === 'cricket') setFullStroke(false);
     const input = definition.id === 'cricket' ? patchCricketView(example.input, cricketOverrides ?? {handedness: readCricketView(drafts.cricket.input)?.handedness ?? 'left'}) : example.input;
     const next = {input, secondary: example.secondary ?? '', exampleId: example.id, renderedInput: input, renderedSecondary: example.secondary ?? ''};
     setRecipeId(definition.id); setDrafts(current => ({...current, [definition.id]: next})); renderDraft(definition.id, next);
@@ -191,6 +196,7 @@ export default function App() {
         }
       } catch (e) {if (e instanceof Error && e.message === 'Invalid input export.') throw e;}
       if (imported) {
+        if (imported.recipe === 'cricket') setFullStroke(false);
         const next = {...drafts[imported.recipe], input: imported.input, secondary: imported.secondary ?? '', exampleId: ''};
         setRecipeId(imported.recipe); setDrafts(current => ({...current, [imported!.recipe]: next})); renderDraft(imported.recipe, next); routeTo(imported.recipe, '', false, next.input);
       } else {
@@ -232,7 +238,7 @@ export default function App() {
   }
   function exportInput() {download(JSON.stringify({format: 'motion-atlas-input-v1', recipe: recipeId, input: draft.input, secondary: draft.secondary}, null, 2), `motion-atlas-${recipeId}-input.json`, 'application/json'); setNotice('Input downloaded. Open this file to restore it later.');}
   function openScene(id: string) {setSelectedScene(id); const url = new URL(location.href); url.search = ''; url.hash = ''; url.searchParams.set('scene', id); routeSearch.current = url.search; history.pushState({}, '', url);}
-  function closeScene() {setSelectedScene(null); routeTo(recipeId, draft.exampleId, true);}
+  function closeScene() {setSelectedScene(null); routeTo(recipeId, recipeId === 'cricket' && fullStroke ? 'full-stroke' : draft.exampleId, true);}
   async function viewSceneSource(id: string) {const path = sourcePath(id); const text = await sourceLoaders[`../${path}`]?.(); setSourceModal({path, text: String(text ?? 'Source unavailable.')});}
   const filtered = useMemo(() => specs.filter(s =>
     (category === 'All examples' || s.category === category) &&
@@ -245,25 +251,28 @@ export default function App() {
   if (embed) {
     const id = selectedSpec?.id ?? recipeId;
     const model = selectedSpec ? appliedResults[selectedSpec.id] : result;
-    return <main className="embed-shell"><MotionPlayer id={`embed-${id}`} factory={selectedSpec ? scenes[selectedSpec.id] : result.factory} title={selectedSpec?.title ?? result.title} autoplay={!reduced} loop={model?.loop} checkpoints={model?.checkpoints} frameStep={model?.frameStep}/><div className="embed-caption"><a href={linkFor(selectedSpec ? 'scene' : 'recipe', id)} target="_blank" rel="noreferrer">{selectedSpec?.title ?? result.title} <ExternalLink size={13}/></a><span className="embed-credit">Built with <a href={MOTION_CANVAS_PROJECT} target="_blank" rel="noreferrer">Motion Canvas <ExternalLink size={11}/></a></span></div></main>;
+    const strokeEmbed = selectedSpec?.id === 'cricket-coaching' || (!selectedSpec && recipeId === 'cricket' && fullStroke);
+    const embedTitle = strokeEmbed ? 'Complete straight drive' : selectedSpec?.title ?? result.title;
+    const embedLink = strokeEmbed ? new URL('?recipe=cricket&example=full-stroke#studio', location.href).href : linkFor(selectedSpec ? 'scene' : 'recipe', id);
+    return <main className="embed-shell">{strokeEmbed ? <CricketStroke/> : <MotionPlayer id={`embed-${id}`} factory={selectedSpec ? scenes[selectedSpec.id] : result.factory} title={selectedSpec?.title ?? result.title} autoplay={!reduced} loop={model?.loop} checkpoints={model?.checkpoints} frameStep={model?.frameStep}/>}<div className="embed-caption"><a href={embedLink} target="_blank" rel="noreferrer">{embedTitle} <ExternalLink size={13}/></a><span className="embed-credit"><a href={REPOSITORY} target="_blank" rel="noreferrer">Motion Atlas</a></span></div></main>;
   }
 
   return <>
     <a href="#studio" className="skip-link">Skip to editor</a>
-    <header className="site-header"><a className="brand" href={location.pathname} aria-label="Motion Atlas home"><span className="brand-mark">m</span><span>motion<span className="brand-serif">atlas</span><small>AN RTWB PROJECT</small></span></a><nav aria-label="Main navigation"><a href="#studio">Editor</a><a href="#collection">Collection <span>{specs.length}</span></a><a href="#guide">How it works</a></nav><div className="header-actions"><button className="text-button saved-button" onClick={() => setPreferencesOpen(true)}><Heart size={16}/> Your picks {votedCount > 0 && <span className="count-badge">{votedCount}</span>}</button><a className="github-button" href={REPOSITORY} target="_blank" rel="noreferrer"><Code2 size={17}/><span>Source</span><ExternalLink size={13}/></a></div></header>
+    <header className="site-header"><a className="brand" href={location.pathname} aria-label="Motion Atlas home"><span className="brand-mark">m</span><span>motion<span className="brand-serif">atlas</span><small>AN RTWB PROJECT</small></span></a><nav aria-label="Main navigation"><a href="#studio">Editor</a><a href="#collection">Collection <span>{specs.length}</span></a><a href={ATLAS_DOCS}>Docs</a></nav><div className="header-actions"><button className="text-button saved-button" onClick={() => setPreferencesOpen(true)}><Heart size={16}/> Your picks {votedCount > 0 && <span className="count-badge">{votedCount}</span>}</button><a className="github-button" href={REPOSITORY} target="_blank" rel="noreferrer"><Code2 size={17}/><span>Atlas GitHub</span></a></div></header>
 
     <main>
-      <section className="intro page-width"><div><p className="eyebrow"><span className="status-dot"/> MOTION CANVAS EXAMPLES & EDITOR</p><h1>Animate your <em>data and code.</em></h1><p className="intro-copy">Choose an example, edit the input, and render the animation.</p></div><div className="intro-aside"><span className="local-badge"><ShieldCheck size={15}/> Runs in your browser</span><p>Your files are processed on your device.<br/>Download a project to keep editing.</p></div></section>
+      <section className="intro page-width"><div><p className="eyebrow"><span className="status-dot"/> MOTION ATLAS · EXAMPLES & EDITOR</p><h1>Animate your <em>data and code.</em></h1><p className="intro-copy">Choose an example, edit the input, and render the animation.</p></div><div className="intro-aside"><span className="local-badge"><ShieldCheck size={15}/> Runs in your browser</span><p>Your files are processed on your device.<br/>Download a project to keep editing.</p></div></section>
 
-      <section className="upstream-credit page-width" aria-labelledby="motion-canvas-credit">
+      <section className="upstream-credit page-width" aria-labelledby="atlas-source-heading">
         <div>
-          <h2 id="motion-canvas-credit">Built with <a href={MOTION_CANVAS_PROJECT} target="_blank" rel="noreferrer">Motion Canvas</a></h2>
-          <p>Motion Canvas provides the open source animation engine. RTWB built this gallery and editor.</p>
-          <p className="upstream-thanks">Thank you to the Motion Canvas creators and contributors.</p>
+          <h2 id="atlas-source-heading">Make it yours with Motion Atlas.</h2>
+          <p>Explore the source, reuse an explanation, or build your own. The editor, recipes, and coaching tools live together in one open source project.</p>
+          <p className="upstream-thanks">Built by RTWB. Powered by Motion Canvas and browser-native graphics.</p>
         </div>
         <div className="upstream-links">
-          <a href={MOTION_CANVAS_PROJECT} target="_blank" rel="noreferrer"><Code2 size={16}/> Motion Canvas on GitHub <ExternalLink size={13}/></a>
-          <a href={MOTION_CANVAS_DOCS} target="_blank" rel="noreferrer"><BookOpen size={16}/> Motion Canvas docs <ExternalLink size={13}/></a>
+          <a href={REPOSITORY} target="_blank" rel="noreferrer"><Code2 size={18}/> Motion Atlas on GitHub</a>
+          <a href={ATLAS_DOCS}><BookOpen size={18}/> Motion Atlas docs</a>
         </div>
       </section>
 
@@ -273,7 +282,10 @@ export default function App() {
           if (['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(e.key)) {e.preventDefault(); const current = recipes.findIndex(item => item.id === r.id); const index = e.key === 'Home' ? 0 : e.key === 'End' ? recipes.length - 1 : (current + (e.key === 'ArrowRight' ? 1 : -1) + recipes.length) % recipes.length; selectRecipe(recipes[index].id); document.getElementById(`tab-${recipes[index].id}`)?.focus();}
         }}><Icon size={18}/><span>{recipeNames[r.id]}</span>{recipeId === r.id && <span className="tab-dot"/>}</button>;})}</div>
 
-        <div id="recipe-panel" className="workspace" role="tabpanel" aria-labelledby={`tab-${recipeId}`}>
+        {recipeId === 'cricket' && <div className="cricket-editor-switch" role="group" aria-label="Cricket study"><button type="button" aria-pressed={fullStroke} onClick={() => {setFullStroke(true); routeTo('cricket', 'full-stroke');}}>Complete straight drive</button><button type="button" aria-pressed={!fullStroke} onClick={() => {setFullStroke(false); routeTo('cricket', draft.exampleId);}}>Custom keyframes</button><span>Pause, compare, inspect</span></div>}
+        {recipeId === 'cricket' && fullStroke && <div id="recipe-panel" role="tabpanel" aria-labelledby="tab-cricket"><CricketStroke/></div>}
+        {!(recipeId === 'cricket' && fullStroke) && <div id="recipe-panel" className="workspace" role="tabpanel" aria-labelledby={`tab-${recipeId}`}>
+
           <div className="input-panel">
             <div className="panel-heading"><span><Code2 size={15}/> EDIT THE INPUT</span><span className="format-badge">{recipe.inputFormat}</span></div>
             <div className="preset-select"><label htmlFor="preset">Start with an example</label><div><select id="preset" value={draft.exampleId} onChange={e => loadPreset(recipe, e.target.value)}>{!draft.exampleId && <option value="">Your imported example</option>}{recipe.examples.map(example => <option key={example.id} value={example.id}>{example.name}</option>)}</select><ChevronDown size={15}/></div><p>{activeExample?.description ?? 'Imported input.'}</p></div>
@@ -306,7 +318,7 @@ export default function App() {
             </div>
             <div className="reuse-actions"><button className="secondary-button" onClick={downloadProject} disabled={busy}>{busy ? <Loader2 size={16} className="spinning"/> : <ArrowDownToLine size={16}/>} Download project</button><button className="text-button" onClick={() => setShareOpen(true)}><Link2 size={15}/> Share / embed</button><span className="reuse-note">MIT licensed</span></div>
           </div>
-        </div>
+        </div>}
       </section>
 
       <section id="collection" className="collection page-width">
@@ -314,7 +326,7 @@ export default function App() {
         <div className="collection-heading"><div><h2>Animation <em>examples.</em></h2><p>Browse coaching, AI, math, charts, and animation techniques. Use the arrows to save your preferences.</p></div><span className="collection-count">{specs.length} <small>EXAMPLES</small></span></div>
         <div className="category-filters" role="group" aria-label="Filter collection">{['All examples', 'Sports & coaching', 'Systems & AI', 'Math & nature', 'Data stories', 'Motion craft'].map(c => <button key={c} aria-pressed={category === c} onClick={() => setCategory(c)}>{c}<span>{c === 'All examples' ? specs.length : specs.filter(scene => scene.category === c).length}</span></button>)}</div>
         <div className="collection-toolbar"><label className="search-field"><Search size={17}/><input aria-label="Search examples" placeholder="Search examples…" value={query} onChange={e => setQuery(e.target.value)}/></label><div className="filter-right"><span>{filtered.length} {filtered.length === 1 ? 'example' : 'examples'}</span><select aria-label="Filter by your votes" value={voteFilter} onChange={e => setVoteFilter(e.target.value)}><option value="all">All votes</option><option value="liked">Upvoted</option><option value="disliked">Downvoted</option><option value="unrated">Unrated</option></select></div></div>
-        <div className="gallery-grid">{filtered.map((spec, i) => <article key={spec.id} className="gallery-card"><button className="gallery-open" onClick={() => openScene(spec.id)} aria-label={`Open ${spec.title}`}><div className="card-preview"><MotionPlayer id={`card-${spec.id}`} factory={scenes[spec.id]} title={spec.title} compact autoplay={galleryPlaying && !reduced} posterTime={2.5}/><span className="card-number">{String(specs.findIndex(s => s.id === spec.id) + 1).padStart(2, '0')}</span><span className="open-indicator"><ArrowRight size={18}/></span></div></button><div className="card-body"><p className="card-category">{spec.category}</p><h3><button onClick={() => openScene(spec.id)}>{spec.title}</button></h3><p>{spec.description}</p><div className="card-footer"><span className="basis-pill">{getSceneBasis(spec.id).label}</span><VoteButtons title={spec.title} preference={preferences[spec.id]} onVote={vote => setPreference(spec.id, {vote})}/></div></div></article>)}</div>
+        <div className="gallery-grid">{filtered.map((spec, i) => <article key={spec.id} className="gallery-card"><button className="gallery-open" onClick={() => openScene(spec.id)} aria-label={`Open ${spec.title}`}><div className="card-preview">{spec.id === 'cricket-coaching' ? <CricketStroke compact autoplay={galleryPlaying && !reduced}/> : <MotionPlayer id={`card-${spec.id}`} factory={scenes[spec.id]} title={spec.title} compact autoplay={galleryPlaying && !reduced} posterTime={2.5}/>}<span className="card-number">{String(specs.findIndex(s => s.id === spec.id) + 1).padStart(2, '0')}</span><span className="open-indicator"><ArrowRight size={18}/></span></div></button><div className="card-body"><p className="card-category">{spec.category}</p><h3><button onClick={() => openScene(spec.id)}>{spec.title}</button></h3><p>{spec.description}</p><div className="card-footer"><span className="basis-pill">{getSceneBasis(spec.id).label}</span><VoteButtons title={spec.title} preference={preferences[spec.id]} onVote={vote => setPreference(spec.id, {vote})}/></div></div></article>)}</div>
         {!filtered.length && <div className="empty-state"><Search size={28}/><h3>No matching examples.</h3><p>Try a different search or clear your filters.</p><button className="secondary-button" onClick={() => {setQuery(''); setCategory('All examples'); setVoteFilter('all');}}>Clear filters</button></div>}
         <div className="collection-footnote"><ShieldCheck size={15}/><span>Your votes and notes are saved in this browser. Export them to use on another device.</span><button className="text-button" onClick={() => setPreferencesOpen(true)}>Review your picks <ArrowRight size={14}/></button></div>
       </section>
@@ -322,9 +334,9 @@ export default function App() {
       <section id="guide" className="guide page-width"><div className="section-kicker"><span>03</span> QUICK START</div><h2>Using the <em>editor.</em></h2><div className="guide-grid"><article><span className="guide-number">01</span><h3>Edit an example</h3><p>Choose a recipe and edit its text, or open a local file.</p></article><article><span className="guide-number">02</span><h3>Preview the animation</h3><p>Click Render changes. Pause or scrub the timeline, and use Inspect values to check the numbers.</p></article><article><span className="guide-number">03</span><h3>Save or share</h3><p>Download your input, a runnable project, or a PNG. Share links and embeds open the selected preset.</p></article></div><div className="open-source-banner"><div><p className="eyebrow">SOURCE CODE</p><h3>Run the editor locally</h3><p>Install Node.js 22.13 or newer, download the source, and run:</p></div><div><code>npm ci<br/>npm run dev</code><div className="banner-links"><a className="secondary-button" href="./motion-atlas-source.zip" download><ArrowDownToLine size={15}/> Download source</a><a className="text-button" href={REPOSITORY} target="_blank" rel="noreferrer">GitHub <ExternalLink size={14}/></a></div></div></div></section>
     </main>
 
-    <footer className="site-footer page-width"><a className="brand footer-brand" href="https://runtheworldbetter.com" target="_blank" rel="noreferrer">RTWB <ArrowRight size={16}/></a><div><a href={MOTION_CANVAS_PROJECT} target="_blank" rel="noreferrer">Built with Motion Canvas</a><a href="./third-party-notices.txt" target="_blank" rel="noreferrer">Licenses & credits</a><button className="text-button" onClick={() => setPreferencesOpen(true)}>Your local data</button></div></footer>
+    <footer className="site-footer page-width"><a className="brand footer-brand" href="https://runtheworldbetter.com" target="_blank" rel="noreferrer">RTWB <ArrowRight size={16}/></a><div><a href={REPOSITORY} target="_blank" rel="noreferrer">Motion Atlas on GitHub</a><a href={ATLAS_DOCS}>Atlas docs</a><a href="./third-party-notices.txt" target="_blank" rel="noreferrer">Licenses & credits</a><button className="text-button" onClick={() => setPreferencesOpen(true)}>Your local data</button></div></footer>
 
-    {selectedSpec && <Dialog title={selectedSpec.title} wide onClose={closeScene}><p className="eyebrow">{selectedSpec.category}</p><h2 className="dialog-title">{selectedSpec.title}</h2><MotionPlayer id={`view-${selectedSpec.id}`} factory={scenes[selectedSpec.id]} title={selectedSpec.title} autoplay={!reduced} loop={appliedResults[selectedSpec.id]?.loop} checkpoints={appliedResults[selectedSpec.id]?.checkpoints} frameStep={appliedResults[selectedSpec.id]?.frameStep} onSnapshot={canvas => downloadSnapshot(canvas, selectedSpec.id)}/><div className="scene-description"><p>{selectedSpec.description}</p><VoteButtons title={selectedSpec.title} preference={preferences[selectedSpec.id]} onVote={vote => setPreference(selectedSpec.id, {vote})}/></div><div className="basis-note"><Info size={17}/><p><strong>{getSceneBasis(selectedSpec.id).label}.</strong> {getSceneBasis(selectedSpec.id).detail}</p></div><p className="scene-technique">{selectedSpec.technique}</p><label className="note-label" htmlFor="scene-note">Your notes <span>Saved in this browser</span></label><textarea id="scene-note" className="note-input" placeholder="Add a note…" maxLength={1200} value={preferences[selectedSpec.id]?.note ?? ''} onChange={e => setPreference(selectedSpec.id, {note: e.target.value})}/><div className="dialog-actions">{appliedRecipes[selectedSpec.id] && <button className="primary-button" onClick={() => {setSelectedScene(null); selectRecipe(appliedRecipes[selectedSpec.id].id); document.getElementById('studio')?.scrollIntoView({behavior: reduced ? 'auto' : 'smooth'});}}>Edit this example <ArrowRight size={15}/></button>}<button className="secondary-button" onClick={() => viewSceneSource(selectedSpec.id)}><Code2 size={15}/> View source</button><button className="text-button" onClick={() => copy(linkFor('scene', selectedSpec.id), 'Scene link copied.')}><Link2 size={15}/> Copy link</button><button className="text-button" onClick={() => copy(`<iframe src="${linkFor('scene', selectedSpec.id, true)}" title="${selectedSpec.title.replaceAll('"', '&quot;')}" style="width:100%;aspect-ratio:16/10;border:0" loading="lazy" allowfullscreen></iframe>`, 'Embed code copied.')}><Code2 size={15}/> Copy embed</button></div></Dialog>}
+    {selectedSpec && <Dialog title={selectedSpec.title} wide onClose={closeScene}><p className="eyebrow">{selectedSpec.category}</p><h2 className="dialog-title">{selectedSpec.title}</h2>{selectedSpec.id === 'cricket-coaching' ? <CricketStroke/> : <MotionPlayer id={`view-${selectedSpec.id}`} factory={scenes[selectedSpec.id]} title={selectedSpec.title} autoplay={!reduced} loop={appliedResults[selectedSpec.id]?.loop} checkpoints={appliedResults[selectedSpec.id]?.checkpoints} frameStep={appliedResults[selectedSpec.id]?.frameStep} onSnapshot={canvas => downloadSnapshot(canvas, selectedSpec.id)}/>}<div className="scene-description"><p>{selectedSpec.description}</p><VoteButtons title={selectedSpec.title} preference={preferences[selectedSpec.id]} onVote={vote => setPreference(selectedSpec.id, {vote})}/></div><div className="basis-note"><Info size={17}/><p><strong>{getSceneBasis(selectedSpec.id).label}.</strong> {getSceneBasis(selectedSpec.id).detail}</p></div><p className="scene-technique">{selectedSpec.technique}</p><label className="note-label" htmlFor="scene-note">Your notes <span>Saved in this browser</span></label><textarea id="scene-note" className="note-input" placeholder="Add a note…" maxLength={1200} value={preferences[selectedSpec.id]?.note ?? ''} onChange={e => setPreference(selectedSpec.id, {note: e.target.value})}/><div className="dialog-actions">{appliedRecipes[selectedSpec.id] && <button className="primary-button" onClick={() => {setSelectedScene(null); selectRecipe(appliedRecipes[selectedSpec.id].id); document.getElementById('studio')?.scrollIntoView({behavior: reduced ? 'auto' : 'smooth'});}}>Edit this example <ArrowRight size={15}/></button>}<button className="secondary-button" onClick={() => viewSceneSource(selectedSpec.id)}><Code2 size={15}/> View source</button><button className="text-button" onClick={() => copy(linkFor('scene', selectedSpec.id), 'Scene link copied.')}><Link2 size={15}/> Copy link</button><button className="text-button" onClick={() => copy(`<iframe src="${linkFor('scene', selectedSpec.id, true)}" title="${selectedSpec.title.replaceAll('"', '&quot;')}" style="width:100%;aspect-ratio:16/10;border:0" loading="lazy" allowfullscreen></iframe>`, 'Embed code copied.')}><Code2 size={15}/> Copy embed</button></div></Dialog>}
 
     {shareOpen && <Dialog title="Share this recipe" onClose={() => setShareOpen(false)}><h2 className="dialog-title">Share this example</h2><p>These links open <strong>{activeExample?.name ?? recipe.examples[0].name}</strong>. To share your edits, use Download project.</p><label className="share-label">Recipe link</label><div className="copy-field"><input readOnly value={linkFor('recipe', recipeId)} aria-label="Recipe link"/><button className="icon-button" aria-label="Copy recipe link" onClick={() => copy(linkFor('recipe', recipeId), 'Preset link copied.')}><Copy size={17}/></button></div><label className="share-label">Embed in a page</label><textarea className="embed-code" readOnly aria-label="Embed code" value={`<iframe src="${linkFor('recipe', recipeId, true)}" title="Motion Atlas ${recipeNames[recipeId]}" style="width:100%;aspect-ratio:16/10;border:0" loading="lazy" allowfullscreen></iframe>`}/><div className="dialog-actions"><button className="secondary-button" onClick={() => copy(`<iframe src="${linkFor('recipe', recipeId, true)}" title="Motion Atlas ${recipeNames[recipeId]}" style="width:100%;aspect-ratio:16/10;border:0" loading="lazy" allowfullscreen></iframe>`)}>Copy embed</button><button className="text-button" onClick={downloadProject}>Download your project <ArrowDownToLine size={15}/></button></div></Dialog>}
 
