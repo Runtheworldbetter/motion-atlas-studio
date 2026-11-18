@@ -1,6 +1,6 @@
 # Motion Atlas
 
-An open source animation workbench from RTWB. Explore explanations, inspect their values, and adapt them to your own data. Motion Atlas brings together cricket coaching tools, AI explanations, seven editable recipes, and 50 gallery examples.
+An open-source collection and editor for interactive visual explanations, built by RTWB. Explore 50 examples across AI, data, mathematics, systems, and sports, then adapt them or build your own.
 
 **[Open Motion Atlas](https://runtheworldbetter.github.io/motion-atlas-studio/) · [Read the Atlas docs](https://runtheworldbetter.github.io/motion-atlas-studio/docs/) · [Browse the source](https://github.com/Runtheworldbetter/motion-atlas-studio)**
 
