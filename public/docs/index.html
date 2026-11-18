@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="The Motion Atlas guide: use the editor, inspect cricket technique, explore AI explanations, export projects, and build with Motion Canvas.">
+  <title>Documentation · Motion Atlas</title>
+  <style>
+    :root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#263a2e;background:#f5f6ef;font-synthesis:none;--ink:#263a2e;--muted:#657268;--line:#d8e0d1;--lime:#d6edaa;--paper:#f5f6ef}
+    *{box-sizing:border-box}html{scroll-padding-top:24px}body{margin:0}a{color:inherit;text-underline-offset:4px}a:hover{color:#42612b}a:focus-visible{outline:3px solid #789b4e;outline-offset:5px;border-radius:3px}h1,h2,h3,p{margin-top:0}p,li{line-height:1.75}p{margin-bottom:18px}header{border-bottom:1px solid var(--line);padding:25px max(24px,calc((100vw - 1240px)/2));display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:11px;text-decoration:none;font-size:23px;font-weight:600;letter-spacing:-.6px}.brand-mark{display:grid;place-items:center;width:38px;height:40px;background:var(--ink);border-radius:11px;color:var(--lime);font:italic 32px Georgia,serif}.brand em{font-family:Georgia,serif;font-weight:400}.brand small{display:block;font-size:10px;letter-spacing:2px;font-weight:600;color:var(--muted);margin-top:5px}.header-links{display:flex;align-items:center;gap:21px;font-size:14px}.header-links>a{white-space:nowrap;text-decoration:none}.button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:11px 17px;border:1px solid var(--ink);border-radius:8px;background:var(--ink);color:var(--paper);font-weight:600;font-size:14px;text-decoration:none;line-height:1.4}.button:hover{background:#3b5135;color:white}.button.secondary{background:transparent;color:var(--ink);border-color:#c9d5c0}.button.secondary:hover{background:#e9f0df}.layout{display:grid;grid-template-columns:205px minmax(0,850px);gap:70px;max-width:1240px;margin:0 auto;padding:60px 24px 80px}.toc{align-self:start;position:sticky;top:32px;font-size:14px}.toc strong{display:block;font-size:12px;letter-spacing:1.6px;margin-bottom:17px;color:var(--muted)}.toc a{display:block;text-decoration:none;padding:10px 0;color:var(--muted);line-height:1.35}.toc a:hover{color:var(--ink)}.toc .version{display:inline-block;border:1px solid #cbd8bf;border-radius:16px;padding:5px 10px;margin-bottom:25px;color:#4b6738;font-size:12px}.eyebrow{font-size:12px;letter-spacing:2px;font-weight:650;color:#5c7350;margin-bottom:17px}h1{font-weight:450;font-size:clamp(37px,4.6vw,58px);letter-spacing:-2px;line-height:1.08;max-width:650px;margin-bottom:24px}h1 em{font-family:Georgia,serif;font-weight:400}.lede{font-size:19px;line-height:1.65;color:#57665b;max-width:720px}.actions{display:flex;flex-wrap:wrap;gap:11px;margin:25px 0 34px}.section{padding-top:40px;margin-top:35px;border-top:1px solid var(--line)}h2{font-size:29px;letter-spacing:-.6px;font-weight:550;line-height:1.2;margin-bottom:20px}h3{font-size:19px;font-weight:600;line-height:1.4;margin:27px 0 12px}.number{font:14px ui-monospace,SFMono-Regular,Consolas,monospace;color:#87977b;margin-right:10px}ul,ol{padding-left:24px}li{padding-left:4px;margin-bottom:9px}.note{background:#eaf0e0;border-left:3px solid #83a65b;padding:16px 19px;margin:24px 0}.note p:last-child{margin-bottom:0}.table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:9px;margin:22px 0}table{border-collapse:collapse;width:100%;text-align:left;font-size:15px}th{background:#eaf0e2;font-size:13px;font-weight:600;padding:13px 16px}td{padding:14px 16px;vertical-align:top;line-height:1.6;border-top:1px solid var(--line)}td:first-child{min-width:135px;font-weight:550}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.87em;background:#e7eddf;border-radius:4px;padding:2px 5px}pre{padding:21px 23px;overflow:auto;border-radius:10px;background:#1d2c24;color:#e1eccf;font-size:14px;line-height:1.85}pre code{padding:0;background:none;font-size:inherit}.role{display:inline-flex;gap:9px;align-items:center}.swatch{display:inline-block;width:12px;height:12px;border-radius:50%;flex-shrink:0}.blue{background:#2475b7}.orange{background:#c36343}.gold{background:#b18422}.gray{background:#89928b}.footlinks{display:flex;flex-wrap:wrap;gap:12px 24px;margin-top:23px;font-size:14px}.footlinks a{color:#4f6642}footer{padding:28px 24px;border-top:1px solid var(--line);font-size:14px;color:var(--muted);text-align:center}footer a{margin:0 10px}.skip{position:absolute;left:16px;top:-70px;background:var(--ink);color:white;padding:12px 20px;border-radius:8px;z-index:3}.skip:focus{top:12px}.source-note{font-size:14px;color:var(--muted)}
+    @media(max-width:900px){.layout{grid-template-columns:160px minmax(0,1fr);gap:35px}.header-links{gap:12px}.header-links .back{display:none}}
+    @media(max-width:640px){header{padding:19px 20px}.brand{font-size:20px}.brand-mark{width:33px;height:36px}.header-links .button{font-size:12px;padding:10px 11px}.layout{display:block;padding:32px 20px 55px}.toc{position:static;display:flex;flex-wrap:wrap;gap:4px 17px;padding-bottom:23px;margin-bottom:31px;border-bottom:1px solid var(--line)}.toc strong{flex-basis:100%;margin-bottom:7px}.toc .version{margin:0;padding:6px 9px;align-self:center}.toc a{font-size:13px;padding:7px 0}.lede{font-size:17px}h1{letter-spacing:-1.3px}h2{font-size:25px}.section{padding-top:30px;margin-top:28px}td,th{padding:12px;font-size:14px}.actions .button{flex:1;min-width:150px}.source-note{font-size:13px}footer{line-height:2}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#guide">Skip to the guide</a>
+  <header>
+    <a class="brand" href="../" aria-label="Motion Atlas home"><span class="brand-mark">m</span><span>motion<em>atlas</em><small>AN RTWB PROJECT</small></span></a>
+    <nav class="header-links" aria-label="Project links"><a class="back" href="../">Open the Atlas</a><a class="button" href="https://github.com/Runtheworldbetter/motion-atlas-studio">Motion Atlas on GitHub</a></nav>
+  </header>
+  <div class="layout">
+    <nav class="toc" aria-label="Documentation sections">
+      <strong>ATLAS DOCUMENTATION</strong><span class="version">Version 0.4.0</span>
+      <a href="#start">Get started</a><a href="#cricket">Cricket coaching</a><a href="#ai">AI explanations</a><a href="#save">Save & share</a><a href="#build">Run & customize</a><a href="#architecture">How it fits together</a><a href="#motion-canvas">Motion Canvas & credits</a>
+    </nav>
+    <main id="guide">
+      <p class="eyebrow">YOUR GUIDE TO MOTION ATLAS</p>
+      <h1>Understand it.<br><em>Then make it your own.</em></h1>
+      <p class="lede">A browser workbench for explanations you can play, inspect, and adapt. Start with cricket, AI, or an editable recipe, then follow the source all the way down.</p>
+      <div class="actions"><a class="button" href="../?recipe=cricket&amp;example=full-stroke#studio">Explore the cricket stroke</a><a class="button secondary" href="../?recipe=post-training#studio">Explore AI post-training</a></div>
+      <p class="source-note">Motion Atlas includes the editor, examples, coaching tools, and documentation. Motion Canvas is one of its underlying engines; its developer resources are collected <a href="#motion-canvas">below</a>.</p>
+
+      <section id="start" class="section">
+        <h2><span class="number">01</span>Get started</h2>
+        <ol><li><strong>Choose a recipe.</strong> The Editor tabs cover Cricket, Post-training, Event trace, Waterfall, Code diff, Harmonics, and Pathfinder.</li><li><strong>Inspect the explanation.</strong> Play, pause, scrub, or slow it down. Use stage buttons where available to pause at a named moment.</li><li><strong>Change an input.</strong> In an editable recipe, select a preset or open a local file, edit its input, and choose <strong>Render changes</strong>. <strong>Inspect values</strong> shows the numbers behind the scene.</li></ol>
+        <p>The Collection contains 50 gallery examples. Use categories and search to explore them. Votes and notes in <strong>Your picks</strong> stay in the current browser.</p>
+        <p><a href="https://github.com/Runtheworldbetter/motion-atlas-studio/blob/main/docs/recipes.md">Read all input formats, limits, and calculations</a></p>
+      </section>
+
+      <section id="cricket" class="section">
+        <h2><span class="number">02</span>Cricket: follow the whole stroke</h2>
+        <p>The Cricket tab opens <strong>Complete straight drive</strong>, a simplified, full-stroke illustration. Choose <strong>Custom keyframes</strong> for the existing four-pose JSON editor.</p>
+        <div class="table-scroll"><table><thead><tr><th scope="col">Control</th><th scope="col">What to use it for</th></tr></thead><tbody>
+          <tr><td>Play full stroke</td><td>See set-up, backlift, contact, extension, and finish as one continuous movement. Pause, continue, or replay.</td></tr>
+          <tr><td>Timeline & stages</td><td>Stop at a precise moment. The stroke passes through these checkpoints during normal playback.</td></tr>
+          <tr><td>Handedness</td><td>Choose left-handed, right-handed, or compare both at the same moment. Role colors stay consistent.</td></tr>
+          <tr><td>Side / Bowler’s view</td><td>Inspect forward movement from the side; separate the arms and compare handedness from the bowler’s end.</td></tr>
+          <tr><td>Imprints</td><td>Keep numbered outlines of the bat at 1 Backlift, 2 Contact, and 3 Extension. Rewinding removes future positions.</td></tr>
+          <tr><td>Playback speed</td><td>Slow the same stroke for close inspection without changing its geometry.</td></tr>
+        </tbody></table></div>
+        <h3>Read the colors and hand labels</h3>
+        <div class="table-scroll"><table><thead><tr><th scope="col">Role</th><th scope="col">Left-handed batter</th><th scope="col">Right-handed batter</th></tr></thead><tbody>
+          <tr><td><span class="role"><span class="swatch blue"></span>Top arm / hand</span></td><td>Right</td><td>Left</td></tr>
+          <tr><td><span class="role"><span class="swatch orange"></span>Bottom arm / hand</span></td><td>Left</td><td>Right</td></tr>
+          <tr><td><span class="role"><span class="swatch gold"></span>Bat</span></td><td colspan="2">Both hands stay on the same handle.</td></tr>
+          <tr><td><span class="role"><span class="swatch gray"></span>Gray outlines</span></td><td colspan="2">Earlier bat positions, identified by number.</td></tr>
+        </tbody></table></div>
+        <p>Changing the camera or handedness preserves the current moment. Start with the full stroke, then isolate one observation: the step, grip, path to contact, or follow-through.</p>
+        <div class="note"><p><strong>A teaching illustration.</strong> Positions and timing are authored and synthetic. The model does not measure or grade a player’s video. The public example contains no personal photos, videos, or coaching records.</p></div>
+        <p><strong>Copy this view</strong> shares the handedness, camera, and current stroke position; the link opens paused at that moment. <strong>Save SVG frame</strong> downloads the current illustration as a vector image.</p>
+        <h3 id="cricket-references">Reference videos behind the revision</h3>
+        <p>We inspected public storyboard samples at one- or two-second intervals from these coaching videos, using side and front views to study posture and movement sequence. This was a sampled reference study, rather than continuous playback or motion capture.</p>
+        <ul>
+          <li><a href="https://www.youtube.com/watch?v=DxCZs5SGM0w">Cricket Australia · Steve Smith Masterclass: Straight drive</a> — front / side-oblique at 0:00–0:22, then front / bowler-end after 0:24.</li>
+          <li><a href="https://www.youtube.com/watch?v=FRtWfiepnRc">Lord’s · Ian Bell cover-drive coaching</a> — side-on at 0:24–0:28 and front-oblique at 0:32–0:35. Used for drive sequencing, not the straight drive’s bat direction.</li>
+          <li><a href="https://www.youtube.com/watch?v=Zm9VKD0gH1U">CoachCricXI · HOW to DRIVE</a> — front-on at 0:50–1:28 and side-on at 2:54–3:10.</li>
+        </ul>
+        <p>The authored revision plants the front foot before contact, carries the hands and bat through contact, and lets the shoulder turn settle into a softer finish. Its timing is designed for a clear generic explanation. No source frames or video files are included in Atlas.</p>
+        <p><a href="https://github.com/Runtheworldbetter/motion-atlas-studio/blob/main/docs/cricket.md">Cricket guide and implementation notes</a></p>
+      </section>
+
+      <section id="ai" class="section">
+        <h2><span class="number">03</span>AI: see what reward teaches</h2>
+        <p>The Post-training recipe follows three possible reply strategies and their probabilities. Change the reward scores to see how a small computed policy changes its preference.</p>
+        <ol><li>Start with <strong>Reward evidence</strong>. Step through Before, Reward, Update, and After.</li><li>Choose <strong>Reward confidence</strong>. The starting probabilities stay the same; the supplied scores change.</li><li>Choose <strong>Give equal rewards</strong>. The update leaves the probabilities unchanged.</li></ol>
+        <p>The percentage labels use the calculated probabilities. The 100 dots use rounded shares that always total 100. <strong>Inspect values</strong> lists each update, its expected reward, and the logit gradient.</p>
+        <p>This is a single-prompt, three-action policy-gradient model with supplied rewards. It makes one update rule visible; it is not a simulation of all the processes used to train a language model.</p>
+        <p><a href="https://github.com/Runtheworldbetter/motion-atlas-studio/blob/main/docs/recipes.md#post-training-change-what-earns-a-reward">Input schema and exact update rule</a></p>
+      </section>
+
+      <section id="save" class="section">
+        <h2><span class="number">04</span>Save, export, and share</h2>
+        <div class="table-scroll"><table><thead><tr><th scope="col">Use</th><th scope="col">When you want to…</th></tr></thead><tbody>
+          <tr><td>Share / embed</td><td>Open a supplied example or put its preview in another webpage.</td></tr>
+          <tr><td>Download input</td><td>Keep edited recipe data and reopen it with <strong>Open file</strong>.</td></tr>
+          <tr><td>Download project</td><td>Save the runnable app source with your edited input as its starting recipe.</td></tr>
+          <tr><td>Copy this view</td><td>Share the cricket inspector’s handedness, camera, and paused stroke position.</td></tr>
+          <tr><td>Save SVG frame</td><td>Save the full-stroke cricket illustration as a vector image. Motion Canvas players retain their PNG frame export.</td></tr>
+          <tr><td>Your picks → Export</td><td>Move votes and notes to another browser or keep a backup.</td></tr>
+        </tbody></table></div>
+        <p>Recipe drafts live in memory until you download them. Opened input files are read in your browser. Shared preset links do not carry your edited data; use an input or project download for that.</p>
+        <p><a href="https://github.com/Runtheworldbetter/motion-atlas-studio/blob/main/docs/hosting.md">Hosting and embed examples</a> · <a href="https://github.com/Runtheworldbetter/motion-atlas-studio/blob/main/docs/privacy.md">Data and privacy</a></p>
+      </section>
+
+      <section id="build" class="section">
+        <h2><span class="number">05</span>Run and customize</h2>
+        <p>Install Node.js 22.13 or newer and npm, then clone the Atlas. No API keys or database setup are needed.</p>
+        <pre><code>git clone https://github.com/Runtheworldbetter/motion-atlas-studio.git
+cd motion-atlas-studio
+npm ci
+npm run dev</code></pre>
+        <p>Open the local address printed by Vite. A downloaded source ZIP works the same way after extraction; start with <code>npm ci</code>.</p>
+        <h3>Check and build a change</h3>
+        <pre><code>npm test
+npm run typecheck
+node scripts/generate-notices.mjs --check
+npm run build
+npm run preview</code></pre>
+        <p>The build produces a static site in <code>dist/</code>, including these docs, dependency notices, and a downloadable source ZIP. It can run at a domain root or a subdirectory such as a GitHub Pages project.</p>
+        <p>To add a recipe, start with a neighboring definition in <code>lib/recipes/</code>, keep calculations in a pure input model, and register it in the recipe catalog. Follow the <a href="https://github.com/Runtheworldbetter/motion-atlas-studio/blob/main/CONTRIBUTING.md">contribution guide</a> for validation and review.</p>
+      </section>
+
+      <section id="architecture" class="section">
+        <h2><span class="number">06</span>How the project fits together</h2>
+        <div class="table-scroll"><table><thead><tr><th scope="col">Part</th><th scope="col">Responsibility</th></tr></thead><tbody>
+          <tr><td>Motion Atlas</td><td>The complete project: editor, input models, examples, coaching tools, downloads, and docs.</td></tr>
+          <tr><td>Motion Canvas</td><td>Animation engine for the editable recipes and gallery scenes.</td></tr>
+          <tr><td>React + SVG</td><td>Interactive full-stroke cricket inspector, with immediate camera changes over a shared pose model.</td></tr>
+          <tr><td><code>src/</code></td><td>App interface, players, preferences, and sharing.</td></tr>
+          <tr><td><code>lib/</code></td><td>Recipe definitions, pure models, scene factories, and the animation runtime.</td></tr>
+          <tr><td><code>lib/cricket/pose.ts</code></td><td>Fixed-length limb geometry, the planted foot, and quintic Hermite motion curves with shared velocity and acceleration at checkpoints.</td></tr>
+          <tr><td><code>lib/cricket/render.ts</code></td><td>Camera projections, colored figure, bat imprints, and SVG drawing.</td></tr>
+          <tr><td><code>src/CricketStroke.tsx</code></td><td>Full-stroke playback, view controls, inspection links, and SVG export.</td></tr>
+          <tr><td><code>tests/</code></td><td>Checks for input validation, calculations, and geometry.</td></tr>
+          <tr><td><code>docs/</code> + <code>public/docs/</code></td><td>Detailed source guides and this browser-readable entry point.</td></tr>
+        </tbody></table></div>
+      </section>
+
+      <section id="motion-canvas" class="section">
+        <h2><span class="number">07</span>Motion Canvas and credits</h2>
+        <p>Motion Canvas provides a TypeScript animation system used by Atlas’s editable recipes and gallery. For a recipe change, begin with the Atlas input guide. For scene authoring and engine APIs, continue to the upstream documentation.</p>
+        <div class="footlinks"><a href="https://motioncanvas.io/docs/">Motion Canvas documentation</a><a href="https://github.com/motion-canvas/motion-canvas">Motion Canvas on GitHub</a><a href="https://motioncanvas.io/">Motion Canvas website</a></div>
+        <h3>Licenses travel with the source</h3>
+        <p>RTWB maintains Motion Atlas. Atlas’s authored code uses the MIT license; third-party projects keep their own licenses. Thank you to the Motion Canvas creators and contributors and to the maintainers of React, Vite, and the other dependencies.</p>
+        <div class="footlinks"><a href="https://github.com/Runtheworldbetter/motion-atlas-studio/blob/main/LICENSE">Atlas MIT license</a><a href="../third-party-notices.txt">Full third-party notices</a><a href="https://github.com/Runtheworldbetter/motion-atlas-studio/blob/main/docs/attribution.md">Attribution process</a><a href="../motion-atlas-source.zip" download>Download complete source</a></div>
+      </section>
+    </main>
+  </div>
+  <footer><a href="../">Open Motion Atlas</a><a href="https://github.com/Runtheworldbetter/motion-atlas-studio">Motion Atlas on GitHub</a><span>RTWB · 0.4.0</span></footer>
+</body>
+</html>
