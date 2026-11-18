@@ -14,9 +14,9 @@ export const appliedResults: Record<string, RecipeResult> = Object.fromEntries(
 );
 export const appliedSpecs: SceneSpec[] = [
   {
-    id: 'cricket-coaching', title: 'See the contact moment', category: 'Sports & coaching',
-    description: 'Follow a batting stroke, freeze contact, and compare the grip and bat path across four phases.',
-    technique: 'Jointed athlete · labeled traces · contact close-up · frame controls',
+    id: 'cricket-coaching', title: 'The complete straight drive', category: 'Sports & coaching',
+    description: 'Follow the whole stroke, switch between side and bowler views, and compare left- and right-handed batting with numbered bat imprints.',
+    technique: 'Continuous stroke · two cameras · both hands · numbered bat imprints',
     tags: ['cricket', 'coaching', 'batting', 'biomechanics', 'recipe'], color: P.teal,
   },
   {

@@ -2,7 +2,7 @@
 
 ## Motion Canvas
 
-[Motion Canvas](https://github.com/motion-canvas/motion-canvas) provides the animation engine used throughout Motion Atlas. Thank you to its creators and contributors for building and maintaining it. Its [documentation](https://motioncanvas.io/docs/) explains how to build your own animations.
+[Motion Canvas](https://github.com/motion-canvas/motion-canvas) provides the animation engine for Motion Atlas's editable recipes and gallery scenes. The complete-stroke cricket inspector uses React and SVG with an Atlas pose model. Thank you to the Motion Canvas creators and contributors for building and maintaining it. Its [documentation](https://motioncanvas.io/docs/) explains how to build your own animations.
 
 RTWB maintains the Motion Atlas editor, gallery scenes, recipes, and examples. That code uses the [MIT license](../LICENSE). Dependencies keep their own licenses, listed below.
 

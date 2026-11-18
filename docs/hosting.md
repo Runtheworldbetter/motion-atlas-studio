@@ -41,6 +41,7 @@ Append a query to the deployed entry-page URL:
 | `?scene=parametric-knot` | Open a gallery scene |
 | `?recipe=trace&example=human-correction` | Open a recipe with a supplied preset |
 | `?recipe=cricket` | Open the cricket coaching recipe |
+| `?recipe=cricket&example=full-stroke#studio` | Open the complete straight-drive inspector |
 | `?recipe=cricket&handedness=left&mirror=0` | Left-handed batter, bowler to the right |
 | `?recipe=cricket&handedness=right&mirror=1` | Right-handed batter, flipped camera view |
 | `?recipe=post-training` | Open the policy-gradient recipe |
@@ -50,6 +51,8 @@ Append a query to the deployed entry-page URL:
 | `?recipe=trace&example=human-correction&embed=1` | Show a focused preset preview |
 
 Recipe IDs are `cricket`, `post-training`, `trace`, `waterfall`, `code`, `fourier`, and `pathfinding`. The app's **Share / embed** controls generate these links. To share edited input, download the input or a project ZIP.
+
+The browser-readable Atlas documentation lives at `docs/` relative to the deployed entry page. It ships in the same build and works at a domain root or GitHub Pages subdirectory.
 
 The Cricket and Post-training recipe embeds include stage buttons that pause at the selected point. Both scenes hold their final frame when playback finishes. Allow room below the canvas for these controls; open the player in full screen when a small embed makes annotations difficult to read.
 

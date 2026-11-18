@@ -51,3 +51,7 @@
 .motion-player:fullscreen .chapter-controls{flex:0 0 auto;width:100%;max-width:1200px;margin-inline:auto}
 @media(max-width:1050px){.recipe-tabs{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:7px}.recipe-tabs>button{border-radius:7px;padding:13px 8px 18px;min-height:51px}}
 @media(max-width:600px){.recipe-tabs{grid-template-columns:repeat(3,minmax(0,1fr));padding:5px}.recipe-tabs>button{flex-direction:row;font-size:12px;min-height:52px;padding:10px 6px 17px;gap:6px}.recipe-tabs>button svg{width:15px;height:15px;flex-shrink:0}.chapter-controls{padding:12px}.chapter-buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.chapter-buttons button{font-size:12px;min-height:44px;gap:7px}.chapter-description{font-size:12px}.frame-step-controls{gap:9px;justify-content:space-between}.frame-step-controls button{min-height:40px}.motion-player:fullscreen .chapter-description{display:none}}
+
+/* Atlas is the project entry point; upstream resources live in its docs. */
+.upstream-credit p{font-size:15px}.upstream-credit .upstream-thanks{font-size:13px}.upstream-links a{font-size:14px;min-height:46px;padding:12px 17px}.github-button{font-size:13px;font-weight:600;background:#eaf1de;border-color:#afc593}.site-footer>div{flex-wrap:wrap}.upstream-credit .upstream-links a{white-space:nowrap}
+@media(max-width:480px){.upstream-credit p{font-size:14px}.upstream-credit .upstream-thanks{font-size:12px}.header-actions .github-button{padding:9px 10px;font-size:12px}.upstream-credit .upstream-links a{white-space:normal}}

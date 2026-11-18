@@ -1,12 +1,16 @@
 # Motion Atlas
 
-## Built with [Motion Canvas](https://github.com/motion-canvas/motion-canvas)
+An open source animation workbench from RTWB. Explore explanations, inspect their values, and adapt them to your own data. Motion Atlas brings together cricket coaching tools, AI explanations, seven editable recipes, and 50 gallery examples.
 
-Motion Canvas is the open source animation engine used throughout Motion Atlas. Thank you to its creators and contributors. Visit the [Motion Canvas website](https://motioncanvas.io/) and [documentation](https://motioncanvas.io/docs/) to use it in your own projects.
+**[Open Motion Atlas](https://runtheworldbetter.github.io/motion-atlas-studio/) · [Read the Atlas docs](https://runtheworldbetter.github.io/motion-atlas-studio/docs/) · [Browse the source](https://github.com/Runtheworldbetter/motion-atlas-studio)**
 
-RTWB maintains this browser editor, its seven editable recipes, and 50 gallery examples. The recipes cover cricket coaching, policy-gradient updates, event traces, waterfalls, code diffs, waveforms, and pathfinding.
+[Cricket: complete straight drive](https://runtheworldbetter.github.io/motion-atlas-studio/?recipe=cricket&example=full-stroke#studio) · [AI: see what reward teaches](https://runtheworldbetter.github.io/motion-atlas-studio/?recipe=post-training#studio) · [Input formats](docs/recipes.md) · [Contributing](CONTRIBUTING.md)
 
-[Open Motion Atlas](https://runtheworldbetter.github.io/motion-atlas-studio/) · [Source on GitHub](https://github.com/Runtheworldbetter/motion-atlas-studio) · [Input formats](docs/recipes.md) · [Contributing](CONTRIBUTING.md)
+## New in 0.4.0
+
+The cricket inspector plays a complete straight drive with continuous movement through its checkpoints. Switch between side and bowler-end views, choose left-handed, right-handed, or a comparison, and keep the same point in the stroke. The top arm and hand are blue, the bottom arm and hand orange, and the bat gold. Numbered bat imprints mark backlift, contact, and extension.
+
+The website now puts **Motion Atlas on GitHub** and **Motion Atlas docs** at the front. The documentation covers the complete project, including the Motion Canvas engine used for the editable recipes and the SVG renderer used for the stroke inspector.
 
 ## Use the editor
 
@@ -16,7 +20,7 @@ Each recipe starts with an example you can edit:
 
 | Recipe | Input | What it explains |
 | --- | --- | --- |
-| Cricket | JSON pose keyframes | Left/right batting modes, labeled hands and feet, and a two-hand close-up |
+| Cricket | Complete-stroke inspector and editable JSON pose studies | Full-stroke playback, two cameras, handedness, and numbered bat imprints |
 | Post-training | JSON probabilities and reward scores | How a supplied scoring rule changes a small policy |
 | Trace | JSON events | Who did what, when, including handoffs and corrections |
 | Waterfall | CSV contributions | How positive and negative changes produce a total |
@@ -28,7 +32,9 @@ Choose an example, edit it or open a local file, then select **Render changes**.
 
 Cricket and Post-training have stage buttons. Select a stage to pause at that point, then scrub or play from there. These two explanations hold their final frame when playback ends. Cricket uses constructed poses; Post-training computes each probability update from the supplied reward scores. The **Inspect values** tab shows the underlying numbers.
 
-Cricket has **Left-handed** and **Right-handed** controls and a separate **Flip camera view** option. Hand and foot labels follow the selected batter. Changing modes preserves the current frame, playback speed, and edited poses. Recipe share links, embeds, and downloads retain the batting mode and camera direction.
+The default cricket view, **Complete straight drive**, includes **Side view**, **Bowler’s view**, and a handedness comparison. **Play full stroke** follows the whole movement; the timeline and named checkpoints let you inspect it. [Cricket guide](docs/cricket.md) explains the colors, imprints, views, and teaching limits.
+
+Choose **Custom keyframes** to edit the additional four-pose cricket presets through JSON. They have **Left-handed** and **Right-handed** controls and a separate **Flip camera view** option. Hand and foot labels follow the selected batter. Changing modes preserves the current frame, playback speed, and edited poses. Recipe share links, embeds, and downloads retain these view settings.
 
 Share a link or embed a gallery scene or recipe preset. To keep or share your edits, download the input or a project ZIP. The ZIP contains the app source and opens with your edited input. You can also save the current frame as a PNG image.
 
@@ -88,11 +94,13 @@ Publish updates with **Actions → Deploy to GitHub Pages → Run workflow** on 
 | `lib/recipes/` | Recipe definitions, presets, pure input models, and animation factories |
 | `tests/` | Input validation and algorithm/model checks |
 | `scripts/` | Dependency notices and downloadable source packaging |
-| `public/` | Static assets and full third-party notices |
-| `docs/` | Input formats, privacy, hosting, and attribution details |
+| `public/` | Browser-readable Atlas documentation, static assets, and full third-party notices |
+| `docs/` | Guides, input formats, privacy, hosting, and attribution details |
 
 ## Versions and attribution
 
-The public app is version **0.3.0**. Direct runtime dependencies are Motion Canvas core/2d **3.17.2**, React/React DOM **19.2.6**, and Lucide React **1.31.0**. The build uses Vite **8.0.13** and TypeScript **5.9.3**; `package.json` and `package-lock.json` are the authoritative version records.
+The public app is version **0.4.0**. Direct runtime dependencies are Motion Canvas core/2d **3.17.2**, React/React DOM **19.2.6**, and Lucide React **1.31.0**. The build uses Vite **8.0.13** and TypeScript **5.9.3**; `package.json` and `package-lock.json` are the authoritative version records.
+
+[Motion Canvas](https://github.com/motion-canvas/motion-canvas) powers the editable animation recipes and gallery scenes. The complete-stroke coaching inspector uses React and SVG with a shared pose model. Atlas owns the surrounding editor, input models, controls, examples, and documentation. Thank you to the Motion Canvas creators and contributors; its [documentation](https://motioncanvas.io/docs/) explains the underlying engine.
 
 Motion Atlas code and examples use the [MIT license](LICENSE). Dependency licenses and attribution are included in [third-party notices](public/third-party-notices.txt). [Attribution](docs/attribution.md) explains how those notices are collected and checked.

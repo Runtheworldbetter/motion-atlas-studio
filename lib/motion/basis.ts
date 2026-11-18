@@ -202,7 +202,7 @@ export const sceneBases: Record<string, SceneBasis> = {
 export function getSceneBasis(id: string): SceneBasis {
   if (id === 'cricket-coaching') return {
     label: 'Synthetic motion, computed geometry',
-    detail: 'Authored batting keyframes drive a jointed figure with two hands on one handle. Bat angles, traces, and ball contact are calculated from those frames. Open the Cricket recipe to edit the poses.',
+    detail: 'A continuous authored stroke keeps both hands attached to the bat and limb lengths fixed. Side and bowler views share the same geometry; numbered imprints show backlift, contact, and extension. Open Cricket to compare hands or inspect the stroke.',
   };
   if (id === 'post-training-feedback') return {
     label: 'Computed policy-gradient model',

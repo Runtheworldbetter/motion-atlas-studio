@@ -10,6 +10,10 @@ Download the input or project before closing or reloading the page to keep your 
 
 ## Cricket: inspect a swing
 
+The default **Complete straight drive** view opens the full-stroke coaching inspector: side and bowler-end cameras, left/right handedness and comparison, continuous playback, a timeline, and numbered bat imprints. See the [cricket guide](cricket.md) for those controls. Choose **Custom keyframes** for the four-pose Motion Canvas input format below. The full-stroke inspector uses a separate SVG pose model.
+
+### Editable four-pose studies
+
 Use **Left-handed** or **Right-handed** above the input. The grip close-up names the top and bottom hands, and the main figure labels the front and back feet. A left-handed batter has the right hand on top and right foot in front; a right-handed batter has the left hand on top and left foot in front. **Flip camera view** changes screen direction independently. The front arm connects to the top hand in both modes.
 
 Mode changes keep your edited poses, current frame, play/pause state, and playback speed. Fix an invalid input before switching modes. Preset selection keeps your handedness; the reversed-view preset changes the camera direction. Share links and recipe embeds include both settings. For example, append `&handedness=right&mirror=0` to a cricket recipe link to choose a right-handed batter with the bowler to the right. Input and project downloads also retain these settings.
