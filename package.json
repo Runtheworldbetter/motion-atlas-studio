@@ -1,8 +1,8 @@
 {
   "name": "motion-atlas",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
-  "description": "Motion Atlas: interactive coaching, AI explanations, and reusable animation recipes.",
+  "description": "Motion Atlas: interactive visual explanations, playable music experiments, and reusable animation recipes.",
   "license": "MIT",
   "type": "module",
   "engines": {

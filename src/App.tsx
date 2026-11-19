@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useRef, useState} from 'react';
+import {Suspense, lazy, useEffect, useMemo, useRef, useState} from 'react';
 import {
   Activity, ArrowDownToLine, ArrowRight, AudioLines, BarChart3, BookOpen, Braces, BrainCircuit,
   Check, CheckCircle2, ChevronDown, Code2, Copy, ExternalLink, FileJson,
@@ -17,6 +17,8 @@ import {MotionPlayer, useReducedMotion} from './Player';
 import {CodeEditor, Dialog, VoteButtons} from './components';
 import initialRecipe from './initial-recipe';
 import {CricketStroke} from './CricketStroke';
+import ExplorationAtlas from './labs/ExplorationAtlas';
+const MusicLab = lazy(() => import('./labs/MusicLab'));
 
 const REPOSITORY = 'https://github.com/Runtheworldbetter/motion-atlas-studio';
 const MOTION_CANVAS_PROJECT = 'https://github.com/motion-canvas/motion-canvas';
@@ -259,15 +261,15 @@ export default function App() {
 
   return <>
     <a href="#studio" className="skip-link">Skip to editor</a>
-    <header className="site-header"><a className="brand" href={location.pathname} aria-label="Motion Atlas home"><span className="brand-mark">m</span><span>motion<span className="brand-serif">atlas</span><small>AN RTWB PROJECT</small></span></a><nav aria-label="Main navigation"><a href="#studio">Editor</a><a href="#collection">Collection <span>{specs.length}</span></a><a href={ATLAS_DOCS}>Docs</a></nav><div className="header-actions"><button className="text-button saved-button" onClick={() => setPreferencesOpen(true)}><Heart size={16}/> Your picks {votedCount > 0 && <span className="count-badge">{votedCount}</span>}</button><a className="github-button" href={REPOSITORY} target="_blank" rel="noreferrer"><Code2 size={17}/><span>Atlas GitHub</span></a></div></header>
+    <header className="site-header"><a className="brand" href={location.pathname} aria-label="Motion Atlas home"><span className="brand-mark">m</span><span>motion<span className="brand-serif">atlas</span><small>AN RTWB PROJECT</small></span></a><nav aria-label="Main navigation"><a href="#explore">Explore</a><a className="music-nav" href="#music-lab">Music Lab</a><a href="#studio">Editor</a><a href="#collection">Collection <span>{specs.length}</span></a><a href={ATLAS_DOCS}>Docs</a></nav><div className="header-actions"><button className="text-button saved-button" onClick={() => setPreferencesOpen(true)}><Heart size={16}/> Your picks {votedCount > 0 && <span className="count-badge">{votedCount}</span>}</button><a className="github-button" href={REPOSITORY} target="_blank" rel="noreferrer"><Code2 size={17}/><span>Atlas GitHub</span></a></div></header>
 
     <main>
-      <section className="intro page-width"><div><p className="eyebrow"><span className="status-dot"/> MOTION ATLAS · EXAMPLES & EDITOR</p><h1>Animate your <em>data and code.</em></h1><p className="intro-copy">Choose an example, edit the input, and render the animation.</p></div><div className="intro-aside"><span className="local-badge"><ShieldCheck size={15}/> Runs in your browser</span><p>Your files are processed on your device.<br/>Download a project to keep editing.</p></div></section>
+      <section className="intro page-width"><div><p className="eyebrow"><span className="status-dot"/> MOTION ATLAS · EXPLANATIONS & EXPERIMENTS</p><h1>Make an idea <em>visible.</em></h1><p className="intro-copy">Explore a model, change an input, or make something you can hear.</p></div><div className="intro-aside"><span className="local-badge"><ShieldCheck size={15}/> Runs in your browser</span><p>Your files are processed on your device.<br/>Download the source to keep building.</p></div></section>
 
       <section className="upstream-credit page-width" aria-labelledby="atlas-source-heading">
         <div>
           <h2 id="atlas-source-heading">Make it yours with Motion Atlas.</h2>
-          <p>Explore the source, reuse an explanation, or build your own. The editor, recipes, and coaching tools live together in one open source project.</p>
+          <p>Interactive explanations, music experiments and editable animations in one open source project.</p>
           <p className="upstream-thanks">Built by RTWB. Powered by Motion Canvas and browser-native graphics.</p>
         </div>
         <div className="upstream-links">
@@ -275,6 +277,9 @@ export default function App() {
           <a href={ATLAS_DOCS}><BookOpen size={18}/> Motion Atlas docs</a>
         </div>
       </section>
+
+      <ExplorationAtlas/>
+      <Suspense fallback={<section id="music-lab" className="page-width lab-loading">Opening Music Lab…</section>}><MusicLab/></Suspense>
 
       <section id="studio" className="studio page-width" aria-label="Recipe editor">
         <div className="section-heading"><div className="section-kicker"><span>01</span> EDITOR</div></div>
