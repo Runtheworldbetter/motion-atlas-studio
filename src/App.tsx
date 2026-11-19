@@ -261,15 +261,15 @@ export default function App() {
 
   return <>
     <a href="#studio" className="skip-link">Skip to editor</a>
-    <header className="site-header"><a className="brand" href={location.pathname} aria-label="Motion Atlas home"><span className="brand-mark">m</span><span>motion<span className="brand-serif">atlas</span><small>AN RTWB PROJECT</small></span></a><nav aria-label="Main navigation"><a href="#explore">Explore</a><a className="music-nav" href="#music-lab">Music Lab</a><a href="#studio">Editor</a><a href="#collection">Collection <span>{specs.length}</span></a><a href={ATLAS_DOCS}>Docs</a></nav><div className="header-actions"><button className="text-button saved-button" onClick={() => setPreferencesOpen(true)}><Heart size={16}/> Your picks {votedCount > 0 && <span className="count-badge">{votedCount}</span>}</button><a className="github-button" href={REPOSITORY} target="_blank" rel="noreferrer"><Code2 size={17}/><span>Atlas GitHub</span></a></div></header>
+    <header className="site-header atlas-with-explorations"><a className="brand" href={location.pathname} aria-label="Motion Atlas home"><span className="brand-mark">m</span><span>motion<span className="brand-serif">atlas</span><small>AN RTWB PROJECT</small></span></a><nav className="atlas-main-navigation" aria-label="Main navigation"><a href="#studio">Editor</a><a href="#collection">Collection <span>{specs.length}</span></a><a href="#explore">Explore</a><a href="#music-lab">Music Lab</a><a href={ATLAS_DOCS}>Docs</a></nav><div className="header-actions"><button className="text-button saved-button" onClick={() => setPreferencesOpen(true)}><Heart size={16}/> Your picks {votedCount > 0 && <span className="count-badge">{votedCount}</span>}</button><a className="github-button" href={REPOSITORY} target="_blank" rel="noreferrer"><Code2 size={17}/><span>Atlas GitHub</span></a></div></header>
 
     <main>
-      <section className="intro page-width"><div><p className="eyebrow"><span className="status-dot"/> MOTION ATLAS · EXPLANATIONS & EXPERIMENTS</p><h1>Make an idea <em>visible.</em></h1><p className="intro-copy">Explore a model, change an input, or make something you can hear.</p></div><div className="intro-aside"><span className="local-badge"><ShieldCheck size={15}/> Runs in your browser</span><p>Your files are processed on your device.<br/>Download the source to keep building.</p></div></section>
+      <section className="intro page-width"><div><p className="eyebrow"><span className="status-dot"/> MOTION ATLAS · EXAMPLES & EDITOR</p><h1>Animate your <em>data and code.</em></h1><p className="intro-copy">Choose an example, edit the input, and render the animation.</p></div><div className="intro-aside"><span className="local-badge"><ShieldCheck size={15}/> Runs in your browser</span><p>Your files are processed on your device.<br/>Download a project to keep editing.</p></div></section>
 
       <section className="upstream-credit page-width" aria-labelledby="atlas-source-heading">
         <div>
           <h2 id="atlas-source-heading">Make it yours with Motion Atlas.</h2>
-          <p>Interactive explanations, music experiments and editable animations in one open source project.</p>
+          <p>Explore the source, reuse an explanation, or build your own. The editor, recipes, and coaching tools live together in one open source project.</p>
           <p className="upstream-thanks">Built by RTWB. Powered by Motion Canvas and browser-native graphics.</p>
         </div>
         <div className="upstream-links">
@@ -277,9 +277,6 @@ export default function App() {
           <a href={ATLAS_DOCS}><BookOpen size={18}/> Motion Atlas docs</a>
         </div>
       </section>
-
-      <ExplorationAtlas/>
-      <Suspense fallback={<section id="music-lab" className="page-width lab-loading">Opening Music Lab…</section>}><MusicLab/></Suspense>
 
       <section id="studio" className="studio page-width" aria-label="Recipe editor">
         <div className="section-heading"><div className="section-kicker"><span>01</span> EDITOR</div></div>
@@ -335,6 +332,9 @@ export default function App() {
         {!filtered.length && <div className="empty-state"><Search size={28}/><h3>No matching examples.</h3><p>Try a different search or clear your filters.</p><button className="secondary-button" onClick={() => {setQuery(''); setCategory('All examples'); setVoteFilter('all');}}>Clear filters</button></div>}
         <div className="collection-footnote"><ShieldCheck size={15}/><span>Your votes and notes are saved in this browser. Export them to use on another device.</span><button className="text-button" onClick={() => setPreferencesOpen(true)}>Review your picks <ArrowRight size={14}/></button></div>
       </section>
+
+      <ExplorationAtlas/>
+      <Suspense fallback={<section id="music-lab" className="page-width lab-loading">Opening Music Lab…</section>}><MusicLab/></Suspense>
 
       <section id="guide" className="guide page-width"><div className="section-kicker"><span>03</span> QUICK START</div><h2>Using the <em>editor.</em></h2><div className="guide-grid"><article><span className="guide-number">01</span><h3>Edit an example</h3><p>Choose a recipe and edit its text, or open a local file.</p></article><article><span className="guide-number">02</span><h3>Preview the animation</h3><p>Click Render changes. Pause or scrub the timeline, and use Inspect values to check the numbers.</p></article><article><span className="guide-number">03</span><h3>Save or share</h3><p>Download your input, a runnable project, or a PNG. Share links and embeds open the selected preset.</p></article></div><div className="open-source-banner"><div><p className="eyebrow">SOURCE CODE</p><h3>Run the editor locally</h3><p>Install Node.js 22.13 or newer, download the source, and run:</p></div><div><code>npm ci<br/>npm run dev</code><div className="banner-links"><a className="secondary-button" href="./motion-atlas-source.zip" download><ArrowDownToLine size={15}/> Download source</a><a className="text-button" href={REPOSITORY} target="_blank" rel="noreferrer">GitHub <ExternalLink size={14}/></a></div></div></div></section>
     </main>
