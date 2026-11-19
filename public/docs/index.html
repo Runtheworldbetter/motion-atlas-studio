@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="The Motion Atlas 0.5.0 guide: explore 13 interactive studies, play in Music Lab, use 50 gallery examples and seven recipes, and export frames, models and music.">
+  <meta name="description" content="The Motion Atlas 0.5.1 guide: the original editor and 50-scene collection, 15 interactive studies, six Music Lab experiments, and frame, model and music exports.">
   <title>Documentation · Motion Atlas</title>
   <style>
     :root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#263a2e;background:#f5f6ef;font-synthesis:none;--ink:#263a2e;--muted:#657268;--line:#d8e0d1;--lime:#d6edaa;--paper:#f5f6ef}
@@ -20,23 +20,24 @@
   </header>
   <div class="layout">
     <nav class="toc" aria-label="Documentation sections">
-      <strong>ATLAS DOCUMENTATION</strong><span class="version">Version 0.5.0</span>
-      <a href="#start">Get started</a><a href="#explorations">13 explorable studies</a><a href="#music">Music Lab</a><a href="#cricket">Cricket coaching</a><a href="#ai">AI explanations</a><a href="#save">Save & share</a><a href="#build">Run & customize</a><a href="#architecture">How it fits together</a><a href="#motion-canvas">Motion Canvas & credits</a>
+      <strong>ATLAS DOCUMENTATION</strong><span class="version">Version 0.5.1</span>
+      <a href="#start">Get started</a><a href="#explorations">15 explorable studies</a><a href="#music">Music Lab</a><a href="#cricket">Cricket coaching</a><a href="#ai">AI explanations</a><a href="#save">Save & share</a><a href="#build">Run & customize</a><a href="#architecture">How it fits together</a><a href="#motion-canvas">Motion Canvas & credits</a>
     </nav>
     <main id="guide">
       <p class="eyebrow">YOUR GUIDE TO MOTION ATLAS</p>
       <h1>Understand it.<br><em>Then make it your own.</em></h1>
       <p class="lede">A browser workbench for explanations you can play, inspect, and adapt. Explore systems, stories, AI, physics, and materials—or make something you can hear in Music Lab.</p>
-      <div class="actions"><a class="button" href="../#explore">Explore the 13 studies</a><a class="button secondary" href="../#music-lab">Open Music Lab</a><a class="button secondary" href="../#collection">Browse the Collection</a></div>
-      <p class="source-note">Version 0.5.0 adds 13 studies and three Music Lab experiments alongside the existing 50 gallery examples and seven editable recipes. Motion Canvas is one of the underlying engines; its developer resources are collected <a href="#motion-canvas">below</a>.</p>
+      <div class="actions"><a class="button" href="../#studio">Open the Editor</a><a class="button secondary" href="../#collection">Browse the Collection</a><a class="button secondary" href="../#explore">Explore the 15 studies</a><a class="button secondary" href="../#music-lab">Open Music Lab</a></div>
+      <p class="source-note">Version 0.5.1 restores the original Editor → Collection presentation, followed by 15 studies and six Music Lab experiments. The 50 gallery examples, seven editable recipes, players, and coaching tools are unchanged. Motion Canvas resources are collected <a href="#motion-canvas">below</a>.</p>
+      <p class="source-note">Three New Directions studies return with their original illustrations and interactions: <a href="../#explore/correction">Correct one assumption</a>, <a href="../#explore/continuity">Follow the same object</a>, and <a href="../#explore/typography">Words that take shape</a>.</p>
 
       <section id="start" class="section">
         <h2><span class="number">01</span>Get started</h2>
         <div class="table-scroll"><table><thead><tr><th scope="col">Start here</th><th scope="col">What you can do</th></tr></thead><tbody>
-          <tr><td><a href="../#explore">Explore</a></td><td>Open one of 13 studies, change its inputs, inspect its components, or follow a model.</td></tr>
-          <tr><td><a href="../#music-lab">Music Lab</a></td><td>See a sound, build a timbre, and compose a short melody in three dedicated tabs.</td></tr>
           <tr><td><a href="../#studio">Editor</a></td><td>Edit seven reusable recipes: Cricket, Post-training, Event trace, Waterfall, Code diff, Harmonics, and Pathfinder.</td></tr>
           <tr><td><a href="../#collection">Collection</a></td><td>Browse 50 gallery examples across math, systems, data stories, motion craft, and sports.</td></tr>
+          <tr><td><a href="../#explore">Explore</a></td><td>Open one of 15 studies, change its inputs, inspect its components, or follow a model.</td></tr>
+          <tr><td><a href="../#music-lab">Music Lab</a></td><td>Choose from three Atlas experiments and three original Chrome Music Lab instruments in one six-tab surface.</td></tr>
         </tbody></table></div>
         <p>In the Editor, select a preset or open a local input file, change its data, and choose <strong>Render changes</strong>. Play, pause, scrub, slow down, or use named stages where available. <strong>Inspect values</strong> shows the numbers behind the recipe.</p>
         <p>The Collection contains 50 gallery examples. Use categories and search to explore them. Votes and notes in <strong>Your picks</strong> stay in the current browser.</p>
@@ -44,10 +45,13 @@
       </section>
 
       <section id="explorations" class="section">
-        <h2><span class="number">02</span>Thirteen ideas to get your hands on</h2>
+        <h2><span class="number">02</span>Fifteen ideas to get your hands on</h2>
         <p>Open <strong>Explore</strong>, choose a category or search, then select a card. It expands into a detail view and returns to its place when closed. Escape also closes it; reduced-motion preferences are respected. Each study includes <strong>Model, source and inspiration</strong> notes.</p>
-        <p>Dense mechanism and trajectory diagrams scroll inside their own canvas on narrow screens to preserve readable labels. With reduced motion enabled, explicitly started gear, spacecraft, projectile, and material playback advances at four updates per second. You can also scrub directly to a chosen moment.</p>
+        <p>Mechanism and trajectory diagrams show the whole figure on narrow screens. Choose <strong>Enlarge to read labels</strong> for a locally scrolling detail view, then <strong>Show whole diagram</strong> to return. With reduced motion enabled, explicitly started gear, projectile, and material playback advances at four updates per second. You can also scrub directly to a chosen moment.</p>
         <div class="table-scroll"><table><thead><tr><th scope="col">Open a study</th><th scope="col">Try the interaction</th><th scope="col">Read the model</th></tr></thead><tbody>
+          <tr><td><a href="../#explore/correction">Correct one assumption</a><br><small>Stories · restored</small></td><td>Review the fictional evidence, correct an opening date, and inspect Original, Corrected, or Compare views across five checkpoints.</td><td>Explicit dependency rules change only actions affected by the opening date. An unrelated Tuesday action stays fixed; grey imprints are labelled. Original Atlas example.</td></tr>
+          <tr><td><a href="../#explore/continuity">Follow the same object</a><br><small>Stories · restored</small></td><td>Select a book and follow it from Shelf to Themes to Reading time, using playback or the scrubber.</td><td>Twelve fictional books retain stable identities and selection across layouts; reading hours are illustrative.<br><a href="https://r2d3.us/visual-intro-to-machine-learning-part-1/">Identity-continuity inspiration: R2D3</a></td></tr>
+          <tr><td><a href="../#explore/typography">Words that take shape</a><br><small>Stories · restored</small></td><td>Follow five inputs into SHARED CONTEXT and then CLEAR ACTION. Inspect four checkpoints or replay the 14-second sequence.</td><td>Original SVG typography illustrates a narrative, not measured data. No GSAP code or fonts are copied.<br><a href="https://tympanus.net/codrops/2026/11/10/kinetic-typography-gsap/">Kinetic-typography inspiration: Codrops</a></td></tr>
           <tr><td><a href="../#explore/classification">Follow a classification</a><br><small>AI</small></td><td>Keep the same observations in view as features become a rule, a tree and a prediction.</td><td>Original classification model with synthetic data and held-out examples.<br><a href="https://r2d3.us/visual-intro-to-machine-learning-part-1/">Inspiration: R2D3</a></td></tr>
           <tr><td><a href="../#explore/slide-canvas">Slides become places</a><br><small>Stories</small></td><td>Move into a slide, follow the story, then zoom out to see how the whole argument fits together.</td><td>Original six-slide example with an animated camera and keyboard navigation.<br><a href="https://reactflow.dev/learn/tutorials/slide-shows-with-react-flow">Inspiration: React Flow slideshow</a></td></tr>
           <tr><td><a href="../#explore/state-machine">Events change the state</a><br><small>Systems</small></td><td>Try guards, delays, failures and retries. See which transition an event actually permits.</td><td>An explicit, inspectable state machine with illustrative events.<br><a href="https://sketch.stately.ai/">Inspiration: Stately Sketch</a></td></tr>
@@ -55,7 +59,6 @@
           <tr><td><a href="../#explore/neighborhood">Find the relevant neighborhood</a><br><small>Systems</small></td><td>Search a graph and keep nearby relationships clear while unrelated nodes recede.</td><td>Original graph with synthetic nodes and explicit relationships.<br><a href="https://www.sigmajs.org/">Inspiration: Sigma.js</a></td></tr>
           <tr><td><a href="../#explore/markov">Edit the probabilities</a><br><small>Systems</small></td><td>Change a transition matrix and watch how persistence changes paths and distributions.</td><td>Computed Markov process; each transition row is normalized to sum to one.<br><a href="https://setosa.io/ev/markov-chains/">Inspiration: Setosa Markov Chains</a></td></tr>
           <tr><td><a href="../#explore/gears">Inside a gear train</a><br><small>Physics</small></td><td>Slow the mechanism, separate its parts and inspect how tooth counts set the motion.</td><td>Original idealized gear model with 12, 24 and 36 teeth and a computed 3:1 reduction.<br><a href="https://ciechanow.ski/gears/">Inspiration: Bartosz Ciechanowski · Gears</a></td></tr>
-          <tr><td><a href="../#explore/spacecraft">Take a spacecraft apart</a><br><small>Physics</small></td><td>Open the assembly, isolate one component and reveal the spacecraft a part at a time.</td><td>Original illustrative spacecraft geometry, not to scale. No source artwork is copied.<br><a href="https://rshekhar.com/voyager/v1/apart/">Inspiration: Raj Shekhar · Voyager, taken apart</a></td></tr>
           <tr><td><a href="../#explore/transformer">Inspect attention</a><br><small>AI</small></td><td>Choose a token, follow its query and keys, and see the computed attention and output probabilities.</td><td>Small illustrative attention model with deterministic values; it is not GPT-2 or a trained language model.<br><a href="https://poloclub.github.io/transformer-explainer/">Inspiration: Polo Club · Transformer Explainer</a></td></tr>
           <tr><td><a href="../#explore/projectile">Change the launch</a><br><small>Physics</small></td><td>Drag the initial velocity and compare the resulting flight with its previous trajectory.</td><td>Computed ideal projectile motion with constant gravity and no air resistance.<br><a href="https://mafs.dev/guides/examples/projectile-motion">Inspiration: Mafs · Projectile motion</a></td></tr>
           <tr><td><a href="../#explore/springs">Feel the rearrangement</a><br><small>Stories</small></td><td>Drag cards into a new order. Tune stiffness and damping to see how their neighbors respond.</td><td>Original unit-mass spring model with exact damped motion and accessible reorder controls.<br><a href="https://www.react-spring.dev/examples">Inspiration: React Spring examples</a></td></tr>
@@ -75,18 +78,23 @@
 
       <section id="music" class="section">
         <h2><span class="number">03</span>Music Lab: hear the model</h2>
-        <p><a href="../#music-lab">Music Lab</a> is a dedicated section with three tabs. Sound starts only when you press Play. Change experiments or hide the page and playback stops. The experiments use generated sound; no microphone, recording, or account is required.</p>
+        <p><a href="../#music-lab">Music Lab</a> has six tabs sharing one active experiment surface. Three are Atlas experiments; three are faithful, self-hosted Chrome Music Lab originals. Labels identify their source. Atlas audio starts with Play; the originals unlock audio on a pointer, touch, or key gesture and use their original instrument controls. No microphone or account is required.</p>
         <div class="table-scroll"><table><thead><tr><th scope="col">Tab</th><th scope="col">Explore</th><th scope="col">A useful first experiment</th></tr></thead><tbody>
-          <tr><td>Sound &amp; spectrum</td><td>Change pitch and choose sine, triangle, square, or sawtooth. A live waveform and spectrogram show generated audio; brighter frequency bands are stronger.</td><td>Keep 440 Hz fixed and change sine to square. Look for the additional harmonic bands.</td></tr>
-          <tr><td>Build a timbre</td><td>Combine eight harmonic components. Change the fundamental and each amplitude, or start with Pure, Warm, Odd, and Bright presets.</td><td>Keep the base frequency fixed and remove one component at a time. Follow the combined wave as the sound changes.</td></tr>
-          <tr><td>Make a melody</td><td>Toggle five pitches on an 8- or 16-step grid. Choose 60–180 BPM, a timbre, and one cycle or a loop.</td><td>Start with Rising notes, move a note, then compare the same pattern at a different tempo.</td></tr>
+          <tr><td>Sound &amp; spectrum<br><small>Atlas</small></td><td>Change pitch and choose sine, triangle, square, or sawtooth. A live waveform and spectrogram show generated audio; brighter frequency bands are stronger.</td><td>Keep 440 Hz fixed and change sine to square. Look for the additional harmonic bands.</td></tr>
+          <tr><td>Build a timbre<br><small>Atlas</small></td><td>Combine eight harmonic components. Change the fundamental and each amplitude, or start with Pure, Warm, Odd, and Bright presets.</td><td>Keep the base frequency fixed and remove one component at a time. Follow the combined wave as the sound changes.</td></tr>
+          <tr><td>Make a melody<br><small>Atlas</small></td><td>Toggle five pitches on an 8- or 16-step grid. Choose 60–180 BPM, a timbre, and one cycle or a loop.</td><td>Start with Rising notes, move a note, then compare the same pattern at a different tempo.</td></tr>
+          <tr><td>Harmonics<br><small>Chrome Music Lab original</small></td><td>See and hear six related harmonic frequencies in the original visual instrument.</td><td>Press and hold or touch a vertical harmonic; compare its overtone with a neighbouring harmonic.</td></tr>
+          <tr><td>Strings<br><small>Chrome Music Lab original</small></td><td>Pluck strings whose lengths map to the included original harp samples.</td><td>Drag across a long string and a short string to compare their pitches.</td></tr>
+          <tr><td>Sound Waves<br><small>Chrome Music Lab original</small></td><td>Drive the original blue particle field with the onscreen piano.</td><td>Use the face/zoom control to inspect an individual particle’s motion.</td></tr>
         </tbody></table></div>
+        <p>Switching experiments or hiding the page stops audio. An upstream original is unloaded on switch or page hide and starts fresh when you return. Its files are served locally from Atlas; the three originals make no external runtime requests.</p>
+        <p><strong>Sound Waves requires WebGL.</strong> When it is unavailable, the experiment displays an availability message with links to the original and its source. The original particle renderer is retained; no simplified animation is substituted. This is separate from the Atlas material study’s Canvas 2D fallback.</p>
         <p>In the melody grid, columns are time and rows are pitch. Each step is half a beat. Use arrow keys to move between cells and Space or Enter to toggle a note. The 16-step grid scrolls on small screens.</p>
         <h3>Keep the composition and the sound</h3>
-        <p><strong>Save JSON</strong> preserves an editable melody pattern; <strong>Import JSON</strong> validates and restores it without starting audio. Save before reloading because Music Lab compositions are held in page memory. <strong>Save WAV</strong> renders one complete cycle using the current pattern, tempo, timbre, and listening level.</p>
+        <p>In Atlas’s <strong>Make a melody</strong>, <strong>Save JSON</strong> preserves an editable pattern; <strong>Import JSON</strong> validates and restores it without starting audio. Save before reloading because compositions are held in page memory. <strong>Save WAV</strong> renders one complete cycle using the current pattern, tempo, timbre, and listening level. These exports and keyboard composition controls do not apply to the three upstream originals.</p>
         <p>The WAV is mono 16-bit PCM at 22,050 Hz. Looping does not lengthen the downloaded cycle. JSON imports must be smaller than 32 KB and contain five boolean pitch rows, an 8- or 16-step length, tempo, timbre, and format version.</p>
-        <p>If Web Audio is unavailable, the visual models and melody downloads remain usable. The resting waveform is a labelled model preview; the live spectrum comes from the generated audio while playing.</p>
-        <p>These are original Atlas experiments inspired by <a href="https://musiclab.chromeexperiments.com/">Chrome Music Lab</a>. <a href="https://github.com/googlecreativelab/chrome-music-lab">Explore the original project</a> or read <a href="https://github.com/Runtheworldbetter/motion-atlas-studio/blob/main/docs/explorations.md#music-lab">Atlas’s controls and complete melody JSON format</a>.</p>
+        <p>If Web Audio is unavailable, Atlas’s visual models and melody downloads remain usable. The resting waveform is a labelled model preview; the live spectrum comes from the generated audio while playing.</p>
+        <p>The three Atlas experiments are inspired by <a href="https://musiclab.chromeexperiments.com/">Chrome Music Lab</a>. The three originals include upstream code and assets from <a href="https://github.com/googlecreativelab/chrome-music-lab/tree/e54bb414908da2b6286a6ad6431a5fcf8b68dc3f">revision <code>e54bb414</code></a>, retaining Apache-2.0 and third-party notices. Read <a href="https://github.com/Runtheworldbetter/motion-atlas-studio/blob/main/docs/upstream-music-lab.md">source provenance, local integration changes, and licenses</a> or <a href="https://github.com/Runtheworldbetter/motion-atlas-studio/blob/main/docs/explorations.md#music-lab">Atlas’s controls and complete melody JSON format</a>.</p>
       </section>
 
       <section id="cricket" class="section">
@@ -133,7 +141,7 @@
       <section id="save" class="section">
         <h2><span class="number">06</span>Save, export, and share</h2>
         <div class="table-scroll"><table><thead><tr><th scope="col">Use</th><th scope="col">When you want to…</th></tr></thead><tbody>
-          <tr><td>Study · Copy link</td><td>Open one of the 13 studies directly with <code>#explore/study-id</code>. Edited inputs are not included in the URL.</td></tr>
+          <tr><td>Study · Copy link</td><td>Open one of the 15 studies directly with <code>#explore/study-id</code>. Edited inputs are not included in the URL.</td></tr>
           <tr><td>Study · Download frame</td><td>Save the current primary SVG illustration, or the material study’s PNG canvas frame.</td></tr>
           <tr><td>Study · Download data</td><td>Keep an inspectable JSON snapshot of the model basis, capabilities, and current state.</td></tr>
           <tr><td>Music · Save / Import JSON</td><td>Keep and reopen an editable melody pattern in Make a melody.</td></tr>
@@ -173,10 +181,12 @@ npm run preview</code></pre>
           <tr><td>Motion Atlas</td><td>The complete project: explorations, Music Lab, editor, input models, gallery, coaching tools, downloads, and docs.</td></tr>
           <tr><td>Motion Canvas</td><td>Animation engine for the editable recipes and gallery scenes.</td></tr>
           <tr><td>React + SVG</td><td>Most interactive studies and the full-stroke inspector, with immediate input changes and inspectable geometry.</td></tr>
-          <tr><td>WebGL / Canvas 2D</td><td>The material study uses original WebGL shaders, with a Canvas 2D fallback. Controls and PNG export remain available when WebGL is unavailable.</td></tr>
+          <tr><td>WebGL / Canvas 2D</td><td>The material study uses original WebGL shaders, with a Canvas 2D fallback that retains controls and PNG export. Music Lab’s original Sound Waves renderer requires WebGL and shows an availability message if it cannot run.</td></tr>
           <tr><td>Web Audio + Canvas</td><td>Music Lab synthesis, waveform/spectrogram displays, and harmonic visualizations.</td></tr>
           <tr><td><code>src/labs/</code></td><td>Study cards, expanding detail views, experiments, exports, and Music Lab.</td></tr>
-          <tr><td><code>lib/explorations/</code></td><td>The 13-study catalog, capability flags, pure models, and music/WAV helpers.</td></tr>
+          <tr><td><code>src/labs/restored/</code></td><td>Original New Directions correction, reading-collection, and typography modules, integrated through <code>RestoredStudies.tsx</code>.</td></tr>
+          <tr><td><code>lib/explorations/</code></td><td>The 15-study catalog, capability flags, pure models, and Atlas music/WAV helpers.</td></tr>
+          <tr><td><code>public/vendor/chrome-music-lab/</code></td><td>Three self-hosted original experiments, assets, and retained upstream notices.</td></tr>
           <tr><td><code>src/</code></td><td>App interface, players, preferences, and sharing.</td></tr>
           <tr><td><code>lib/</code></td><td>Recipe definitions, pure models, scene factories, and the animation runtime.</td></tr>
           <tr><td><code>lib/cricket/pose.ts</code></td><td>Fixed-length limb geometry, the planted foot, and quintic Hermite motion curves with shared velocity and acceleration at checkpoints.</td></tr>
@@ -191,15 +201,16 @@ npm run preview</code></pre>
         <h2><span class="number">09</span>Motion Canvas and credits</h2>
         <p>Motion Canvas provides a TypeScript animation system used by Atlas’s editable recipes and gallery. For a recipe change, begin with the Atlas input guide. For scene authoring and engine APIs, continue to the upstream documentation.</p>
         <div class="footlinks"><a href="https://motioncanvas.io/docs/">Motion Canvas documentation</a><a href="https://github.com/motion-canvas/motion-canvas">Motion Canvas on GitHub</a><a href="https://motioncanvas.io/">Motion Canvas website</a></div>
-        <h3>Original adaptations and independent inspirations</h3>
-        <p>The 13 studies and Music Lab use original Atlas code, synthetic examples, authored geometry, and sound/shader models. Each study links to its independent teaching or design references. Those links do not embed the upstream applications or redistribute their code, artwork, or datasets. The card-to-detail interaction is inspired by <a href="https://motion-primitives.com/docs/morphing-dialog">Motion Primitives</a>.</p>
-        <p>The small models state their boundaries: the attention study is not a trained language model; repair uses explicit local rules; the spacecraft is illustrative and not to scale; the projectile ignores air resistance. Open each study’s model notes before extending its conclusions.</p>
+        <h3>Original adaptations and licensed originals</h3>
+        <p>The 15 studies and three Atlas music experiments use original Atlas code, synthetic examples, authored geometry, and sound/shader models. Each study links to its independent teaching or design references. The card-to-detail interaction is inspired by <a href="https://motion-primitives.com/docs/morphing-dialog">Motion Primitives</a>. The three Chrome Music Lab originals are separately labelled upstream applications with their own code, assets, and retained licenses.</p>
+        <p>The three restored New Directions modules remain Atlas-authored work under MIT. Their venue note, book collection, reading hours, and word sequence are fictional or illustrative; no private source materials are included.</p>
+        <p>The small models state their boundaries: the attention study is not a trained language model; repair uses explicit local rules; the projectile ignores air resistance. Open each study’s model notes before extending its conclusions. The spacecraft study was removed in 0.5.1; the original Voyager experience is omitted because an applicable reuse or embedding grant could not be verified.</p>
         <h3>Licenses travel with the source</h3>
-        <p>RTWB maintains Motion Atlas. Atlas’s authored code uses the MIT license; third-party projects keep their own licenses. Thank you to the Motion Canvas creators and contributors and to the maintainers of React, Vite, and the other dependencies.</p>
-        <div class="footlinks"><a href="https://github.com/Runtheworldbetter/motion-atlas-studio/blob/main/LICENSE">Atlas MIT license</a><a href="../third-party-notices.txt">Full third-party notices</a><a href="https://github.com/Runtheworldbetter/motion-atlas-studio/blob/main/docs/attribution.md">Attribution process</a><a href="../motion-atlas-source.zip" download>Download complete source</a></div>
+        <p>RTWB maintains Motion Atlas. Atlas’s authored code uses the MIT license. The Chrome Music Lab originals retain Apache-2.0 and their bundled third-party notices; Atlas’s license does not replace them. Thank you to the Motion Canvas creators and contributors, Google Creative Lab, and the maintainers of React, Vite, and the other dependencies.</p>
+        <div class="footlinks"><a href="https://github.com/Runtheworldbetter/motion-atlas-studio/blob/main/LICENSE">Atlas MIT license</a><a href="../third-party-notices.txt">Runtime dependency notices</a><a href="https://github.com/Runtheworldbetter/motion-atlas-studio/blob/main/docs/upstream-music-lab.md">Original music provenance and notices</a><a href="https://github.com/Runtheworldbetter/motion-atlas-studio/blob/main/docs/attribution.md">Attribution process</a><a href="../motion-atlas-source.zip" download>Download complete source</a></div>
       </section>
     </main>
   </div>
-  <footer><a href="../">Open Motion Atlas</a><a href="https://github.com/Runtheworldbetter/motion-atlas-studio">Motion Atlas on GitHub</a><span>RTWB · 0.5.0</span></footer>
+  <footer><a href="../">Open Motion Atlas</a><a href="https://github.com/Runtheworldbetter/motion-atlas-studio">Motion Atlas on GitHub</a><span>RTWB · 0.5.1</span></footer>
 </body>
 </html>
