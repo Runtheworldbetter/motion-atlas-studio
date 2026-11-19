@@ -2,41 +2,54 @@
 
 An open-source workbench for interactive explanations, visual experiments, music, and editable animations, built by RTWB. Change an input, inspect a mechanism, follow a model, or make something you can hear.
 
-Version 0.5.0 brings **13 explorable studies** and a dedicated **Music Lab with three experiments**, alongside the existing **50 gallery examples** and **seven editable recipes**. The repertoire spans stories, systems, AI, probability, physics, materials, data, and sports.
+Version 0.5.1 restores the original **Editor → Collection** presentation, followed by **15 explorable studies** and a **Music Lab with six experiments**. The existing **50 gallery examples**, **seven editable recipes**, players, and coaching tools are unchanged. The repertoire spans stories, systems, AI, probability, physics, materials, data, and sports.
 
 **[Open Motion Atlas](https://runtheworldbetter.github.io/motion-atlas-studio/) · [Read the Atlas docs](https://runtheworldbetter.github.io/motion-atlas-studio/docs/) · [Browse the source](https://github.com/Runtheworldbetter/motion-atlas-studio)**
 
 [Explore the studies](https://runtheworldbetter.github.io/motion-atlas-studio/#explore) · [Open Music Lab](https://runtheworldbetter.github.io/motion-atlas-studio/#music-lab) · [Browse the collection](https://runtheworldbetter.github.io/motion-atlas-studio/#collection) · [Input formats](docs/recipes.md) · [Contributing](CONTRIBUTING.md)
 
-## New in 0.5.0
+## New in 0.5.1
+
+The Editor and Collection come first again. Explore and Music Lab follow the original collection. Music Lab keeps its three Atlas experiments and adds three self-hosted Chrome Music Lab originals: **Harmonics**, **Strings**, and **Sound Waves**. Source labels distinguish the two sets.
+
+Three studies from the earlier New Directions prototype return with their original illustrations and interactions: **Correct one assumption**, **Follow the same object**, and **Words that take shape**. They bring the exploration collection to 15 studies.
+
+The spacecraft study has been removed. Raj Shekhar's original Voyager experience is not included because an applicable reuse or embedding grant could not be verified.
 
 **Explore** is a searchable set of working studies. A card expands into an interactive detail view and returns to its place when closed. Category filters cover Stories, Systems, AI, Physics, and Materials. **Can suggest repairs** is a capability filter: it finds studies that can propose a change for review. It currently selects the local-rule repair study.
 
 | Area | New studies |
 | --- | --- |
-| Stories | [Slides become places](https://runtheworldbetter.github.io/motion-atlas-studio/#explore/slide-canvas); [Feel the rearrangement](https://runtheworldbetter.github.io/motion-atlas-studio/#explore/springs) |
+| Stories | [Correct one assumption](https://runtheworldbetter.github.io/motion-atlas-studio/#explore/correction); [Follow the same object](https://runtheworldbetter.github.io/motion-atlas-studio/#explore/continuity); [Words that take shape](https://runtheworldbetter.github.io/motion-atlas-studio/#explore/typography); [Slides become places](https://runtheworldbetter.github.io/motion-atlas-studio/#explore/slide-canvas); [Feel the rearrangement](https://runtheworldbetter.github.io/motion-atlas-studio/#explore/springs) |
 | Systems | [Events change the state](https://runtheworldbetter.github.io/motion-atlas-studio/#explore/state-machine); [Suggest a repair](https://runtheworldbetter.github.io/motion-atlas-studio/#explore/repair); [Find the relevant neighborhood](https://runtheworldbetter.github.io/motion-atlas-studio/#explore/neighborhood); [Edit the probabilities](https://runtheworldbetter.github.io/motion-atlas-studio/#explore/markov) |
 | AI & probability | [Follow a classification](https://runtheworldbetter.github.io/motion-atlas-studio/#explore/classification); [Inspect attention](https://runtheworldbetter.github.io/motion-atlas-studio/#explore/transformer); [Expectation meets a sample](https://runtheworldbetter.github.io/motion-atlas-studio/#explore/probability) |
-| Physics | [Inside a gear train](https://runtheworldbetter.github.io/motion-atlas-studio/#explore/gears); [Take a spacecraft apart](https://runtheworldbetter.github.io/motion-atlas-studio/#explore/spacecraft); [Change the launch](https://runtheworldbetter.github.io/motion-atlas-studio/#explore/projectile) |
+| Physics | [Inside a gear train](https://runtheworldbetter.github.io/motion-atlas-studio/#explore/gears); [Change the launch](https://runtheworldbetter.github.io/motion-atlas-studio/#explore/projectile) |
 | Materials | [Shape a material](https://runtheworldbetter.github.io/motion-atlas-studio/#explore/shaders) |
 
-The studies are original Atlas adaptations of interaction and teaching ideas from projects including R2D3, Stately, Distill, Sigma, Setosa, React Flow, Transformer Explainer, Seeing Theory, and Paper Shaders. Each study includes **Model, source and inspiration** notes. These references are links to independent projects; their applications, code, datasets, and artwork are not bundled into Atlas.
+The 15 studies are original Atlas adaptations of interaction and teaching ideas from projects including R2D3, Stately, Distill, Sigma, Setosa, React Flow, Transformer Explainer, Seeing Theory, and Paper Shaders. Each study includes **Model, source and inspiration** notes. Those study references are inspiration links. The three separately labelled Chrome Music Lab originals do include upstream code and assets under their retained licenses; see [their provenance and notices](docs/upstream-music-lab.md).
 
 Use **Download frame** for the current SVG illustration, or a PNG for the material study. The material renders with WebGL, with a Canvas 2D fallback when WebGL is unavailable; its controls and PNG export work with either renderer. **Download data** saves the current study state as JSON. **Copy link** opens the same study; edited controls are not serialized into the link. [The exploration guide](docs/explorations.md) covers every study, the calculations, exports, and model boundaries.
 
-Dense mechanism diagrams scroll inside their own canvas on narrow screens to keep labels readable. With reduced motion enabled, explicitly started gear, spacecraft, projectile, and material playback advances at four updates per second; you can also scrub directly to a moment.
+Mechanism and trajectory diagrams show the whole figure on narrow screens; **Enlarge to read labels** opens a locally scrolling detail view. With reduced motion enabled, explicitly started gear, projectile, and material playback advances at four updates per second; you can also scrub directly to a moment.
 
 ## Music Lab
 
-[Music Lab](https://runtheworldbetter.github.io/motion-atlas-studio/#music-lab) is a dedicated section with three tabs:
+[Music Lab](https://runtheworldbetter.github.io/motion-atlas-studio/#music-lab) has six tabs sharing one active experiment surface:
 
-| Tab | Try it |
-| --- | --- |
-| Sound & spectrum | Change pitch and wave shape while a live waveform and spectrogram show the generated sound. |
-| Build a timbre | Adjust eight harmonic amplitudes and hear how their sum changes the sound. |
-| Make a melody | Compose on an 8- or 16-step, five-pitch grid; change tempo and timbre, and play once or loop. |
+| Tab | Source | Try it |
+| --- | --- | --- |
+| Sound & spectrum | Atlas | Change pitch and wave shape while a live waveform and spectrogram show the generated sound. |
+| Build a timbre | Atlas | Adjust eight harmonic amplitudes and hear how their sum changes the sound. |
+| Make a melody | Atlas | Compose on an 8- or 16-step, five-pitch grid; change tempo and timbre, and play once or loop. |
+| Harmonics | Chrome Music Lab original | Press or touch a vertical harmonic to see and hear one of six related frequencies. |
+| Strings | Chrome Music Lab original | Pluck strings of different lengths and hear the original harp samples. |
+| Sound Waves | Chrome Music Lab original | Play the onscreen piano to drive the blue particle field; zoom in to inspect one particle. |
 
-Sound begins only when you press Play. Switching experiments or hiding the page stops playback. The melody tab can **Save JSON**, **Import JSON**, and **Save WAV** for one complete pattern cycle. Save JSON before leaving if you want to keep your composition. Music Lab uses the browser's Web Audio API and original sound models, inspired by [Chrome Music Lab](https://musiclab.chromeexperiments.com/). No microphone or account is required. [Music controls and file format](docs/explorations.md#music-lab).
+Atlas sound begins when you press Play; the originals unlock audio on a pointer, touch, or key gesture and use their own instrument controls. Switching experiments or hiding the page stops audio. An original is unloaded when switched away from or hidden, and restarts when you return. The Atlas melody tab retains **Save JSON**, **Import JSON**, and **Save WAV** for one complete pattern cycle. Save JSON before leaving if you want to keep your composition. These exports and keyboard composition controls belong to Make a melody, not the upstream originals. No microphone or account is required. [Music controls and file format](docs/explorations.md#music-lab).
+
+The Chrome Music Lab originals are served from this site's own files, with no external runtime requests. They preserve the upstream experiments and use Chrome Music Lab revision `e54bb414908da2b6286a6ad6431a5fcf8b68dc3f`, under Apache-2.0 with third-party notices retained. [Upstream provenance, integration changes, and licenses](docs/upstream-music-lab.md).
+
+**Sound Waves requires WebGL.** If it is unavailable, the experiment shows an availability message with links to the original and its source. Atlas keeps the original renderer; it does not substitute a simplified particle animation. The material study's Canvas 2D fallback is separate.
 
 ## Use the editor
 
@@ -115,7 +128,7 @@ The public app is hosted on [GitHub Pages](https://runtheworldbetter.github.io/m
 #music-lab
 ```
 
-Exploration fragments open a study directly in its detail view. Escape or the close button returns to Explore. Music Lab's section link opens the lab; its three tabs are selected inside that section. Study links identify an example, while downloads preserve its current data.
+Exploration fragments open a study directly in its detail view. Escape or the close button returns to Explore. Music Lab's section link opens the lab; its six tabs are selected inside that section. Study links identify an example, while downloads preserve its current data.
 
 Publish updates with **Actions → Deploy to GitHub Pages → Run workflow** on the default branch. Deployment is manual; pushes and pull requests run CI. For a fork, first enable Pages with GitHub Actions in the repository settings. [Hosting and embeds](docs/hosting.md) has setup instructions and an iframe example.
 
@@ -125,19 +138,21 @@ Publish updates with **Actions → Deploy to GitHub Pages → Run workflow** on 
 | --- | --- |
 | `src/` | Gallery, recipe editor, local preferences, downloads, and share controls |
 | `src/labs/` | Explorable study cards and detail views, interactive studies, and Music Lab |
-| `lib/explorations/catalog.ts` | The 13 studies, categories, capability flags, model notes, and inspiration links |
+| `src/labs/restored/` | The original New Directions correction, reading-collection, and typography modules |
+| `lib/explorations/catalog.ts` | The 15 studies, categories, capability flags, model notes, and inspiration links |
 | `lib/explorations/` | Pure study models, seeded experiments, mechanics, and music/WAV helpers |
 | `lib/motion/` | Motion Canvas runtime, palette, and the 50 gallery scenes |
 | `lib/recipes/` | Recipe definitions, presets, pure input models, and animation factories |
 | `tests/` | Input validation and algorithm/model checks |
 | `scripts/` | Dependency notices and downloadable source packaging |
 | `public/` | Browser-readable Atlas documentation, static assets, and full third-party notices |
+| `public/vendor/chrome-music-lab/` | Three self-hosted original experiments and their retained upstream notices |
 | `docs/` | Guides, input formats, privacy, hosting, and attribution details |
 
 ## Versions and attribution
 
-This guide covers **0.5.0**. Direct runtime dependencies are Motion Canvas core/2d **3.17.2**, React/React DOM **19.2.6**, and Lucide React **1.31.0**. The build uses Vite **8.0.13** and TypeScript **5.9.3**; `package.json` and `package-lock.json` are the authoritative version records. The new studies add no packages.
+This guide covers **0.5.1**. Direct runtime dependencies are Motion Canvas core/2d **3.17.2**, React/React DOM **19.2.6**, and Lucide React **1.31.0**. The build uses Vite **8.0.13** and TypeScript **5.9.3**; `package.json` and `package-lock.json` are the authoritative version records. The studies add no packages. The original music experiments are vendored static applications with their own dependency notices.
 
-[Motion Canvas](https://github.com/motion-canvas/motion-canvas) powers the editable animation recipes and gallery scenes. The complete-stroke coaching inspector and most new studies use React and SVG; the material study uses WebGL with a Canvas 2D fallback, and Music Lab uses Web Audio and Canvas. Atlas owns the surrounding editor, input models, controls, examples, and documentation. Thank you to the Motion Canvas creators and contributors; its [documentation](https://motioncanvas.io/docs/) explains the underlying engine.
+[Motion Canvas](https://github.com/motion-canvas/motion-canvas) powers the editable animation recipes and gallery scenes. The complete-stroke coaching inspector and most new studies use React and SVG; the material study uses WebGL with a Canvas 2D fallback. Music Lab uses Web Audio, Canvas, and the original Sound Waves WebGL renderer. Atlas owns the surrounding editor, input models, controls, examples, and documentation. Thank you to the Motion Canvas creators and contributors; its [documentation](https://motioncanvas.io/docs/) explains the underlying engine.
 
-Motion Atlas code and examples use the [MIT license](LICENSE). Dependency licenses and attribution are included in [third-party notices](public/third-party-notices.txt). [Attribution](docs/attribution.md) explains how those notices are collected and checked.
+Atlas-authored code and examples use the [MIT license](LICENSE). The three Chrome Music Lab originals retain Apache-2.0 and their included third-party licenses; Atlas's MIT license does not replace them. See [upstream music provenance and notices](docs/upstream-music-lab.md), [dependency notices](public/third-party-notices.txt), and [attribution](docs/attribution.md).
