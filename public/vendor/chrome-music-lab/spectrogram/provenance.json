@@ -1,0 +1,119 @@
+{
+  "id": "chrome-music-lab-spectrogram",
+  "title": "Spectrogram · Chrome Music Lab original",
+  "upstream_repository": "https://github.com/googlecreativelab/chrome-music-lab",
+  "upstream_commit": "e54bb414908da2b6286a6ad6431a5fcf8b68dc3f",
+  "upstream_directory": "spectrogram",
+  "upstream_source_url": "https://github.com/googlecreativelab/chrome-music-lab/tree/e54bb414908da2b6286a6ad6431a5fcf8b68dc3f/spectrogram",
+  "packaged_on": "2026-11-18",
+  "entry": "index.html",
+  "license": "Apache-2.0 with BSD, MIT, and SIL OFL notices retained",
+  "runtime_external_requests": "none; only local MP3, shader, font, JavaScript, CSS and image requests",
+  "microphone": "Optional explicit Microphone button; permission required, input is not played back or uploaded; tracks stopped on stop, blur, hidden, and pagehide.",
+  "original_assets_no_separate_exception_found": true,
+  "source": "source/",
+  "upstream_hash_manifest": "upstream-sha256.json",
+  "modifications": [
+    "Replace the obsolete Gulp/Browserify/Jade/Sass build with an isolated locked build using esbuild, Pug, Sass and SVG font tooling; keep the original build files as historical source.",
+    "Retain original renderer, shaders, colors, geometry, sample audio, icon SVGs and drawing/camera interactions; regenerate the original icon font from its 13 SVGs.",
+    "Replace remote Google locale request with local English accessible labels; package the original font families Poppins and Roboto locally under their OFL licenses.",
+    "Bundle jQuery 2.1.3 locally, preserving its MIT notice; no remote CDN, analytics, or external runtime requests.",
+    "Modernize explicit microphone permission to mediaDevices.getUserMedia; release all tracks and pending async work on stop or visibility loss.",
+    "Suspend Web Audio until user gesture; remove the silent startup MP3; resume after explicit interaction; sample gain 0.65, original sine-drawing gain 0.2.",
+    "Prevent late decoded samples or permission responses from starting after a stop, switch, or hidden page; stop drawing tones when released outside the canvas.",
+    "Replace the original externally credited audio-file loader adapter with a small local File.arrayBuffer/decodeAudioData adapter; sound files remain local.",
+    "Fix two accidental JavaScript globals and pointer-at-zero/touchcancel handling; preserve the audio analysis and spectral rendering algorithms.",
+    "Add keyboard Enter/Space instrument activation, Escape stop, focus indication and aria-pressed state; drawn pitch and camera rotation retain original pointer interaction.",
+    "Show an explicit WebGL/Web Audio unavailable panel with full-size/source links; no substitute renderer.",
+    "Stop and suspend sound/rendering on blur, hidden, pagehide, or parent atlas-original-stop message. No initial playback; original visual motion starts only on interaction."
+  ],
+  "fonts": {
+    "upstream_repository": "https://github.com/google/fonts",
+    "upstream_commit": "5bd87dfc525c8a0d1d8529d3684716e00c3fc59a",
+    "license": "OFL-1.1",
+    "files": {
+      "source/fonts/Poppins-Regular.ttf": "ofl/poppins/Poppins-Regular.ttf",
+      "source/fonts/Roboto-Regular.ttf": "ofl/roboto/Roboto[wdth,wght].ttf",
+      "source/fonts/Roboto-Italic.ttf": "ofl/roboto/Roboto-Italic[wdth,wght].ttf"
+    }
+  },
+  "runtime_components": [
+    {
+      "name": "Chrome Music Lab Spectrogram",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "O3D helpers, Matrix4x4, CameraController",
+      "license": "BSD-style (verbatim notices retained)"
+    },
+    {
+      "name": "jQuery",
+      "version": "2.1.3",
+      "license": "MIT"
+    },
+    {
+      "name": "Poppins and Roboto",
+      "license": "OFL-1.1"
+    },
+    {
+      "name": "Motion Atlas compatibility/build additions",
+      "license": "MIT"
+    }
+  ],
+  "distribution_sha256": {
+    "bin/fonts/Poppins-Regular.ttf": "7e65201e9b79159e2300267cc885e16c8dcef2424cdfa09a29bfb0980a94a7ba",
+    "bin/fonts/Roboto-Italic.ttf": "9725a847af6b460ffca162ae66d20dad48b01876137947180b42d7dcd7887182",
+    "bin/fonts/Roboto-Regular.ttf": "d7598e12c5dbef095ff8272cfc55da0250bd07fbdecbac8a530b9b277872a134",
+    "bin/fonts/icons/icons.woff": "a04a6bdd2f9a90257ba1e91f188d44cde159694f2717f4ff9905e2ed6176c071",
+    "bin/shaders/.svn/all-wcprops": "df5f2d69154640dee61a0db3eb62758546d26866a9a3bcddfdc8e9f1af7962c5",
+    "bin/shaders/.svn/entries": "8855cc141a5967f32b95568d1b3e6734d4d933ac3b78a840f9dd9a99de10a7d6",
+    "bin/shaders/.svn/text-base/common-vertex.shader.svn-base": "86b578dceaba122b6798ad91098389b26fca19bb44a4f9946327c8826e5b87a7",
+    "bin/shaders/.svn/text-base/frequency-fragment.shader.svn-base": "65c0b05c7246e29daaa1a226310674766ae70f85360062ba476c8d5df8749a97",
+    "bin/shaders/.svn/text-base/sonogram-fragment.shader.svn-base": "e45fb4a00e8c70c7ed64a7f87f6e79df9db2a9b659cd8733e82f8af511867f33",
+    "bin/shaders/.svn/text-base/sonogram-vertex.shader.svn-base": "49fc7f94da6cba928cebf67a93e12a7a41358709c738240f468096341abbdb53",
+    "bin/shaders/.svn/text-base/texture-only.shader.svn-base": "407561b666b714354d48690fbe15af83fb7ece256384652e4322e6088d45281b",
+    "bin/shaders/.svn/text-base/waveform-fragment.shader.svn-base": "1a8432fc611bc798f2dfe08363617c4c09a1c8abb129876e1b1de285d38b3fc1",
+    "bin/shaders/common-vertex.shader": "48dc3fbff7a61cf4f1deb85cd63b584e1fe321cb6b8d2150639928d86110ac4a",
+    "bin/shaders/frequency-fragment.shader": "ad86aef8b0dc8e3ba6c68605ae8db81c0185e15c4d573f8d02059c6604c3eb93",
+    "bin/shaders/sonogram-fragment.shader": "62ad5be23d48d107c6068e1a3bd06789d325a9a702c93771da3121cf7392109c",
+    "bin/shaders/sonogram-vertex.shader": "c88780eb9469c8ecda7a713892816a3339ce6ae5507efef0f137eec15ffb206c",
+    "bin/shaders/texture-only.shader": "e4c2be70bc32528e75a1f637d0c2ec485bb00afbfdeb599162e8852dd8a35a4a",
+    "bin/shaders/waveform-fragment.shader": "4168465b46d22b3835c07561b70291a536209c86b87a304585d5d5f549ea205e",
+    "bin/snd/160113_808_loop.mp3": "e35c6741519bea10b7ff1b1b0f6dc5326930b0d6ea413eeba9c1d77cb5371cc1",
+    "bin/snd/160113_birds.mp3": "c47be717e5b1a301266d54a324243c744175f72d4eab019c51db986caa71b1ad",
+    "bin/snd/160113_flute.mp3": "aae7c9b666cc9cbfb1a6d3e557e879e9042ee86a6c3ee10552a156cccbe7793f",
+    "bin/snd/160113_harp_whole_tone_scale.mp3": "e281f4a58aa7517b844ac0b7ff813e6430aa1fbc5b55435974b3558b2c0e2595",
+    "bin/snd/160113_modem.mp3": "9194961fa471ec776678b1bb981c75deb0d251f77eea59134a5e105c4d38ad98",
+    "bin/snd/160113_trombone.mp3": "d64fc7e369336b6c34fe66f8ba982aff1a161effa1217a004210ec3e64e8785e",
+    "bin/snd/160113_whistling.mp3": "b447ffe64c24ca50ebb6069a23c1a6edb7314c2b59432650ad6f33a06c8eb821",
+    "bin/snd/160113_wine_glass.mp3": "edcdbaa9c323c0052c105d2c89b86b6ec06350ddd24c1e52d3fe427f6405c8ef",
+    "bin/snd/160210_flute_new_cmajor_scale.mp3": "59409ebdb5677642c0150fddaa12f9f2d63e5455c1fc9a48bcf6aa693ea2a3a7",
+    "bin/snd/160211_spectrogram_harp_new.mp3": "d93828cdcb00f57875c1e29b8f616104de975231aff5ab1466a70a7ef8b6cb72",
+    "bin/snd/empty.mp3": "90914b68cc7f8ac1559791001f0052165c8ee08f3547651aed6b1441ee04f8eb",
+    "css/atlas-compat.css": "b1aaab901c4c7a103e5ffef9b3a5ace74422b8806c989ffac0e98b9a1d268bee",
+    "css/screen.css": "14df97b52439a3bd157a23dfef60a9df97804f2170cf53adafca31dc8a5dd323",
+    "img/finger_anim.png": "ae6d5def253fc67c7077f733a1346887e75e2bffe7a96873d2c14207835a866c",
+    "img/horse.jpg": "7bc07db2c28e02d2dd5186317f116e740bcabe608cf62ddd9eaea02553de4056",
+    "img/seven.png": "ca015e4adbaa7458cd9a949fde690903c4a0501428fab8eb6bf7e82098caf0be",
+    "img/svg/ic_autorenew_black_24dp.svg": "9593b77e6421bbae45b7e07c23c60478b0ad84667f6bc12674299c82b1a7f2d5",
+    "img/svg/ic_create_black_24dp.svg": "80906ea86e21b2ceaa77c4ddc52a15418e24692d16a693b2d0ad4fb149ed39bc",
+    "img/svg/ic_create_black_24dp_2.svg": "2efa584e64c6de9319004e2151371937020102c2f70e5f003e61c9f30b28dde2",
+    "img/svg/new/piano.svg": "84bab28122c787d84798cf8aec8815889b1a3602ea861143247775b4f863184b",
+    "img/svg/spectrogram_icons-01.svg": "e3dcf8ed7cf8bcbb9fedc053126cc5e0eac30ae052958ce0f3fda7c08811d54f",
+    "img/svg/spectrogram_icons-02.svg": "b56c35eb871dd0b6d9f7da2ebd5f0e44dc27b0755ee4aeabb0570bc0287e773b",
+    "img/svg/spectrogram_icons-03.svg": "cfcb8088e5918c7552b696a7067ef1e5cc4bfbd6492c0bb952158ab0cfb71ce7",
+    "img/svg/spectrogram_icons-04.svg": "097f6e0ecfe7679dba26894acbe88cda116953ba0285ed779943ee8abbd684b5",
+    "img/svg/spectrogram_icons-05.svg": "3b974cf5d3d0446b913e4f75d2a339a52d0c7846f4854c08524c1da185a6a3dc",
+    "img/svg/spectrogram_icons-06.svg": "1802fce95ccb42738d77a674f095ea4c9b2f888c2c1c9e93f1ee398b4a0d9a21",
+    "img/svg/spectrogram_icons-07.svg": "86a82068aecfdb78a89c7c03371a2251a273a32a62e6762ef82e4f321683eb12",
+    "img/svg/spectrogram_icons-08.svg": "67509ff96aa94753be23f74641a1cf52e0f5b2abdc0e26149bb7e85058e341f6",
+    "img/svg/spectrogram_icons-09.svg": "ef4c87f81d79c3609b1dc61a5fa6b50f864ef17b96fc9748f36bdae3c53ca979",
+    "img/svg/spectrogram_icons-10.svg": "11b042aa65d30c6cdf934fff4957979bb1948a81b22db5221ff3d4ab0f26afaa",
+    "index.html": "0eaee1a5da355acf2198ca8dbaacca8d092097b5847c4731165314bb232f2d65",
+    "js/app.js": "b431d1dec0e69b38cdf41fea0a292802def9bf6ecc2e6194860ef9f40df3eb0d",
+    "js/atlas-compat.js": "1b3051009c29afa7b26d08cb607ddfb1bb547e6d7d3a9d29e9050a4a0beaab8d",
+    "js/bundle.js": "8b220b8245f0a87af79f1be5135375774d0f196453f1ec623454d51eb3751e03",
+    "js/jquery.min.js": "7682ae16052155906f82c882564658da00e3f9bf19eadf56cfe13f44c0c3d308"
+  },
+  "distribution_bytes": 2984337
+}

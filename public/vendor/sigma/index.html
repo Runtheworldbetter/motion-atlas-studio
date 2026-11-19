@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sigma — original paper network · Motion Atlas</title>
+<meta name="description" content="Sigma's original interactive AI research-paper network, with its original renderer, selection, search and local OpenAlex metadata.">
+<link rel="stylesheet" href="./style.css">
+<script>// Follows the docs theme (stored by Starlight), and reloads when it changes so the graph can redraw
+  const getTheme = () => {
+    try {
+      const stored = localStorage.getItem("starlight-theme");
+      if (stored === "light" || stored === "dark") return stored;
+    } catch {
+      // Storage can be blocked in third-party iframes
+    }
+    return matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+  };
+  document.documentElement.dataset.theme = getTheme();
+  const reloadOnThemeChange = () => {
+    if (getTheme() !== document.documentElement.dataset.theme) location.reload();
+  };
+  window.addEventListener("storage", reloadOnThemeChange);
+  matchMedia("(prefers-color-scheme: light)").addEventListener("change", reloadOnThemeChange);
+</script>
+</head><body>
+<div id="sigma-container"></div>
+<aside id="legend" class="example-panel">
+  <section>
+    <h4>About this graph</h4>
+    <p>
+      The ~9,000 most-cited AI papers from <a href="https://openalex.org" target="_blank" rel="noopener">OpenAlex</a>,
+      clustered with <a href="https://en.wikipedia.org/wiki/Louvain_method" target="_blank" rel="noopener">Louvain</a>
+      in <a href="https://gephi.org/gephi-lite" target="_blank" rel="noopener">Gephi Lite</a>.
+    </p>
+  </section>
+  <section>
+    <h4>Nodes</h4>
+    <div class="legend-item">
+      <svg viewBox="0 0 16 16" class="legend-node-icon">
+        <polygon points="8,1 15,8 8,15 1,8" fill="none" stroke="currentColor" stroke-width="1.5"></polygon>
+      </svg>
+      <span>Scientific paper</span>
+    </div>
+    <div class="legend-subitems">
+      <p>Colors: research community</p>
+      <p>Sizes: citation count</p>
+    </div>
+  </section>
+  <section>
+    <h4>Edges</h4>
+    <div class="legend-item">
+      <svg width="32" height="12" viewBox="0 0 32 12">
+        <line x1="2" y1="6" x2="24" y2="6" stroke="#e3a95b" stroke-width="2"></line>
+        <polygon points="24,3 32,6 24,9" fill="#e3a95b"></polygon>
+      </svg>
+      <span>A cites B</span>
+    </div>
+    <div class="legend-item">
+      <svg width="32" height="12" viewBox="0 0 32 12">
+        <line x1="2" y1="6" x2="30" y2="6" stroke="#e22653" stroke-width="2"></line>
+      </svg>
+      <span>A and B share authors</span>
+    </div>
+  </section>
+  <div class="legend-search">
+    <input type="search" id="search-input" list="suggestions" placeholder="Search a paper…" />
+    <datalist id="suggestions"></datalist>
+  </div>
+</aside>
+<div id="runtime-status" role="status">Loading the original paper network…</div>
+<aside id="source-credit">Original by <a href="https://www.sigmajs.org/" target="_blank" rel="noopener">Sigma</a> · <a href="./source/upstream/packages/website/src/examples/homepage/demo.astro" target="_blank">Source</a> · <a href="./licenses/NOTICE.md" target="_blank">Notices</a></aside>
+<script type="module" src="./boot.js"></script>
+</body></html>

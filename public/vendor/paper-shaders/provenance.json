@@ -1,0 +1,61 @@
+{
+  "project": "Paper Shaders",
+  "upstream": "https://github.com/paper-design/shaders",
+  "commit": "e7003a2d4e6e932e30b8fa11ec1239e6ea48e16a",
+  "version": "0.0.82",
+  "license": "Apache-2.0",
+  "packaged_at": "2026-11-18",
+  "scope": "Original Metaballs and Warp renderers, mount, helpers, and preset values; Atlas controls are a separate adapter.",
+  "files": [
+    {
+      "upstream": "packages/shaders/src/shader-mount.ts",
+      "file": "upstream/shader-mount.ts",
+      "sha256": "c4e2e24aa3b6f87e55463adfdf9dea98b08d537766728834479a8857e5bbe1ad"
+    },
+    {
+      "upstream": "packages/shaders/src/vertex-shader.ts",
+      "file": "upstream/vertex-shader.ts",
+      "sha256": "b2f8121916f21674ccb53174efa88f19e53287893035333bc65f6228a4bfd136"
+    },
+    {
+      "upstream": "packages/shaders/src/shader-utils.ts",
+      "file": "upstream/shader-utils.ts",
+      "sha256": "5805b80c74323b0a8fce8c8c3628b17372014f7417d0c7de3346fa532c6c903a"
+    },
+    {
+      "upstream": "packages/shaders/src/get-shader-color-from-string.ts",
+      "file": "upstream/get-shader-color-from-string.ts",
+      "sha256": "20fdc1a154ce9cc7d2d5b369150954e10b4845a0c5a764b814e2561e803deedd"
+    },
+    {
+      "upstream": "packages/shaders/src/get-shader-noise-texture.ts",
+      "file": "upstream/get-shader-noise-texture.ts",
+      "sha256": "c5d36911326153219bd450def1e5e84250a37968d79b29d4d7b11eff7bf5ecf9"
+    },
+    {
+      "upstream": "packages/shaders/src/shader-sizing.ts",
+      "file": "upstream/shader-sizing.ts",
+      "sha256": "b4579aa325c6e662b271bed812415e5aed7cf8ff066a7940045f422458b7abeb"
+    },
+    {
+      "upstream": "packages/shaders/src/types.ts",
+      "file": "upstream/types.ts",
+      "sha256": "7d726479d24cdccd0a77a47b7203a4dd231ae8c97035c12c568dc6966ddb6a64"
+    },
+    {
+      "upstream": "packages/shaders/src/shaders/metaballs.ts",
+      "file": "upstream/shaders/metaballs.ts",
+      "sha256": "9ce5b3d1329fbf55a0c90cc4610f69879fc81e7d059b44818af5c2b333fb912d"
+    },
+    {
+      "upstream": "packages/shaders/src/shaders/warp.ts",
+      "file": "upstream/shaders/warp.ts",
+      "sha256": "4a650f3cf0baccd6dd04d2b4d62da0fc876d7cf7761a3b3e5318012b3d75d63e"
+    }
+  ],
+  "changes": [
+    "Standalone Atlas controls and WebGL2 availability message.",
+    "Preset values extracted without change from the upstream React modules.",
+    "Upstream rendering source is unmodified."
+  ]
+}

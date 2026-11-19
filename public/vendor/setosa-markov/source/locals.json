@@ -1,0 +1,125 @@
+{
+  "basepath": "/ev/"
+  , "name": "ev"
+  , "src": "client"
+  , "staticOutputDir": "_static"
+  , "host": "setosa.io"
+  , "debug": false
+  , "bg": "#2c3e50"
+  , "highlight": "#e67e22"
+  , "textPrimary": "#ecf0f1"
+  , "textSoft": "#7f8c8d"
+  , "textExtraSoft": "#aaa"
+  , "textHighlight": "#e67e22"
+  , "seperation": "rgba(0, 0, 0, 0.08)"
+  , "bg": "#fff"
+  , "highlight": "#e74c3c"
+  , "textPrimary": "#222"
+  , "textSoft": "#c1c0c1"
+  , "textExtraSoft": "#aaa"
+  , "textHighlight": "#e74c3c"
+  , "explanations": [
+    {
+        "title": "Conditional probability"
+      , "subtitle": "Explained Visually"
+      , "slug": "conditional-probability"
+      , "quip": "You probably wouldn't understand."
+      , "date": "2014/10/30"
+      , "author": "Victor Powell"
+      , "twitterCreator": "vicapow"
+    }
+    , {
+        "title": "Markov Chains"
+      , "subtitle": "Explained Visually"
+      , "slug": "markov-chains"
+      , "quip": "Mark on, Markov"
+      , "date": "2014/11/07"
+      , "author": "Victor Powell"
+      , "twitterCreator": "vicapow"
+      , "twitterCreatorText": "lewislehe"
+      , "authorText" : "Lewis Lehe"
+    }
+    , {
+        "title": "Exponentiation"
+      , "subtitle": "Explained Visually"
+      , "slug": "exponentiation"
+      , "quip": "Growing, growing, gone."
+      , "date": "2014/11/14"
+      , "twitterCreator": "vicapow"
+      , "author": "Victor Powell"
+    }
+    , {
+        "title": "Sine and Cosine"
+      , "subtitle": "Explained Visually"
+      , "slug": "sine-and-cosine"
+      , "quip": "Sine on the line."
+      , "date": "2014/11/21"
+      , "author": "Victor Powell"
+      , "twitterCreator": "vicapow"
+      , "twitterCreatorText": "lewislehe"
+      , "authorText" : "Lewis Lehe"
+    }
+    , {
+        "title": "Pi (π)"
+      , "subtitle": "Explained Visually"
+      , "slug": "pi"
+      , "quip": "Pi me to the moon."
+      , "date": "2014/11/28"
+      , "author": "Victor Powell"
+      , "twitterCreator": "vicapow"
+    }
+    , {
+        "title": "Eigenvectors and Eigenvalues"
+      , "hideFromHomepage": false
+      , "subtitle": "Explained Visually"
+      , "slug": "eigenvectors-and-eigenvalues"
+      , "quip": "No, no. Do it eigen!"
+      , "date": "2015/01/20"
+      , "author": "Victor Powell"
+      , "twitterCreator": "vicapow"
+      , "author2": "Lewis Lehe"
+      , "twitterCreator2": "lewislehe"
+    }
+    , {
+        "title": "Variance"
+      , "hideFromHomepage": true
+      , "subtitle": "Explained Visually"
+      , "slug": "variance"
+      , "quip": "Close enough."
+      , "date": "2014/12/19"
+      , "author": "Victor Powell"
+      , "twitterCreator": "vicapow"
+    }
+    , {
+        "title": "Image Kernels"
+      , "subtitle": "Explained Visually"
+      , "slug": "image-kernels"
+      , "quip": "The kernel's secret recipe."
+      , "date": "2015/01/29"
+      , "author": "Victor Powell"
+      , "twitterCreator": "vicapow"
+    }
+    , {
+        "title": "Principal Component Analysis"
+      , "subtitle": "Explained Visually"
+      , "slug": "principal-component-analysis"
+      , "quip": "Axis of easy."
+      , "date": "2015/02/12"
+      , "author": "Victor Powell"
+      , "twitterCreator": "vicapow"
+      , "twitterCreatorText": "lewislehe"
+      , "authorText" : "Lewis Lehe"
+    }
+    , {
+        "title": "Ordinary Least Squares Regression"
+      , "subtitle": "Explained Visually"
+      , "slug": "ordinary-least-squares-regression"
+      , "quip": "Where do betas come from?"
+      , "date": "2015/02/17"
+      , "author": "Victor Powell"
+      , "twitterCreator": "vicapow"
+      , "author2": "Lewis Lehe"
+      , "twitterCreator2": "lewislehe"
+    }
+  ]
+}

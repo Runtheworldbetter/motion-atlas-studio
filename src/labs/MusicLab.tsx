@@ -25,7 +25,9 @@ const LABS: {id: Lab; name: string; hint: string}[] = [
   {id: 'original-harmonics', name: 'Harmonics', hint: 'Google original'},
   {id: 'original-strings', name: 'Strings', hint: 'Google original'},
   {id: 'original-soundwaves', name: 'Sound Waves', hint: 'Google original'},
+  {id: 'original-spectrogram', name: 'Spectrogram', hint: 'Google original'},
 ];
+const labFromHash = () => LABS.find(item => window.location.hash === `#music-lab/${item.id}`)?.id;
 const HARMONIC_PRESETS = {
   Pure: [1, 0, 0, 0, 0, 0, 0, 0],
   Warm: [1, .25, .08, 0, 0, 0, 0, 0],
@@ -185,7 +187,7 @@ function HarmonicPlot({amplitudes}: {amplitudes: number[]}) {
 
 export default function MusicLab() {
   const id = useId(), engine = useRef<AudioSession | null>(null), request = useRef(0), mounted = useRef(true);
-  const [lab, setLab] = useState<Lab>('sound'), [playing, setPlaying] = useState(false), [starting, setStarting] = useState(false);
+  const [lab, setLab] = useState<Lab>(() => labFromHash() ?? 'sound'), [playing, setPlaying] = useState(false), [starting, setStarting] = useState(false);
   const [frequency, setFrequency] = useState(440), [shape, setShape] = useState<ToneShape>('sine'), [level, setLevel] = useState(30);
   const [fundamental, setFundamental] = useState(220), [amplitudes, setAmplitudes] = useState<number[]>([...HARMONIC_PRESETS.Warm]);
   const [pattern, setPattern] = useState<MusicPattern>(() => makePattern()), patternRef = useRef(pattern);
@@ -204,8 +206,17 @@ export default function MusicLab() {
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
     const update = () => setReduced(preference.matches); update(); preference.addEventListener('change', update);
     const hidden = () => {if (document.hidden) stop('Sound stopped while the page was out of view.');};
+    const stopForOriginal = () => stop('Sound stopped while another original is open.');
+    window.addEventListener('atlas-stop-audio', stopForOriginal);
     document.addEventListener('visibilitychange', hidden);
-    return () => {mounted.current = false; request.current++; closeSession(engine.current); engine.current = null; document.removeEventListener('visibilitychange', hidden); preference.removeEventListener('change', update);};
+    return () => {mounted.current = false; request.current++; closeSession(engine.current); engine.current = null; document.removeEventListener('visibilitychange', hidden); window.removeEventListener('atlas-stop-audio', stopForOriginal); preference.removeEventListener('change', update);};
+  }, [stop]);
+
+  useEffect(() => {
+    const navigate = () => {const next = labFromHash(); if (next) {stop(); setLab(next); setError(''); document.getElementById('music-lab')?.scrollIntoView({block: 'start'});}};
+    navigate();
+    window.addEventListener('hashchange', navigate); window.addEventListener('popstate', navigate);
+    return () => {window.removeEventListener('hashchange', navigate); window.removeEventListener('popstate', navigate);};
   }, [stop]);
 
   useEffect(() => {
@@ -229,7 +240,7 @@ export default function MusicLab() {
   }, [playing, lab]);
 
   const changePattern = (next: MusicPattern, interrupt = false) => {if (interrupt) stop('Pattern updated. Press Play to hear it.'); patternRef.current = next; setPattern(next);};
-  const chooseLab = (next: Lab) => {if (next !== lab) {stop(); setLab(next); setError(''); setMessage('Ready. Press Play when you want to listen.');}};
+  const chooseLab = (next: Lab) => {if (next !== lab) {stop(); setLab(next); setError(''); setMessage('Ready. Press Play when you want to listen.'); window.history.replaceState(null, '', `#music-lab/${next}`);}};
 
   async function play() {
     if (playing) {stop('Sound stopped. Your settings are kept.'); return;}
@@ -318,6 +329,6 @@ export default function MusicLab() {
       {lab === 'sequence' && <div className="ml-sequencer"><div className="ml-sequence-tools"><label>Tempo <input type="range" min="60" max="180" value={pattern.bpm} onChange={event => changePattern({...pattern, bpm: Number(event.target.value)}, true)}/><output>{pattern.bpm} BPM</output></label><label>Length <select value={pattern.steps} onChange={event => {const steps = Number(event.target.value) as 8 | 16; changePattern({...pattern, steps, notes: pattern.notes.map(row => Array.from({length: steps}, (_, i) => row[i] ?? false))}, true); setCursor({row: 4, step: 0});}}><option value="8">8 steps</option><option value="16">16 steps</option></select></label><label>Sound <select value={pattern.timbre} onChange={event => changePattern({...pattern, timbre: event.target.value as MusicPattern['timbre']})}><option value="soft">Soft keys</option><option value="sine">Pure sine</option></select></label><label className="ml-loop"><input type="checkbox" checked={loop} onChange={event => changeLoop(event.target.checked)}/> Loop</label></div><div className="ml-sequence-scroll"><div className="ml-sequence-grid" role="grid" aria-label="Melody sequencer. Use arrow keys to move between notes, and Space or Enter to toggle a note." style={{'--step-count': pattern.steps} as CSSProperties}><div className="ml-grid-row ml-grid-header" role="row"><span role="columnheader">Pitch</span>{Array.from({length: pattern.steps}, (_, step) => <span role="columnheader" key={step} className={step === playhead ? 'ml-current' : ''}>{step + 1}</span>)}</div>{MUSIC_PITCHES.map((pitch, row) => <div className="ml-grid-row" role="row" key={pitch.midi} style={{'--pitch-color': pitch.color} as CSSProperties}><span className="ml-pitch-label" role="rowheader">{pitch.name}</span>{pattern.notes[row].map((on, step) => <button type="button" className={`ml-note ${on ? 'ml-on' : ''} ${step === playhead ? 'ml-current' : ''}`} role="gridcell" aria-selected={on} aria-label={`${pitch.name}, step ${step + 1}, ${on ? 'on' : 'off'}`} tabIndex={cursor.row === row && cursor.step === step ? 0 : -1} key={step} data-row={row} data-step={step} onFocus={() => setCursor({row, step})} onClick={() => toggleNote(row, step)} onKeyDown={event => {if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) return; event.preventDefault(); const r = Math.max(0, Math.min(4, row + (event.key === 'ArrowUp' ? -1 : event.key === 'ArrowDown' ? 1 : 0))); const s = event.key === 'Home' ? 0 : event.key === 'End' ? pattern.steps - 1 : Math.max(0, Math.min(pattern.steps - 1, step + (event.key === 'ArrowLeft' ? -1 : event.key === 'ArrowRight' ? 1 : 0))); event.currentTarget.closest('.ml-sequence-grid')?.querySelector<HTMLButtonElement>(`[data-row="${r}"][data-step="${s}"]`)?.focus();}}><span aria-hidden="true">{on ? '●' : '·'}</span></button>)}</div>)}</div></div><div className="ml-grid-caption"><span>One step = ½ beat · {patternDuration(pattern).toFixed(1)} s per cycle</span><span>{pattern.steps === 16 ? 'Scroll the grid to reach every step.' : 'C major pentatonic · five pitches that work together'}</span></div><div className="ml-sequence-bottom"><div className="ml-preset-buttons"><span>Start with</span><button type="button" onClick={() => changePattern({...makePattern(pattern.steps, 'rise'), bpm: pattern.bpm, timbre: pattern.timbre}, true)}>Rising notes</button><button type="button" onClick={() => changePattern({...makePattern(pattern.steps, 'syncopation'), bpm: pattern.bpm, timbre: pattern.timbre}, true)}>Offbeat</button><button type="button" onClick={() => changePattern({...pattern, notes: pattern.notes.map(row => row.map(() => false))}, true)}>Clear</button></div><div className="ml-downloads"><button type="button" onClick={() => {downloadFile('motion-atlas-melody.json', JSON.stringify(pattern, null, 2), 'application/json'); setMessage('Pattern JSON downloaded. You can import it here again.');}}>Save JSON</button><button type="button" onClick={() => {const rate = 22050; downloadFile('motion-atlas-melody.wav', encodeWav(renderPatternSamples(pattern, rate, level / 100 * .12), rate), 'audio/wav'); setMessage('One complete cycle downloaded as a WAV audio file.');}}>Save WAV</button><button type="button" onClick={() => importRef.current?.click()}>Import JSON</button><input ref={importRef} className="ml-hidden" type="file" accept=".json,application/json" aria-label="Import melody pattern JSON" onChange={event => void importPattern(event.target.files?.[0])}/></div></div></div>}
       <div className="ml-status" role="status" aria-live="polite"><span className={playing ? 'ml-status-light active' : 'ml-status-light'} aria-hidden="true"/>{!audioAvailable ? 'Web Audio is unavailable here. The visual models and melody downloads still work.' : error || message}</div>
     </div>}
-    <footer className="ml-footer"><p>Three Atlas experiments, plus three originals from <a href="https://musiclab.chromeexperiments.com/" target="_blank" rel="noreferrer">Google’s Chrome Music Lab</a>. No microphone, account or recording required.</p><a href="https://github.com/googlecreativelab/chrome-music-lab" target="_blank" rel="noreferrer">Explore the original project</a></footer>
+    <footer className="ml-footer"><p>Three Atlas experiments, plus four originals from <a href="https://musiclab.chromeexperiments.com/" target="_blank" rel="noreferrer">Google’s Chrome Music Lab</a>. No account required. Spectrogram also offers optional microphone input.</p><a href="https://github.com/googlecreativelab/chrome-music-lab" target="_blank" rel="noreferrer">Explore the original project</a></footer>
   </section>;
 }

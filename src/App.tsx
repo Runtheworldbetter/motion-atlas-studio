@@ -12,13 +12,14 @@ import {specs, scenes} from '../lib/motion/catalog';
 import {appliedRecipes, appliedResults} from '../lib/motion/applied';
 import {getSceneBasis} from '../lib/motion/basis';
 import {PREFERENCE_KEY, validatePreferences, type Preferences, type Preference} from '../lib/preferences';
-import {createZip} from '../lib/zip';
+import {createZip, loadSourceBundle} from '../lib/zip';
 import {MotionPlayer, useReducedMotion} from './Player';
 import {CodeEditor, Dialog, VoteButtons} from './components';
 import initialRecipe from './initial-recipe';
 import {CricketStroke} from './CricketStroke';
 import ExplorationAtlas from './labs/ExplorationAtlas';
 const MusicLab = lazy(() => import('./labs/MusicLab'));
+const OriginalsAtlas = lazy(() => import('./labs/OriginalsAtlas'));
 
 const REPOSITORY = 'https://github.com/Runtheworldbetter/motion-atlas-studio';
 const MOTION_CANVAS_PROJECT = 'https://github.com/motion-canvas/motion-canvas';
@@ -228,9 +229,14 @@ export default function App() {
   async function downloadProject() {
     try {
       recipe.compile(draft.input, draft.secondary); setBusy(true);
-      const response = await fetch(new URL('./source/bundle.json', location.href));
+      const sourceURL = new URL('./source/bundle.json', location.href);
+      const response = await fetch(sourceURL);
       if (!response.ok) throw new Error('The source download is temporarily unavailable.');
-      const files: Record<string, string> = await response.json();
+      const files = await loadSourceBundle(await response.json(), async name => {
+        const part = await fetch(new URL(name, sourceURL));
+        if (!part.ok) throw new Error('A source download part is temporarily unavailable.');
+        return part.json();
+      });
       files['src/initial-recipe.ts'] = `import type {RecipeId} from '../lib/recipes/types';\nconst initialRecipe: {recipe: RecipeId; input: string; secondary?: string} | null = ${JSON.stringify({recipe: recipeId, input: draft.input, secondary: draft.secondary}, null, 2)};\nexport default initialRecipe;\n`;
       files['YOUR-RECIPE.md'] = `# Your Motion Atlas recipe\n\nThis project opens with your edited ${recipeNames[recipeId]} inputs.\n\n1. Install Node.js 22.13 or newer.\n2. Run npm ci.\n3. Run npm run dev.\n4. Open the local address shown.\n\nYour input is saved in src/initial-recipe.ts.\n`;
       const bytes = createZip(files);
@@ -261,7 +267,7 @@ export default function App() {
 
   return <>
     <a href="#studio" className="skip-link">Skip to editor</a>
-    <header className="site-header atlas-with-explorations"><a className="brand" href={location.pathname} aria-label="Motion Atlas home"><span className="brand-mark">m</span><span>motion<span className="brand-serif">atlas</span><small>AN RTWB PROJECT</small></span></a><nav className="atlas-main-navigation" aria-label="Main navigation"><a href="#studio">Editor</a><a href="#collection">Collection <span>{specs.length}</span></a><a href="#explore">Explore</a><a href="#music-lab">Music Lab</a><a href={ATLAS_DOCS}>Docs</a></nav><div className="header-actions"><button className="text-button saved-button" onClick={() => setPreferencesOpen(true)}><Heart size={16}/> Your picks {votedCount > 0 && <span className="count-badge">{votedCount}</span>}</button><a className="github-button" href={REPOSITORY} target="_blank" rel="noreferrer"><Code2 size={17}/><span>Atlas GitHub</span></a></div></header>
+    <header className="site-header atlas-with-explorations"><a className="brand" href={location.pathname} aria-label="Motion Atlas home"><span className="brand-mark">m</span><span>motion<span className="brand-serif">atlas</span><small>AN RTWB PROJECT</small></span></a><nav className="atlas-main-navigation" aria-label="Main navigation"><a href="#studio">Editor</a><a href="#collection">Collection <span>{specs.length}</span></a><a href="#explore">Explore</a><a href="#originals">Originals</a><a href="#music-lab">Music Lab</a><a href={ATLAS_DOCS}>Docs</a></nav><div className="header-actions"><button className="text-button saved-button" onClick={() => setPreferencesOpen(true)}><Heart size={16}/> Your picks {votedCount > 0 && <span className="count-badge">{votedCount}</span>}</button><a className="github-button" href={REPOSITORY} target="_blank" rel="noreferrer"><Code2 size={17}/><span>Atlas GitHub</span></a></div></header>
 
     <main>
       <section className="intro page-width"><div><p className="eyebrow"><span className="status-dot"/> MOTION ATLAS · EXAMPLES & EDITOR</p><h1>Animate your <em>data and code.</em></h1><p className="intro-copy">Choose an example, edit the input, and render the animation.</p></div><div className="intro-aside"><span className="local-badge"><ShieldCheck size={15}/> Runs in your browser</span><p>Your files are processed on your device.<br/>Download a project to keep editing.</p></div></section>
@@ -318,7 +324,7 @@ export default function App() {
               {activeTab === 'data' && <div className="data-table-wrap"><table><thead><tr><th>Item</th><th>Value</th><th>Explanation</th></tr></thead><tbody>{result.rows.map((row, index) => <tr key={index}><th scope="row">{row.label}</th><td>{row.value}</td><td>{row.detail ?? ''}</td></tr>)}</tbody></table></div>}
               {activeTab === 'source' && <><div className="source-caption"><code>lib/recipes/{recipeId}.ts</code><button className="text-button" onClick={() => copy(sourceText)}><Copy size={13}/> Copy</button></div><pre className="source-code" tabIndex={0}>{sourceText}</pre><p className="small-note">The project download includes this code and your edited input.</p></>}
             </div>
-            <div className="reuse-actions"><button className="secondary-button" onClick={downloadProject} disabled={busy}>{busy ? <Loader2 size={16} className="spinning"/> : <ArrowDownToLine size={16}/>} Download project</button><button className="text-button" onClick={() => setShareOpen(true)}><Link2 size={15}/> Share / embed</button><span className="reuse-note">MIT licensed</span></div>
+            <div className="reuse-actions"><button className="secondary-button" onClick={downloadProject} disabled={busy}>{busy ? <Loader2 size={16} className="spinning"/> : <ArrowDownToLine size={16}/>} Download project</button><button className="text-button" onClick={() => setShareOpen(true)}><Link2 size={15}/> Share / embed</button><span className="reuse-note">Atlas: MIT · upstream licenses included</span></div>
           </div>
         </div>}
       </section>
@@ -334,6 +340,7 @@ export default function App() {
       </section>
 
       <ExplorationAtlas/>
+      <Suspense fallback={<section id="originals" className="page-width lab-loading">Opening Originals…</section>}><OriginalsAtlas/></Suspense>
       <Suspense fallback={<section id="music-lab" className="page-width lab-loading">Opening Music Lab…</section>}><MusicLab/></Suspense>
 
       <section id="guide" className="guide page-width"><div className="section-kicker"><span>03</span> QUICK START</div><h2>Using the <em>editor.</em></h2><div className="guide-grid"><article><span className="guide-number">01</span><h3>Edit an example</h3><p>Choose a recipe and edit its text, or open a local file.</p></article><article><span className="guide-number">02</span><h3>Preview the animation</h3><p>Click Render changes. Pause or scrub the timeline, and use Inspect values to check the numbers.</p></article><article><span className="guide-number">03</span><h3>Save or share</h3><p>Download your input, a runnable project, or a PNG. Share links and embeds open the selected preset.</p></article></div><div className="open-source-banner"><div><p className="eyebrow">SOURCE CODE</p><h3>Run the editor locally</h3><p>Install Node.js 22.13 or newer, download the source, and run:</p></div><div><code>npm ci<br/>npm run dev</code><div className="banner-links"><a className="secondary-button" href="./motion-atlas-source.zip" download><ArrowDownToLine size={15}/> Download source</a><a className="text-button" href={REPOSITORY} target="_blank" rel="noreferrer">GitHub <ExternalLink size={14}/></a></div></div></div></section>

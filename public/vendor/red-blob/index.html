@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Red Blob Games — original A* diagrams · Motion Atlas</title>
+  <meta name="description" content="Original Red Blob Games grid, frontier, weighted-route and A* comparison diagrams. Locally hosted with editable source and notices.">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header>
+    <div class="credit">Original by <a href="https://www.redblobgames.com/pathfinding/a-star/introduction.html" target="_blank" rel="noopener">Red Blob Games</a></div>
+    <nav aria-label="Original pathfinding diagrams">
+      <button type="button" data-panel="frontier" aria-pressed="true">Growing frontier</button>
+      <button type="button" data-panel="expansion" aria-pressed="false">Step through</button>
+      <button type="button" data-panel="weights" aria-pressed="false">Movement cost</button>
+      <button type="button" data-panel="astar" aria-pressed="false">Compare A*</button>
+    </nav>
+  </header>
+  <main>
+    <section data-scene="frontier" aria-labelledby="frontier-title">
+      <h1 id="frontier-title">Watch the frontier grow</h1>
+      <p class="instruction">Drag the red start marker. Paint walls by dragging across cells. Scrub or play the original breadth-first frontier.</p>
+      <figure id="diagram-frontier" class="wide-diagram"><canvas width="608" height="308" aria-label="Editable breadth-first frontier grid"></canvas></figure>
+      <div class="legend" aria-label="Grid legend"><span><i class="reached-bg"></i>Reached</span><span><i class="frontier-bg"></i>Frontier</span><span><i class="unexplored-bg"></i>Unexplored</span></div>
+    </section>
+    <section data-scene="expansion" aria-labelledby="expansion-title" hidden>
+      <h1 id="expansion-title">One search step at a time</h1>
+      <p class="instruction">Move the start and use the original forward/back controls. The numbers show visit order; the blue cell is current and green marks its neighbors.</p>
+      <figure id="diagram-expansion" class="wide-diagram"><canvas width="608" height="275" aria-label="Editable search expansion with numbered visit order"></canvas></figure>
+      <div class="legend"><span><i class="current-bg"></i>Current</span><span><i class="neighbors-bg"></i>Neighbors</span><span><i class="frontier-bg"></i>Frontier</span></div>
+    </section>
+    <section data-scene="weights" aria-labelledby="weights-title" hidden>
+      <h1 id="weights-title">A short path can cost more</h1>
+      <p class="instruction">The two original diagrams share their terrain and endpoints. Paint terrain or walls, then move the start and target to compare their calculated routes.</p>
+      <div class="comparison two">
+        <figure id="diagram-weights-false"><figcaption>Every move costs 1</figcaption><canvas width="288" height="288" aria-label="Unweighted route ignoring terrain movement cost"></canvas></figure>
+        <figure id="diagram-weights-true"><figcaption>Terrain changes the cost</figcaption><canvas width="288" height="288" aria-label="Weighted shortest route including terrain movement cost"></canvas></figure>
+      </div>
+      <p class="hint">Click or drag a cell to cycle open ground → forest → wall. Forest costs 5 in the right-hand diagram.</p>
+    </section>
+    <section data-scene="astar" aria-labelledby="astar-title" hidden>
+      <h1 id="astar-title">What each search pays attention to</h1>
+      <p class="instruction">These are Red Blob’s original linked comparison diagrams. Drag either endpoint or paint a wall in one view; all three recompute. Hover over a cell to inspect a route or heuristic.</p>
+      <div class="comparison three">
+        <figure id="diagram-astar-1"><figcaption>Dijkstra<br><span>Cost so far</span></figcaption><canvas width="293" height="293" aria-label="Dijkstra search, actual cost so far"></canvas></figure>
+        <figure id="diagram-astar-2"><figcaption>Greedy best-first<br><span>Estimated distance left</span></figcaption><canvas width="293" height="293" aria-label="Greedy best-first search, estimated distance to target"></canvas></figure>
+        <figure id="diagram-astar-3"><figcaption>A*<br><span>Cost plus estimate</span></figcaption><canvas width="293" height="293" aria-label="A star search, sum of actual and estimated cost"></canvas></figure>
+      </div>
+      <p class="hint">The original A* example uses cost + 1.01 × Manhattan distance to break ties. It is the teaching example’s actual model.</p>
+    </section>
+  </main>
+  <footer><a href="./source/pathfinding/a-star/introduction.js" target="_blank">Original editable source</a> · <a href="./atlas-diagrams.js" target="_blank">Hosting adapter</a> · <a href="./THIRD-PARTY-NOTICES.txt" target="_blank">Licenses and notices</a> · <a href="./README.md" target="_blank">Build notes</a></footer>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

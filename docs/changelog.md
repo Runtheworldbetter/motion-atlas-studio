@@ -1,5 +1,21 @@
 # Motion Atlas releases
 
+## 0.6.0
+
+Added **Originals**, a separate collection of six upstream projects with their original implementations, readable source, precise provenance and retained licenses. The existing Editor → Collection presentation, 50 gallery examples, seven editable recipes, 15 Atlas studies, and previous six music experiments remain available.
+
+- **Spectrogram** brings the original Google Creative Lab renderer, instrument samples, drawing mode and optional explicit microphone input. It is also the seventh Music Lab tab, alongside the three Atlas instruments and three earlier Google originals.
+- **LOOPY** preserves Nicky Case’s v1.1 system-drawing and signal-simulation application, including its three authored example models.
+- **Setosa Markov chains** includes the licensed original article, probability sliders, transition matrix, diagrams and moving weather sequences. Its separate full playground remains an external link because no reuse grant for that application was verified.
+- **Sigma’s paper network** preserves the original homepage demo, public OpenAlex metadata, search, camera focus, citation and co-authorship views.
+- **Red Blob Games’ pathfinding** includes four sets of original plain-grid diagrams: frontier expansion, search stepping, weighted routes, and Dijkstra/greedy/A* comparisons. StarRaven artwork and Conrec are not used at runtime.
+- **Paper’s Metaballs and Warp** preserve the original shaders and preset values, with standalone Atlas hosting controls.
+- Every original has **Open full size**, **Restart**, **Copy launch link**, source/credit links and a dedicated source ZIP at `originals/<id>-source.zip`. Links use `#originals/<id>`; Spectrogram also uses `#music-lab/original-spectrogram`.
+- Original frames unload when closed. Silent originals stay mounted while the page is hidden, preserving edits; Spectrogram unloads to stop audio and microphone access. Music starts only through interaction, and pending Spectrogram audio starts are cancelled on stop/hide.
+- The local packages include their runtime assets, editable source, README, build instructions where needed, provenance and full notices. They make no external runtime requests. Ordinary Atlas builds use the checked-in original distributions.
+- Apache-2.0, MIT, CC0, dependency, font and data terms remain attached to the relevant packages. Atlas-authored code stays MIT; it does not relicense upstream originals.
+- Updated the website guide, README, [Originals guide](originals.md), attribution and [Spectrogram integration guide](upstream-spectrogram.md). The mechanical watch, shuttle and Voyager experiences are not included.
+
 ## 0.5.1 — 18 November 2026
 
 The original Editor → Collection presentation is restored. Explore and Music Lab follow the collection, while the existing 50 gallery scenes, seven editable recipes, players, and coaching tools remain unchanged.

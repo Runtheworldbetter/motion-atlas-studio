@@ -7,8 +7,8 @@ const sourceDownloads = {
   name: 'motion-atlas-local-downloads',
   configureServer(server: import('vite').ViteDevServer) {
     server.middlewares.use((request, response, next) => {
-      const pathname = request.url?.split('?')[0];
-      if (pathname !== '/source/bundle.json' && pathname !== '/motion-atlas-source.zip') {next(); return;}
+      const pathname = request.url?.split('?')[0] ?? '';
+      if (!/^\/source\/bundle(?:-\d+)?\.json$/.test(pathname) && pathname !== '/motion-atlas-source.zip' && !/^\/originals\/[a-z-]+-source\.zip$/.test(pathname)) {next(); return;}
       readFile(`dist${pathname}`).then(bytes => {
         response.setHeader('Content-Type', pathname.endsWith('.zip') ? 'application/zip' : 'application/json');
         response.end(bytes);

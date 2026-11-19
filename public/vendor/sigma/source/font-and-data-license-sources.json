@@ -1,0 +1,62 @@
+[
+  {
+    "path": "fonts/hauora/Hauora-Medium.woff2",
+    "url": "https://raw.githubusercontent.com/jacomyal/sigma.js/e7748c88c861f19cab00be80cb7f836c5fef61e8/packages/website/public/fonts/hauora/Hauora-Medium.woff2",
+    "sha256": "167934ba6f14161d9d6973358ff88b20f3645256786842bc21a45d08d755d3af",
+    "bytes": 48240
+  },
+  {
+    "path": "fonts/hauora/Hauora-Bold.woff2",
+    "url": "https://raw.githubusercontent.com/jacomyal/sigma.js/e7748c88c861f19cab00be80cb7f836c5fef61e8/packages/website/public/fonts/hauora/Hauora-Bold.woff2",
+    "sha256": "d79e11c83ecef23ece2fc610fe50eb9f1806dbec5c484a3d3d3a160b8de9f735",
+    "bytes": 48436
+  },
+  {
+    "path": "fonts/public-sans/PublicSans-Regular.woff2",
+    "url": "https://raw.githubusercontent.com/jacomyal/sigma.js/e7748c88c861f19cab00be80cb7f836c5fef61e8/packages/website/public/fonts/public-sans/PublicSans-Regular.woff2",
+    "sha256": "bea988eeadc7c0ddf9644c2dce7efb35f1767eac0187c0967f8a2567473cbbfe",
+    "bytes": 32548
+  },
+  {
+    "path": "fonts/public-sans/PublicSans-LightItalic.woff2",
+    "url": "https://raw.githubusercontent.com/jacomyal/sigma.js/e7748c88c861f19cab00be80cb7f836c5fef61e8/packages/website/public/fonts/public-sans/PublicSans-LightItalic.woff2",
+    "sha256": "cbb417e666b8a56de5251971831d6bb1f64e46b1e028456809941be869f6881c",
+    "bytes": 32916
+  },
+  {
+    "path": "fonts/public-sans/PublicSans-SemiBold.woff2",
+    "url": "https://raw.githubusercontent.com/jacomyal/sigma.js/e7748c88c861f19cab00be80cb7f836c5fef61e8/packages/website/public/fonts/public-sans/PublicSans-SemiBold.woff2",
+    "sha256": "44077e6ceb62b989c9ef0d4659d5b6a261c31fdec49e317e8833a9fb9550e02c",
+    "bytes": 32588
+  },
+  {
+    "path": "fonts/public-sans/PublicSans-SemiBoldItalic.woff2",
+    "url": "https://raw.githubusercontent.com/jacomyal/sigma.js/e7748c88c861f19cab00be80cb7f836c5fef61e8/packages/website/public/fonts/public-sans/PublicSans-SemiBoldItalic.woff2",
+    "sha256": "89bf32390f3cef4ffc6e582c279dbecaf9d810c9018141700efe894e899beb82",
+    "bytes": 33060
+  },
+  {
+    "path": "licenses/Hauora-OFL.txt",
+    "url": "https://raw.githubusercontent.com/WCYS-Co/Hauora-Sans/master/OFL.txt",
+    "sha256": "6bd31e5cd14b6d770e5e16eab9095f8952be3fa53e231d472f5755967a665f98",
+    "bytes": 4567
+  },
+  {
+    "path": "licenses/Public-Sans-OFL.txt",
+    "url": "https://raw.githubusercontent.com/uswds/public-sans/develop/OFL.txt",
+    "sha256": "157a9e77f7580246e97c769490e2e977ae94399f9d30f4556015c41fe8c28bac",
+    "bytes": 4390
+  },
+  {
+    "path": "licenses/Public-Sans-LICENSE.md",
+    "url": "https://raw.githubusercontent.com/uswds/public-sans/develop/LICENSE.md",
+    "sha256": "82f0d3cad45f264192db156360b4a710fe7060885f6aa261e6539f13cb9eb0d9",
+    "bytes": 6709
+  },
+  {
+    "path": "licenses/CC0-1.0.txt",
+    "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/CC0-1.0.txt",
+    "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+    "bytes": 7048
+  }
+]
