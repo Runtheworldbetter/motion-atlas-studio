@@ -1,0 +1,414 @@
+{
+  "upstream_repository": "https://github.com/googlecreativelab/chrome-music-lab",
+  "upstream_commit": "e54bb414908da2b6286a6ad6431a5fcf8b68dc3f",
+  "upstream_commit_date": "2022-12-16",
+  "packaged_on": "2026-11-18",
+  "license": "Apache-2.0 with separately retained library notices",
+  "runtime_network_requests": "none",
+  "experiments": [
+    {
+      "id": "harmonics",
+      "file": "harmonics.html",
+      "source_directory": "harmonics & strings",
+      "mode": 0,
+      "assets": "Synthesized with original Tone.js 0.6.1; no sampled audio"
+    },
+    {
+      "id": "strings",
+      "file": "strings.html",
+      "source_directory": "harmonics & strings",
+      "mode": 1,
+      "assets": "11 original harp MP3 files from upstream audio directory, embedded unchanged"
+    },
+    {
+      "id": "soundwaves",
+      "file": "soundwaves.html",
+      "source_directory": "soundwaves/dist",
+      "assets": "Original inline Browserify bundle, CSS, zoom-in.svg and zoom-out.svg (including their embedded PNG artwork), embedded unchanged except listed code compatibility edits"
+    }
+  ],
+  "modifications": [
+    "Inline JavaScript, CSS, SVG and audio files for self-contained static HTML; retain original source comments and add change notices.",
+    "Use the original bundled Tone.js 0.6.1 (r6) locally instead of the Harmonics remote Tone URL.",
+    "Correct standalone Harmonics mode; two entry pages select fixed modes 0 (Harmonics) and 1 (Strings), rather than the upstream query parser which could only choose Strings.",
+    "Correct Harmonics/Strings touchStarted(event) to touchStarted(e), and undefined mode to MODE in touch-cancel handling.",
+    "Replace legacy iOS-only audio overlays with native AudioContext.resume on first pointer/touch/key gesture; suspend on visibility loss/blur and close on pagehide.",
+    "Support parent atlas-original-stop message from the parent frame only.",
+    "Give the original Sound Waves zoom control an accessible name, focus style and Enter/Space activation.",
+    "Show an explicit WebGL-unavailable message with original/site source links when the original renderer cannot create its WebGL context; no alternate simplified renderer is substituted.",
+    "Omit unused Deku and keys imports from Sound Waves module 80 and prune their 30 unreachable Browserify modules; the active original piano, renderer, shaders and audio remain.",
+    "Remove obsolete separate sourceMappingURL from the inline Sound Waves distribution; source is pinned by upstream commit."
+  ],
+  "original_assets_no_separate_exception_found": true,
+  "not_included": [
+    "Rhythm",
+    "Kandinsky",
+    "Song Maker",
+    "Oscillators"
+  ],
+  "not_included_reason": "These originals are not in the licensed upstream repository; no website-only code, artwork or samples were copied.",
+  "bundled_packages": [
+    {
+      "name": "a-big-triangle",
+      "license": "MIT",
+      "license_reference_version": "1.0.2",
+      "source_match": false,
+      "license_evidence": [
+        "soundwaves/third_party/a-big-triangle/LICENSE"
+      ]
+    },
+    {
+      "name": "base64-js",
+      "license": "MIT",
+      "license_reference_version": "0.0.8",
+      "source_match": true,
+      "license_evidence": [
+        "https://registry.npmjs.org/base64-js/-/base64-js-0.0.8.tgz"
+      ]
+    },
+    {
+      "name": "bit-twiddle",
+      "license": "MIT",
+      "license_reference_version": "1.0.2",
+      "source_match": true,
+      "license_evidence": [
+        "https://registry.npmjs.org/bit-twiddle/-/bit-twiddle-1.0.2.tgz"
+      ]
+    },
+    {
+      "name": "browser-pack",
+      "license": "MIT",
+      "license_reference_version": "6.0.1",
+      "source_match": true,
+      "license_evidence": [
+        "https://registry.npmjs.org/browser-pack/-/browser-pack-6.0.1.tgz"
+      ]
+    },
+    {
+      "name": "buffer",
+      "license": "MIT",
+      "license_reference_version": "3.5.1",
+      "source_match": true,
+      "license_evidence": [
+        "https://registry.npmjs.org/buffer/-/buffer-3.5.1.tgz"
+      ]
+    },
+    {
+      "name": "cwise-compiler",
+      "license": "MIT",
+      "license_reference_version": "1.1.2",
+      "source_match": true,
+      "license_evidence": [
+        "https://registry.npmjs.org/cwise-compiler/-/cwise-compiler-1.1.2.tgz"
+      ]
+    },
+    {
+      "name": "dup",
+      "license": "MIT",
+      "license_reference_version": "1.0.0",
+      "source_match": true,
+      "license_evidence": [
+        "https://registry.npmjs.org/dup/-/dup-1.0.0.tgz"
+      ]
+    },
+    {
+      "name": "get-canvas-context",
+      "license": "MIT",
+      "license_reference_version": "1.0.1",
+      "source_match": true,
+      "license_evidence": [
+        "https://registry.npmjs.org/get-canvas-context/-/get-canvas-context-1.0.1.tgz"
+      ]
+    },
+    {
+      "name": "gl-buffer",
+      "license": "MIT",
+      "license_reference_version": "2.1.2",
+      "source_match": true,
+      "license_evidence": [
+        "soundwaves/third_party/gl-buffer/LICENSE"
+      ]
+    },
+    {
+      "name": "gl-fbo",
+      "license": "MIT",
+      "license_reference_version": "2.0.5",
+      "source_match": true,
+      "license_evidence": [
+        "soundwaves/third_party/gl-fbo/LICENSE"
+      ]
+    },
+    {
+      "name": "gl-shader",
+      "license": "MIT",
+      "license_reference_version": "4.0.5",
+      "source_match": true,
+      "license_evidence": [
+        "soundwaves/third_party/gl-shader/LICENSE"
+      ]
+    },
+    {
+      "name": "gl-texture2d",
+      "license": "MIT",
+      "license_reference_version": "2.0.10",
+      "source_match": true,
+      "license_evidence": [
+        "https://registry.npmjs.org/gl-texture2d/-/gl-texture2d-2.0.10.tgz"
+      ]
+    },
+    {
+      "name": "gl-vao",
+      "license": "MIT",
+      "license_reference_version": "1.2.1",
+      "source_match": true,
+      "license_evidence": [
+        "https://registry.npmjs.org/gl-vao/-/gl-vao-1.2.1.tgz"
+      ]
+    },
+    {
+      "name": "ieee754",
+      "license": "MIT",
+      "license_reference_version": "1.1.6",
+      "source_match": true,
+      "license_evidence": [
+        "https://registry.npmjs.org/ieee754/-/ieee754-1.1.6.tgz"
+      ]
+    },
+    {
+      "name": "iota-array",
+      "license": "MIT",
+      "license_reference_version": "1.0.0",
+      "source_match": true,
+      "license_evidence": [
+        "https://registry.npmjs.org/iota-array/-/iota-array-1.0.0.tgz"
+      ]
+    },
+    {
+      "name": "is-array",
+      "license": "MIT",
+      "license_reference_version": "1.0.1",
+      "source_match": true,
+      "license_evidence": [
+        "https://registry.npmjs.org/is-array/-/is-array-1.0.1.tgz"
+      ]
+    },
+    {
+      "name": "is-buffer",
+      "license": "MIT",
+      "license_reference_version": "1.1.3",
+      "source_match": true,
+      "license_evidence": [
+        "https://registry.npmjs.org/is-buffer/-/is-buffer-1.1.3.tgz"
+      ]
+    },
+    {
+      "name": "lodash",
+      "license": "MIT",
+      "license_reference_version": "3.10.1",
+      "source_match": true,
+      "license_evidence": [
+        "soundwaves/third_party/lodash/LICENSE"
+      ]
+    },
+    {
+      "name": "ndarray",
+      "license": "MIT",
+      "license_reference_version": "1.0.18",
+      "source_match": true,
+      "license_evidence": [
+        "https://registry.npmjs.org/ndarray/-/ndarray-1.0.18.tgz"
+      ]
+    },
+    {
+      "name": "ndarray-ops",
+      "license": "MIT",
+      "license_reference_version": "1.2.2",
+      "source_match": true,
+      "license_evidence": [
+        "https://registry.npmjs.org/ndarray-ops/-/ndarray-ops-1.2.2.tgz"
+      ]
+    },
+    {
+      "name": "tone",
+      "license": "MIT",
+      "license_reference_version": "0.6.1",
+      "source_match": true,
+      "license_evidence": [
+        "soundwaves/third_party/tone/LICENSE.md"
+      ]
+    },
+    {
+      "name": "typedarray-pool",
+      "license": "MIT",
+      "license_reference_version": "1.1.0",
+      "source_match": true,
+      "license_evidence": [
+        "https://registry.npmjs.org/typedarray-pool/-/typedarray-pool-1.1.0.tgz"
+      ]
+    },
+    {
+      "name": "uniq",
+      "license": "MIT",
+      "license_reference_version": "1.0.1",
+      "source_match": true,
+      "license_evidence": [
+        "https://registry.npmjs.org/uniq/-/uniq-1.0.1.tgz"
+      ]
+    },
+    {
+      "name": "weak-map",
+      "license": "Apache 2.0",
+      "license_reference_version": "1.0.5",
+      "source_match": true,
+      "license_evidence": [
+        "https://registry.npmjs.org/weak-map/-/weak-map-1.0.5.tgz"
+      ]
+    },
+    {
+      "name": "weakmap-shim",
+      "license": [
+        {
+          "type": "MIT",
+          "url": "http://github.com/Raynos/weakmap-shim/raw/master/LICENSE"
+        }
+      ],
+      "license_reference_version": "1.1.0",
+      "source_match": true,
+      "license_evidence": [
+        "https://registry.npmjs.org/weakmap-shim/-/weakmap-shim-1.1.0.tgz"
+      ]
+    },
+    {
+      "name": "webgl-context",
+      "license": "MIT",
+      "license_reference_version": "2.2.0",
+      "source_match": true,
+      "license_evidence": [
+        "https://registry.npmjs.org/webgl-context/-/webgl-context-2.2.0.tgz"
+      ]
+    }
+  ],
+  "soundwaves_module_inventory": {
+    "retained": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      76,
+      77,
+      78,
+      80,
+      81,
+      82,
+      83
+    ],
+    "omitted": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      72,
+      73,
+      74,
+      75,
+      79
+    ]
+  },
+  "upstream_file_sha256": {
+    "harmonics & strings/index.html": "b681aa3b7c5668a4975a073df84ff0cdf938ba1f6e1b5aed0cddf10c5c9b8540",
+    "harmonics & strings/audio/harp_1_bottom.mp3": "53b36da7ff03250edcdd55f7dadd14fa9f3d3044bb7c7a551df476b2f5082e29",
+    "harmonics & strings/audio/harp_5_bottom.mp3": "3e77fd4cbc7bb815fdf6e8b46fbd0eac085a96fd18ca34130a17f370ed2a5e94",
+    "harmonics & strings/audio/harp_4_bottom.mp3": "e86f5ce91034bf25d8c6fbdddedf4c167ee721191b84822f3444ec61941a33a0",
+    "harmonics & strings/audio/harp_3_bottom.mp3": "8627af92f4c8a79f69ac13ee2611524a7a803c8f5bc9d1fb4796b655e85903cb",
+    "harmonics & strings/audio/harp_2_bottom.mp3": "0eefdabc9b841cf583d58140923ce0991588340590a440df17679fc0cdda0821",
+    "harmonics & strings/audio/harp_1_top.mp3": "53b36da7ff03250edcdd55f7dadd14fa9f3d3044bb7c7a551df476b2f5082e29",
+    "harmonics & strings/audio/harp_5_top.mp3": "f0b9aea0c3c5f75f9cef86213cd508d3f14cd1ecb07f8837278828ce5e480931",
+    "harmonics & strings/audio/harp_3_top.mp3": "f5618b5872f432350db62c437655a684b11011cc603219ec4dc9f57e3ef19883",
+    "harmonics & strings/audio/harp_4_top.mp3": "ffaf0eb08c4b845daa8c0dd1c4de7c8488752d76ed4b3eb0d2152156539e6cda",
+    "harmonics & strings/audio/harp_0_top.mp3": "a74d1b79615293a63944a9f6d9054b0a8bbc0daf37829ec5897170cd6a60c541",
+    "harmonics & strings/audio/harp_2_top.mp3": "131704c4485a493bd066a9968c1a62fe90d05d62a6bb0f1e45ae8863438ddf3c",
+    "harmonics & strings/js/HarmonicController.js": "c3ba4400d2b7deecf348abe89a5a048942aac740d175c95efec75fde6459cd9d",
+    "harmonics & strings/js/Thread.js": "03c253a478c1e7ebd58afe3fa7e05323600b3cee5660284f02221bf77c9038fc",
+    "harmonics & strings/js/Harmonic.js": "96ec553b6b5d4ad51da7089ac3a07fe19a3de1f7e44f261182e39eca127c0872",
+    "harmonics & strings/js/ThreadGrabber.js": "2c5c502105f6e4773014b150cec566f32e69f179fb11b4e12cacaecfb68300de",
+    "harmonics & strings/js/index.js": "4cb094c54552c8418428c22a0533ff99c80bc44d510e8780b96bce45fae16ce3",
+    "harmonics & strings/js/ThreadController.js": "e1d75ef3cd1991f8b0742443f6754a8ea3352f5bfdf5806b84a280ed26d7018f",
+    "harmonics & strings/js/third-party/StartAudioContext.js": "0b44beb6e8027a168ba4de2f351620108877a986fb82fc05582d716da05bcb84",
+    "soundwaves/dist/index.html": "efdb94dd83224a7ff12af76ea6bc7f7cbf1c8dc138af56ad8722fb92782b864b",
+    "soundwaves/dist/bundle.js": "0a5181945a406f5c23a81b0d2ae8e336833f96ad47015a0f980f155178c9898a",
+    "soundwaves/dist/bundle.js.map": "b2b9011ff3b3658e868904722e155f364c92bde57f8c04f466272eb86ead8279",
+    "soundwaves/dist/media/zoom-out.svg": "fa3084265eca51adb280ca1c4bba2ea7a2375ed11272a7fbf08afb2da2c28bdd",
+    "soundwaves/dist/media/face-asleep.svg": "69297f62d786c1ac179d02bbbc45b5b63ef4bc2997c0c23b498f85caa43d6a81",
+    "soundwaves/dist/media/face-awake.svg": "89ad3c9c7fce4bba2398b8f85aa2233109a1346df39f8a563edeeb3c8f6bd684",
+    "soundwaves/dist/media/zoom-in.svg": "73c887e459dd5f2da52da06e134cef5def4ecad41dac73d9ae69586c78e3ac0b",
+    "soundwaves/dist/css/main.css": "788c9ca65c5d1a64f37ab803384f8602d187c1d91e3410c56131ec693b287bd7"
+  },
+  "distribution_sha256": {
+    "strings.html": "61b0046a28bbe64fe46934e7c13aa5ca0980b8182b91a4c845728840b097827a",
+    "harmonics.html": "3fe422c65339a7aed59177ba5f9f52a4ed312fa3f6eec58b04f489959ced78dd",
+    "soundwaves.html": "a74077e96616460091b4c4c6a748730e35e12cadb4a31b6fb477de5d3f34c37c"
+  }
+}

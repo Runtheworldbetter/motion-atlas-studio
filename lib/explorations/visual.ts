@@ -51,14 +51,6 @@ export function gearPath(teeth: number, module: number) {
   return points.map(([x,y],i)=>`${i?'L':'M'}${x.toFixed(3)},${y.toFixed(3)}`).join(' ')+' Z';
 }
 
-export const probeParts = [
-  {id:'antenna',title:'High-gain antenna',role:'A narrow radio beam carries measurements and receives commands.',color:'#d6edaa',offset:[0,-72]},
-  {id:'bus',title:'Equipment bus',role:'The central structure holds computers, communications and control equipment.',color:'#b9b0da',offset:[0,80]},
-  {id:'instruments',title:'Science instruments',role:'Different sensors turn their surroundings into measurements.',color:'#77c9ce',offset:[170,-20]},
-  {id:'power',title:'Power supply',role:'A long-lived power source supplies the spacecraft and its instruments.',color:'#eeb586',offset:[-175,55]},
-  {id:'boom',title:'Sensor boom',role:'A long support places sensitive instruments away from the main body.',color:'#b8c9b3',offset:[190,95]},
-] as const;
-
 /** CPU counterpart of Atlas's original GLSL material field. Coordinates preserve
  * WebGL's bottom-left origin; the returned opaque RGBA pixels use canvas rows. */
 export function materialPixels(width:number,height:number,time:number,mode:number,amount:number,grain:number,pixels=new Uint8ClampedArray(width*height*4)){

@@ -1,0 +1,52 @@
+/* Original New Directions study skin, scoped to its adapter. The original
+   modules retain their own component selectors and responsive rules. */
+.restored-study {
+  --bg:#11241e;--panel:#1c332a;--ink:#22372e;--paper:#f0f4ed;
+  --muted:#c4d0c5;--lime:#d4ed9b;--cyan:#7dd3d5;--orange:#f4b886;
+  --purple:#bca4dc;--border:#435c4c;--light:#f3f3e8;
+  color-scheme:dark;background:var(--bg);color:var(--light);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:16px;line-height:1.55;font-synthesis:none;
+  padding:24px;border-radius:14px;min-width:0;
+}
+.restored-study-host{min-width:0}
+.restored-study :where(*, *::before, *::after){box-sizing:border-box}
+.restored-study :where(a){color:inherit;text-underline-offset:4px}
+.restored-study :where(button,input,select,textarea){font:inherit}
+.restored-study :where(button,a,input,textarea,select){-webkit-tap-highlight-color:transparent}
+.restored-study :where(button){cursor:pointer}
+.restored-study :where(button:disabled){cursor:default;opacity:.5}
+.restored-study :where(:focus-visible){outline:3px solid var(--cyan);outline-offset:4px}
+.restored-study :where(h3){font-size:19px;line-height:1.3;letter-spacing:-.025em;font-weight:500;margin:0 0 10px}
+.restored-study :where(.scene){background:var(--paper);color:var(--ink);border-radius:10px;overflow:hidden;color-scheme:light}
+.restored-study :where(.scene svg){display:block;width:100%;max-width:100%;font-family:inherit}
+.restored-study :where(.controls){display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:18px 0}
+.restored-study :where(.control){display:flex;flex-direction:column;gap:7px;font-size:14px}
+.restored-study :where(.control input[type=range]){accent-color:var(--lime);min-width:180px}
+.restored-study :where(.button){display:inline-flex;justify-content:center;align-items:center;gap:8px;min-height:42px;border:1px solid var(--border);background:transparent;color:var(--light);padding:9px 14px;border-radius:6px;font-size:14px;font-weight:500;line-height:1.35;text-decoration:none}
+.restored-study :where(.button:hover){background:var(--panel)}
+.restored-study :where(.button.primary,.button[aria-pressed=true]){background:var(--lime);border-color:var(--lime);color:var(--ink)}
+.restored-study :where(.scene .button){color:var(--ink);border-color:#a4b7a9}
+.restored-study :where(.scene .button:hover){background:#dbe5d6}
+.restored-study :where(.scene .button.primary,.scene .button[aria-pressed=true]){background:#294b3a;color:#f4f8f1;border-color:#294b3a}
+.restored-study :where(.detail){padding:17px 20px;border-left:2px solid var(--lime);background:var(--panel);font-size:15px;color:var(--muted)}
+.restored-study :where(.detail strong){color:var(--light)}
+.restored-study :where(.muted){color:var(--muted)}
+.restored-study :where(.scene .muted){color:#52695b}
+.restored-study :where(input[type=range]){accent-color:var(--lime)}
+.restored-study :where(.scene input[type=range]){accent-color:#294b3a}
+.restored-study :where(.continuity-layout){display:flex;gap:8px;flex-wrap:wrap}
+.restored-study :where(.continuity-timeline){flex:1;min-width:200px}
+.restored-study :where(.continuity-timeline input){width:100%}
+.restored-study :where(.continuity-detail){display:grid;grid-template-columns:1fr auto;align-items:center;gap:20px}
+.restored-study :where(.continuity-detail p){margin:2px 0 0}
+.restored-study :where(.continuity-legend){display:flex;flex-wrap:wrap;gap:24px;font-size:13px;color:var(--muted);margin:12px 0}
+.restored-study :where(.continuity-legend span){display:flex;gap:7px;align-items:center}
+.restored-study :where(.continuity-legend i){width:10px;height:10px;display:inline-block;border-radius:2px}
+.restored-study :where(.continuity-book){cursor:pointer}
+.restored-study :where(.continuity-book:focus){outline:none}
+.restored-study :where(.continuity-book:focus .book-body){stroke:#14726b;stroke-width:3}
+.restored-study :where(.continuity-book:hover .book-body){filter:brightness(.96)}
+@media(max-width:650px){.restored-study{padding:16px 12px}}
+@media(max-width:480px){.restored-study{padding:16px 0}.restored-study :where(.button){min-height:44px}.restored-study :where(.controls){gap:10px}.restored-study :where(.continuity-detail){grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.restored-study :where(*,*::before,*::after){scroll-behavior:auto!important}}

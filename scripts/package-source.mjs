@@ -5,7 +5,7 @@ import {createZip} from '../lib/zip.ts';
 const root = process.cwd();
 const omit = new Set(['.git', '.openai', '.sites-runtime', '.wrangler', 'node_modules', 'dist', 'outputs']);
 const rootEntries = new Set(['src', 'lib', 'scripts', 'tests', 'docs', 'public', '.github', 'package.json', 'package-lock.json', 'vite.config.ts', 'tsconfig.json', 'index.html', 'README.md', 'LICENSE', 'CONTRIBUTING.md', '.gitignore']);
-const allowed = new Set(['.ts', '.tsx', '.mjs', '.json', '.html', '.css', '.md', '.txt', '.svg', '.yml', '.yaml']);
+const allowed = new Set(['.ts', '.tsx', '.js', '.mjs', '.json', '.html', '.css', '.md', '.txt', '.svg', '.yml', '.yaml']);
 const files = {};
 async function walk(directory) {
   for (const entry of await readdir(directory, {withFileTypes: true})) {

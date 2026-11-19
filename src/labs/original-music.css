@@ -1,0 +1,21 @@
+.music-lab .ml-tabs>button.ml-original-tab{background:#f7fbff;border-color:#ccdbe8}
+.music-lab .ml-tabs>button.ml-original-tab[aria-selected=true]{background:#d8efff;border-color:#77acd4}
+.music-lab .ml-tabs>button.ml-original-tab .ml-tab-number{color:#426c8a}
+.ml-original{background:#fff;border:1px solid #cbdce7;border-radius:16px;overflow:hidden;color:#263a2e}
+.ml-original-heading{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:25px 28px;border-bottom:1px solid #e1e9ee}
+.ml-original-heading h3{font-size:27px;font-weight:500;letter-spacing:-.6px;margin:0 0 8px}
+.ml-original-heading p{font-size:16px;line-height:1.6;margin:0;color:#566875}
+.ml-original-heading .ml-original-credit{font-size:12px;letter-spacing:.08em;font-weight:600;color:#497da2;margin-bottom:9px}
+.ml-original-actions{display:flex;align-items:center;gap:15px;flex-wrap:wrap;flex:none;font-size:14px}
+.ml-original-actions button,.ml-original-paused button{min-height:44px;border:1px solid #b9d1e3;border-radius:7px;background:#ecf6fd;padding:10px 15px;color:#315d7c}
+.ml-original-actions a,.ml-original-attribution a{text-decoration:underline;text-underline-offset:4px}
+.ml-original-frame{display:block;border:0;width:100%;height:560px;background:#fff}
+.ml-original-attribution{display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding:17px 28px;border-top:1px solid #e1e9ee;font-size:14px;color:#5e7180;line-height:1.6}
+.ml-original-attribution p{flex:1;min-width:240px;margin:0}
+.ml-original-attribution a{white-space:nowrap}
+.ml-original-paused{min-height:400px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;background:#f7fbff}
+.ml-original-paused h4{font-size:24px;margin:0 0 12px;font-weight:500}
+.ml-original-paused p{font-size:16px;line-height:1.6;margin:0 0 20px}
+@media(max-width:720px){.ml-original-heading{align-items:flex-start;flex-direction:column;padding:22px 18px;gap:16px}.ml-original-frame{height:480px}.ml-original-attribution{padding:17px 18px;gap:12px}.ml-original-attribution p{flex-basis:100%}.ml-original-paused{min-height:320px;padding:25px 18px}}
+
+.music-lab .ml-tabs>button.ml-original-tab small{display:block;font-size:12px;color:#456d8a}

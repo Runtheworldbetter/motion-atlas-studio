@@ -18,7 +18,15 @@ Reloading the page clears editor drafts. Download the input or project ZIP to ke
 
 Study controls and the attention input are processed locally. Most study state lasts only while that study is open. The Markov example stores its transition matrix, random seed, and path position in this browser; **Reset all** restores its defaults.
 
-Music Lab synthesizes sound on your device after an explicit Play action. It does not request microphone access or upload recordings. Melody patterns stay in memory; Save JSON preserves an editable copy and Save WAV exports a synthesized cycle. Imported melody files are validated locally. Study-state and melody downloads may contain your edits, so review them before sharing.
+The restored New Directions studies use a fictional venue plan, twelve fictional books with illustrative reading hours, and an authored word sequence. They contain no personal plans, reading records, or source documents.
+
+Music Lab has three Atlas experiments and three self-hosted Chrome Music Lab originals: Harmonics, Strings, and Sound Waves. The Atlas experiments synthesize sound after an explicit Play action. The originals unlock audio on a user gesture and use their original instrument controls and bundled samples. None requests microphone access or uploads recordings.
+
+Only one music experiment is active at a time. Switching experiments or hiding the page stops audio. An original application is unloaded on switch or page hide and starts fresh on return. Its HTML, code, and assets are served from this website's own files; the vendored originals make no external runtime requests. See [their source and integration record](upstream-music-lab.md).
+
+Atlas melody patterns stay in memory; Save JSON preserves an editable copy and Save WAV exports a synthesized cycle. Imported melody files are validated locally. These melody controls do not apply to the upstream originals. Study-state and melody downloads may contain your edits, so review them before sharing.
+
+The public examples contain no private source materials, personal photographs, videos, or coaching records.
 
 ## Links and hosting
 
