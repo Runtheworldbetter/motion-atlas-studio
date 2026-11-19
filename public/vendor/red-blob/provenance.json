@@ -1,0 +1,85 @@
+{
+  "project": "Red Blob Games original A* plain-grid diagrams",
+  "source": "https://www.redblobgames.com/pathfinding/a-star/build/_introduction.js.map",
+  "sourceSnapshotSha256": "a92677fadf5b4bfd7bb9290a28f6737c23042f5c004061ad4d8527afd909be4d",
+  "retrieved": "2026-11-19",
+  "upstreamPage": "https://www.redblobgames.com/pathfinding/a-star/introduction.html",
+  "licenses": {
+    "firstPartyCode": "Apache-2.0",
+    "conrec": "See original BSD-style and Nicholas Yue notices; archived unchanged, not loaded by these diagrams"
+  },
+  "runtimeSources": [
+    "source/pathfinding/search.js",
+    "source/pathfinding/grid.js",
+    "source/pathfinding/diagram.js",
+    "source/mjs/draggable.v2.js"
+  ],
+  "excluded": [
+    "StarRaven illustrated maps and sprites",
+    "Article prose",
+    "Analytics",
+    "Remote fonts and assets"
+  ],
+  "files": [
+    {
+      "path": "app.js",
+      "sha256": "22817846a28f94ae69335f50ef4be2c2250aa62b23cb629c787bd5907c7182f7"
+    },
+    {
+      "path": "atlas-diagrams.js",
+      "sha256": "b2b3a0f769d56a724feb64c72c0608a096f04af9460e589dd439e2a981f76288"
+    },
+    {
+      "path": "index.html",
+      "sha256": "5f93b91a43067af7b1e9adf15afc6847e62f8a0d69d80a78cb37c9998591162c"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "README.md",
+      "sha256": "bf66003d0dcf90c6eed8675b69b72a118267a055ab85b365210889788f778324"
+    },
+    {
+      "path": "source/mjs/draggable.v2.js",
+      "sha256": "65da366f8c1e5404d8be6a32b2f3865ad78750b40c0621261a1f0d7522b164ac"
+    },
+    {
+      "path": "source/pathfinding/a-star/introduction.js",
+      "sha256": "23b4a40dd0f5fa5ee3031f5e9b226fa1a1b7e808473bfad31eb88f29ad65ae6f"
+    },
+    {
+      "path": "source/pathfinding/code-highlighting.js",
+      "sha256": "3acdc6e50777983b8d783a5972a0e186776d44b71cf0d5b77991da6e57fac878"
+    },
+    {
+      "path": "source/pathfinding/conrec.js/conrec.js",
+      "sha256": "a01e0132aa4c179319b0654324110c9f556c441afe9c8b1986a78d5ba5d69432"
+    },
+    {
+      "path": "source/pathfinding/diagram.js",
+      "sha256": "c80934dd38ba8733dcff1bc7ee08f2b8a06ba1b8db2a452d03dc08a24932ba80"
+    },
+    {
+      "path": "source/pathfinding/grid.js",
+      "sha256": "a3aec0322683d19a8124784a63bff535b4ac970022d6d8cda9bbc2492bd16c6e"
+    },
+    {
+      "path": "source/pathfinding/search.js",
+      "sha256": "3fe33b9c77cc3a73ba978e38d242fdd902bef18eb442aded5fe7879598da195c"
+    },
+    {
+      "path": "source/upstream-source-map.json",
+      "sha256": "a92677fadf5b4bfd7bb9290a28f6737c23042f5c004061ad4d8527afd909be4d"
+    },
+    {
+      "path": "style.css",
+      "sha256": "5112349b475e83dee0f7aacb881da28ba5923fe062fd000064f8b34fcccc68f0"
+    },
+    {
+      "path": "THIRD-PARTY-NOTICES.txt",
+      "sha256": "db69e84d30ae527b44ec7a65e9a41a89cccb1be31693e91ded4d36b4c925d959"
+    }
+  ]
+}

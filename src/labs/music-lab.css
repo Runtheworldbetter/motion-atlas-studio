@@ -17,3 +17,7 @@
 .music-lab .ml-status,.music-lab .ml-footer{font-size:14px}
 @media(max-width:720px){.music-lab .ml-tabs strong{font-size:14px}.music-lab .ml-heading-aside{font-size:16px!important}.music-lab .ml-tabs>button{min-height:100px}.music-lab .ml-stage-heading p{font-size:16px}.music-lab .ml-note{min-height:44px}}
 @media(max-width:440px){.music-lab .ml-wave-choices{grid-template-columns:repeat(2,minmax(0,1fr))}.music-lab .ml-volume{font-size:14px}.music-lab .ml-partials{grid-template-columns:repeat(2,minmax(0,1fr))}.music-lab .ml-partial>span{display:flex}.music-lab .ml-partial output{margin:0}.music-lab .ml-base-frequency input{width:120px}.music-lab figcaption{flex-wrap:wrap;gap:4px}.music-lab .ml-frequency-stops{gap:5px}.music-lab .ml-frequency-stops button{padding-inline:9px}}
+
+/* Keep the four upstream instruments together as a second row. */
+@media(min-width:721px){.music-lab .ml-tabs{grid-template-columns:repeat(12,minmax(0,1fr))}.music-lab .ml-tabs>button{grid-column:span 4}.music-lab .ml-tabs>button.ml-original-tab{grid-column:span 3}}
+@media(max-width:720px){.music-lab .ml-tabs{grid-template-columns:repeat(6,minmax(0,1fr))}.music-lab .ml-tabs>button{grid-column:span 2}.music-lab .ml-tabs>button.ml-original-tab{grid-column:span 3}}

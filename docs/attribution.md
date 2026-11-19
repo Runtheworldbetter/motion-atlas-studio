@@ -6,17 +6,34 @@
 
 RTWB maintains the Motion Atlas editor, gallery scenes, recipes, and examples. That code uses the [MIT license](../LICENSE). Dependencies keep their own licenses, listed below.
 
+## Licensed upstream originals
+
+Version 0.6.0 includes six packages in **Originals**. Their source and assets remain attributed to their creators. Atlas adds hosting and integration controls and records those changes in each package's README and provenance. [The Originals guide](originals.md) gives exact pins, scope, downloads and reuse details.
+
+| Project | Creator | Retained rights and record |
+| --- | --- | --- |
+| Spectrogram | Google Creative Lab and collaborators | Apache-2.0 original; BSD-style helpers, MIT jQuery, SIL OFL fonts. [Source and notices](../public/vendor/chrome-music-lab/spectrogram/README.md). |
+| LOOPY v1.1 | Nicky Case | CC0-1.0; separate MIT dependency notices. [Source and notices](../public/vendor/loopy/README.md). |
+| Markov Chains — Explained Visually | Victor Powell; text by Lewis Lehe | MIT article/source; BSD D3/helper, helper patent grant, MIT AngularJS and SIL OFL Lato notices. [Source and notices](../public/vendor/setosa-markov/README.md). |
+| Sigma homepage paper network | Sigma.js contributors | MIT code, public OpenAlex metadata under CC0, separate font licenses and notices. [Source and notices](../public/vendor/sigma/README.md). |
+| Plain-grid A* diagrams | Amit Patel, Red Blob Games | Apache-2.0 original runtime. Original, unused Conrec source and notices retained in the archive. [Source and notices](../public/vendor/red-blob/README.md). |
+| Metaballs and Warp | Paper | Apache-2.0 renderers and presets; original LICENSE and NOTICE retained. [Source and notices](../public/vendor/paper-shaders/README.md). |
+
+Setosa's separately hosted full playground is linked only: no verified grant for incorporating that separate application was found. Red Blob's runtime does not use StarRaven illustrated-map assets or Conrec. Paper's original renderers and preset values are included with Atlas controls; its entire website/editor is not copied. Sigma's data is public metadata, not paper full text.
+
+These licenses apply to their respective code and assets. Atlas's MIT license does not replace them. Preserve the project licenses, copyright/attribution, applicable NOTICE files and modification records when redistributing source or built files. Each dedicated source ZIP carries those materials. No endorsement by the upstream creators is implied.
+
 ## Original Chrome Music Lab experiments
 
-Music Lab includes faithful, self-hosted versions of **Harmonics**, **Strings**, and **Sound Waves** from [Google Creative Lab's Chrome Music Lab](https://github.com/googlecreativelab/chrome-music-lab/tree/e54bb414908da2b6286a6ad6431a5fcf8b68dc3f), pinned to commit `e54bb414908da2b6286a6ad6431a5fcf8b68dc3f`.
+Music Lab includes faithful, self-hosted **Harmonics**, **Strings**, **Sound Waves**, and **Spectrogram** from [Google Creative Lab's Chrome Music Lab](https://github.com/googlecreativelab/chrome-music-lab/tree/e54bb414908da2b6286a6ad6431a5fcf8b68dc3f), pinned to commit `e54bb414908da2b6286a6ad6431a5fcf8b68dc3f`.
 
-These are upstream applications with their original visuals, assets, and instrument interactions. Chrome Music Lab's Apache-2.0 license and bundled third-party notices remain applicable; Atlas's MIT license does not replace them. The vendored files live under `public/vendor/chrome-music-lab/`. [Upstream music provenance and notices](upstream-music-lab.md) records the exact sources, retained copyright and license texts, and compatibility/packaging changes. It is the attribution record for this vendored distribution; the npm notice generator below does not cover those files.
+They retain their upstream visuals, relevant assets and instrument interactions. Their Apache-2.0 license and bundled third-party notices remain applicable. [The earlier music provenance record](upstream-music-lab.md) documents Harmonics, Strings and Sound Waves; [the Spectrogram record](upstream-spectrogram.md) covers the new experiment's source, local fonts, retained notices and compatibility changes. The files live under `public/vendor/chrome-music-lab/`, with Spectrogram in its own subdirectory.
 
-Music Lab labels distinguish these three originals from Atlas's own **Sound & spectrum**, **Build a timbre**, and **Make a melody** experiments. The 15 exploration studies are original Atlas adaptations with linked inspirations and explicit model boundaries; see [Models, source and inspiration](explorations.md#models-source-and-inspiration).
+Music Lab labels distinguish the four Google originals from Atlas's **Sound & spectrum**, **Build a timbre**, and **Make a melody**. The 15 exploration studies are original Atlas adaptations with linked inspirations and explicit model boundaries; see [Models, source and inspiration](explorations.md#models-source-and-inspiration).
 
 Three studies restore Atlas's own earlier New Directions modules: **Correct one assumption**, **Follow the same object**, and **Words that take shape**. Their original code and illustrative content remain Atlas work under MIT. R2D3 supplies an identity-continuity reference for the reading collection; Codrops supplies a kinetic-typography reference. No source artwork, datasets, GSAP code, or fonts are copied from those references.
 
-The spacecraft study was removed in 0.5.1. Raj Shekhar's Voyager experience is not bundled or embedded because a grant permitting that reuse could not be verified.
+The spacecraft study was removed in 0.5.1. Raj Shekhar's Voyager experience is not bundled or embedded because a grant permitting that reuse could not be verified. The mechanical watch and shuttle experiences are also outside this release's included collection.
 
 ## Direct runtime dependencies
 
@@ -28,7 +45,7 @@ The spacecraft study was removed in 0.5.1. Raj Shekhar's Voyager experience is n
 | `react-dom` | 19.2.6 | MIT |
 | `lucide-react` | 1.31.0 | ISC |
 
-Dependencies also include MathJax, CodeMirror, Lezer, chroma.js, and syntax grammars. Some packages include other third-party code with its own notices. Full license and notice texts are in [public/third-party-notices.txt](../public/third-party-notices.txt), included with the built site.
+Dependencies also include MathJax, CodeMirror, Lezer, chroma.js, and syntax grammars. Some packages include other third-party code with its own notices. Full license and notice texts are in [public/third-party-notices.txt](../public/third-party-notices.txt), included with the built site. Vendored projects also retain their own notice files next to their source; those project records define the scope of each original.
 
 ## Reproduce the notices
 
@@ -42,7 +59,9 @@ The generator follows the installed dependency graph from `package.json`'s produ
 
 The list covers all installed production dependencies, including code the browser build may remove as unused. Development tools have their licenses in their installed packages. If you distribute `node_modules` or build-tool binaries separately, include the licenses for that distribution too.
 
-The same installed dependencies produce the same output. `--check` validates the generated file without changing it. The check fails for missing packages or license text, version mismatches, outdated overrides, or conflicting notices for the same package version.
+Vendored original notices are aggregated with the production package notices, with source and integrity records checked during release. Each original also keeps its complete notices locally.
+
+The same installed dependencies and reviewed vendor files produce the same output. `--check` validates the generated file without changing it. The check fails for missing packages or license text, version mismatches, outdated overrides, or conflicting notices for the same package version.
 
 ## A package without a license file
 

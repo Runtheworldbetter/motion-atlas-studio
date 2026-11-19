@@ -1,0 +1,16 @@
+{
+  "name": "motion-atlas-vendored-sigma-original",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "sigma": "4.0.6",
+    "@sigma/node-border": "4.0.0",
+    "@sigma/layer-webgl": "4.0.0",
+    "graphology": "0.26.0",
+    "graphology-metrics": "2.3.0",
+    "lodash-es": "4.18.1"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.12"
+  }
+}

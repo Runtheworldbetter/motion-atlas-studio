@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import {createZip} from '../lib/zip.ts';
+import {createZip, decodeSourceBundle, loadSourceBundle} from '../lib/zip.ts';
 
 // Read the standard central directory rather than relying on the writer's
 // iteration order. Real extraction is also checked during release validation.
@@ -13,7 +13,7 @@ function readStoredEntries(bytes: Uint8Array) {
   const directorySize = view.getUint32(end + 12, true);
   let cursor = view.getUint32(end + 16, true);
   assert.equal(cursor + directorySize, end);
-  const entries = new Map<string, {text: string; crc: number}>();
+  const entries = new Map<string, {data: Uint8Array; crc: number}>();
   for (let index = 0; index < count; index++) {
     assert.equal(view.getUint32(cursor, true), 0x02014b50, 'central-directory signature');
     assert.equal(view.getUint16(cursor + 10, true), 0, 'stored compression method');
@@ -34,7 +34,7 @@ function readStoredEntries(bytes: Uint8Array) {
     assert.equal(view.getUint32(offset + 14, true), crc);
     assert.equal(view.getUint32(offset + 18, true), size);
     assert.ok(start + size <= view.getUint32(end + 16, true), 'file data must precede the central directory');
-    entries.set(name, {text: decoder.decode(bytes.subarray(start, start + size)), crc});
+    entries.set(name, {data: bytes.subarray(start, start + size), crc});
     cursor += 46 + nameLength + extraLength + commentLength;
   }
   assert.equal(cursor, end);
@@ -45,10 +45,25 @@ function readStoredEntries(bytes: Uint8Array) {
 test('ZIP preserves nested UTF-8 paths and content with standard CRC-32', () => {
   const files = {'docs/λ.txt': 'An explanation → a useful idea 🌱', 'checksum.txt': '123456789', 'empty.txt': ''};
   const entries = readStoredEntries(createZip(files));
-  for (const [name, text] of Object.entries(files)) assert.equal(entries.get(name)?.text, text);
+  for (const [name, text] of Object.entries(files)) assert.equal(new TextDecoder().decode(entries.get(name)?.data), text);
   // Published CRC-32/ISO-HDLC check value for the ASCII sequence 123456789.
   assert.equal(entries.get('checksum.txt')?.crc, 0xcbf43926);
   assert.equal(entries.get('empty.txt')?.crc, 0);
+});
+
+test('source JSON and ZIP preserve binary audio/image bytes alongside editable Unicode text', () => {
+  const binary = Uint8Array.from([0, 255, 128, 1, 13, 10, 0, 254]);
+  const bundle = JSON.parse(JSON.stringify({
+    'audio/sample.bin': {encoding: 'base64', data: Buffer.from(binary).toString('base64')},
+    'README.md': 'Original sound → editable source 🎵',
+  }));
+  const files = decodeSourceBundle(bundle);
+  assert.deepEqual(files['audio/sample.bin'], binary);
+  const entries = readStoredEntries(createZip(files));
+  assert.deepEqual(entries.get('audio/sample.bin')?.data, binary);
+  assert.equal(new TextDecoder().decode(entries.get('README.md')?.data), bundle['README.md']);
+  assert.throws(() => decodeSourceBundle({'../private': 'bad'}), /path/i);
+  assert.throws(() => decodeSourceBundle({'sample.bin': {encoding: 'utf16', data: 'wrong'}}), /entry/i);
 });
 
 test('ZIP output is repeatable across object insertion order', () => {
@@ -70,4 +85,15 @@ test('ZIP refuses ambiguous or truncated archive entry names', () => {
   for (const name of ['', '.', '..', './file.txt', 'dir/./file.txt', 'dir//file.txt', 'dir/', 'nul\0.txt']) {
     assert.throws(() => createZip({[name]: 'data'}), /path/i, JSON.stringify(name));
   }
+});
+
+
+test('split source manifests assemble all chunks and reject duplicate or unsafe parts', async () => {
+  const manifest = {format: 'motion-atlas-source-v2', parts: ['bundle-1.json', 'bundle-2.json']};
+  const chunks: Record<string, unknown> = {'bundle-1.json': {'README.md': 'Editable'}, 'bundle-2.json': {'sample.bin': {encoding: 'base64', data: 'AP8='}}};
+  const files = await loadSourceBundle(manifest, async name => chunks[name]);
+  assert.equal(files['README.md'], 'Editable');
+  assert.deepEqual(files['sample.bin'], Uint8Array.of(0, 255));
+  await assert.rejects(loadSourceBundle({...manifest, parts: ['../secret.json']}, async () => ({})), /manifest/i);
+  await assert.rejects(loadSourceBundle(manifest, async () => ({'same.txt': 'duplicate'})), /duplicate/i);
 });

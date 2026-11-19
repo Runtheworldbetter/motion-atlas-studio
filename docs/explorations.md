@@ -2,7 +2,9 @@
 
 **[Open Explore](https://runtheworldbetter.github.io/motion-atlas-studio/#explore) · [Open Music Lab](https://runtheworldbetter.github.io/motion-atlas-studio/#music-lab) · [All Atlas guides](README.md)**
 
-Version 0.5.1 has 15 working studies and a six-experiment Music Lab. They extend Atlas's visual vocabulary across stories, systems, AI, probability, physics, and materials. The original Editor → Collection presentation comes first, followed by Explore and Music Lab. The existing 50 gallery examples, seven recipes, players, and coaching tools are unchanged.
+Version **0.6.0** retains the **15 Atlas studies** and expands Music Lab to **seven experiments**: three Atlas instruments and four Google originals. They extend Atlas's visual vocabulary across stories, systems, AI, probability, physics, materials, and music. The existing Editor → Collection presentation, 50 gallery examples, seven recipes, players, and coaching tools remain available.
+
+The separate **[Originals collection](originals.md)** adds six licensed upstream projects: Spectrogram, LOOPY, Setosa Markov chains, Sigma’s paper network, Red Blob’s plain-grid pathfinding, and Paper’s Metaballs and Warp. It preserves their implementations and supplies individual source downloads. These six projects are separate from the 15 Atlas studies described below; Spectrogram is also accessible in Music Lab.
 
 **Correct one assumption**, **Follow the same object**, and **Words that take shape** restore the original illustrations and interactions from the earlier New Directions prototype. Their venue note, book collection, and word sequence are fictional or illustrative examples.
 
@@ -64,11 +66,14 @@ This adapts the idea of an interactive damage-and-regrowth demonstration. It doe
 #explore/transformer
 #explore/shaders
 #music-lab
+#music-lab/original-spectrogram
+#originals
+#originals/loopy
 ```
 
 For example, [open the repair study](https://runtheworldbetter.github.io/motion-atlas-studio/#explore/repair). A study fragment opens its detail view directly. **Copy link** copies that address. Closing returns to `#explore`; browser history can navigate study links.
 
-Links identify a study; they do not encode its edited controls. The Music Lab section has one link, with its six tabs chosen within the page.
+Links identify a study; they do not encode its edited controls. Music Lab has seven tabs; [`#music-lab/original-spectrogram`](https://runtheworldbetter.github.io/motion-atlas-studio/#music-lab/original-spectrogram) opens its new original directly. The separate Originals collection uses `#originals/project-id`; see [Originals links, source downloads, and reuse](originals.md).
 
 ### Keep a frame or the state
 
@@ -83,13 +88,13 @@ Links identify a study; they do not encode its edited controls. The Music Lab se
 
 Exploration JSON uses `format: "motion-atlas-exploration-v1"` with `study`, `basis`, `capabilities`, and `state`. It is an inspectable snapshot for analysis or reuse in code. General restoration of study snapshots is not implemented in this release. Melody JSON uses its own validated, importable pattern format below.
 
-Most study controls last while that study is open. The Markov study persists its matrix, seed, and path position in local storage and restores them without starting playback. **Reset all** restores its defaults. Atlas music compositions and controls are held in page memory; save the melody JSON before reloading or closing the tab. The upstream originals unload when you select another experiment or hide the page, and start fresh when you return.
+Most study controls last while that study is open. The Markov study persists its matrix, seed, and path position in local storage and restores them without starting playback. **Reset all** restores its defaults. Atlas music compositions and controls are held in page memory; save the melody JSON before reloading or closing the tab. In Music Lab, upstream originals unload when you select another experiment or hide the page. Use **Start experiment** after one is stopped; reopening starts a fresh instance.
 
 ## Music Lab
 
-[Open Music Lab](https://runtheworldbetter.github.io/motion-atlas-studio/#music-lab). Six tabs share one active experiment surface, separate from the 15 study cards. **Sound & spectrum**, **Build a timbre**, and **Make a melody** are Atlas experiments. **Harmonics**, **Strings**, and **Sound Waves** are self-hosted Chrome Music Lab originals; their labels identify the upstream source.
+[Open Music Lab](https://runtheworldbetter.github.io/motion-atlas-studio/#music-lab). Seven tabs share one active experiment surface, separate from the 15 study cards. **Sound & spectrum**, **Build a timbre**, and **Make a melody** are Atlas experiments. **Harmonics**, **Strings**, **Sound Waves**, and **Spectrogram** are self-hosted Chrome Music Lab originals; their labels identify the upstream source.
 
-Atlas audio starts with Play. The originals unlock audio on the first pointer, touch, or key gesture and use their original instrument controls. Switching experiments or hiding the page stops audio. For an upstream original, this unloads the embedded application; returning starts a fresh instance. No microphone or account is required.
+Atlas audio starts with Play. The originals unlock audio on the first pointer, touch, or key gesture and use their original instrument controls. Switching experiments or hiding the page stops audio. For an upstream original, this unloads the embedded application; choose **Start experiment** to reopen it after it stops. No account is required. Spectrogram offers optional, explicit microphone capture; samples, drawing and the other experiments work without microphone access.
 
 ### Sound & spectrum
 
@@ -131,23 +136,26 @@ The five rows are **A4, G4, E4, D4, C4**, in that order. Every row must contain 
 
 **Save WAV** renders one complete cycle as mono, signed 16-bit PCM at 22,050 Hz. The export uses the current pattern, tempo, timbre, and listening level; looping does not lengthen the downloaded file. It is synthesized from the pattern rather than recorded from a microphone. If Web Audio is unavailable, the visual models and melody downloads still work.
 
-### Three original Chrome Music Lab experiments
+### Four original Chrome Music Lab experiments
 
 | Original | Interaction |
 | --- | --- |
 | Harmonics | Press and hold or touch a vertical harmonic to see and hear its overtone. The instrument presents six related frequencies. |
 | Strings | Drag or pluck the original strings. Their lengths map to the original included harp samples. |
 | Sound Waves | Play the onscreen piano to drive the blue particle field. Use the face/zoom control to inspect an individual particle's motion. |
+| [Spectrogram](https://runtheworldbetter.github.io/motion-atlas-studio/#music-lab/original-spectrogram) | Choose an original instrument sample and drag its spectral landscape to change the view. Choose Draw sound and drag vertically to draw a sine tone, or explicitly enable the optional microphone. |
 
-These preserve the original visual designs, assets, and instrument interactions, with compatibility and local-packaging changes documented in [Upstream music provenance](upstream-music-lab.md). All runtime files are served from Atlas's own `vendor/chrome-music-lab/` directory; the experiments make no external runtime requests. They do not share Atlas's melody JSON/WAV exports or its keyboard composition controls.
+These preserve the original visual designs, assets, and instrument interactions, with compatibility and local-packaging changes documented in [the earlier music provenance record](upstream-music-lab.md) and [the Spectrogram guide](upstream-spectrogram.md). All runtime files are served from Atlas's own `vendor/chrome-music-lab/` directory; the experiments make no external runtime requests. They do not share Atlas's melody JSON/WAV exports or its keyboard composition controls.
 
-**Sound Waves requires WebGL.** If the browser cannot provide it, an availability message links to the original hosted experiment and pinned source. Its original particle renderer is retained; there is no replacement animation. This differs from Atlas's material study, which has a Canvas 2D fallback. The legacy instruments are primarily pointer/touch experiences; their surrounding Atlas controls and attribution links are keyboard accessible.
+**Sound Waves and Spectrogram require WebGL.** If an original renderer cannot initialize, an availability message provides relevant source or full-size links. Atlas's separate material study has a Canvas 2D fallback. The original instruments primarily use pointer/touch gestures; Spectrogram's instrument buttons also support Tab, Enter and Space, with Escape to stop. The surrounding Atlas controls and attribution links are keyboard accessible.
 
-The source is [Google Creative Lab's Chrome Music Lab](https://github.com/googlecreativelab/chrome-music-lab/tree/e54bb414908da2b6286a6ad6431a5fcf8b68dc3f), pinned to `e54bb414908da2b6286a6ad6431a5fcf8b68dc3f`. Its Apache-2.0 license and included third-party notices are retained. Atlas's MIT license applies to Atlas-authored code and does not replace these upstream terms. [Read the full source, modification, and license record](upstream-music-lab.md).
+Spectrogram includes eight original samples and optional local microphone input. The microphone asks for permission only when selected; it is not played through the speakers or uploaded. Samples and drawing need no microphone permission. Dropped audio files stay in the browser. Clicking the selected sample again stops it, and releasing a drawn tone stops the oscillator. The same packaged experiment is also available through [Originals](originals.md#spectrogram), with a dedicated source ZIP.
+
+The source is [Google Creative Lab's Chrome Music Lab](https://github.com/googlecreativelab/chrome-music-lab/tree/e54bb414908da2b6286a6ad6431a5fcf8b68dc3f), pinned to `e54bb414908da2b6286a6ad6431a5fcf8b68dc3f`. Its Apache-2.0 license and included third-party notices are retained. Atlas's MIT license applies to Atlas-authored code and does not replace these upstream terms. [Earlier originals: source, changes, and licenses](upstream-music-lab.md) · [Spectrogram: source, changes, and licenses](upstream-spectrogram.md).
 
 ## Models, source and inspiration
 
-The 15 studies and three Atlas music experiments use original Atlas code, synthetic data, authored geometry, and sound/shader models. Their reference links identify teaching or interaction ideas and routes to deeper material. The three Chrome Music Lab originals are separately labelled upstream applications, bundled with their original assets and retained licenses. [Their provenance guide](upstream-music-lab.md) records the pinned source and integration changes.
+The 15 studies and three Atlas music experiments use original Atlas code, synthetic data, authored geometry, and sound/shader models. Their reference links identify teaching or interaction ideas and routes to deeper material. The four Chrome Music Lab originals are labelled upstream applications, bundled with their relevant original assets and retained licenses. [The earlier provenance guide](upstream-music-lab.md) and [Spectrogram guide](upstream-spectrogram.md) record the pinned source and integration changes. The separate [six-project Originals collection](originals.md) has its own package scopes, source downloads and mixed licenses; the Atlas study models above remain unchanged.
 
 | Atlas study or interaction | Source and teaching reference |
 | --- | --- |
@@ -169,6 +177,7 @@ The 15 studies and three Atlas music experiments use original Atlas code, synthe
 | Card expansion | [Motion Primitives · Morphing dialog](https://motion-primitives.com/docs/morphing-dialog) |
 | Three Atlas music experiments · inspiration | [Chrome Music Lab](https://musiclab.chromeexperiments.com/) |
 | Harmonics, Strings, Sound Waves · original upstream applications | [Pinned Chrome Music Lab source](https://github.com/googlecreativelab/chrome-music-lab/tree/e54bb414908da2b6286a6ad6431a5fcf8b68dc3f) · [provenance and licenses](upstream-music-lab.md) |
+| Spectrogram · original upstream application | [Pinned Chrome Music Lab source](https://github.com/googlecreativelab/chrome-music-lab/tree/e54bb414908da2b6286a6ad6431a5fcf8b68dc3f/spectrogram) · [provenance and licenses](upstream-spectrogram.md) |
 
 ## Extend a study
 
@@ -176,8 +185,9 @@ The 15 studies and three Atlas music experiments use original Atlas code, synthe
 - `src/labs/ExplorationAtlas.tsx` owns cards, filtering, the expanding detail dialog, fragment routing, and exports.
 - `src/labs/LearningStudies.tsx`, `SystemStudies.tsx`, and `VisualStudies.tsx` render the experiments. Pure calculations live in the corresponding modules under `lib/explorations/`.
 - `src/labs/RestoredStudies.tsx` adapts the original New Directions modules in `src/labs/restored/` to the Atlas study lifecycle and exports.
-- `src/labs/MusicLab.tsx` owns the six music tabs, the Atlas Web Audio session, and the active original's lifecycle. `lib/explorations/music.ts` owns Atlas wave, pattern-validation, synthesis, and WAV helpers.
-- `public/vendor/chrome-music-lab/` contains the self-hosted original applications and their notices. [The upstream music guide](upstream-music-lab.md) records how to trace their source and packaging changes.
+- `src/labs/MusicLab.tsx` owns the seven music tabs, the Atlas Web Audio session, and the active original's lifecycle. `lib/explorations/music.ts` owns Atlas wave, pattern-validation, synthesis, and WAV helpers.
+- `public/vendor/chrome-music-lab/` contains the self-hosted original applications and their notices. [The earlier music guide](upstream-music-lab.md) and [Spectrogram guide](upstream-spectrogram.md) record their source and packaging changes.
+- `lib/originals/catalog.ts` and `src/labs/OriginalsAtlas.tsx` manage the separate six-project Originals collection; [its guide](originals.md) covers source and integration.
 - A study's `.lab-demo` root publishes JSON through `data-export-state`; the primary SVG or Canvas uses `data-export="true"` for frame export.
 
 Keep model rules explicit, support keyboard operation, respect reduced motion, clean up timers and audio resources, and use synthetic or appropriately licensed content. Pure model tests live under `tests/`. The Atlas studies use browser APIs and existing React dependencies; no new npm packages are required. Vendored original applications keep their own dependency and license records.

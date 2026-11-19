@@ -1,0 +1,182 @@
+{
+  "project": "Sigma original homepage paper network",
+  "commit": "e7748c88c861f19cab00be80cb7f836c5fef61e8",
+  "source": "https://github.com/jacomyal/sigma.js/tree/e7748c88c861f19cab00be80cb7f836c5fef61e8/packages/website/src/examples/homepage",
+  "dataSource": "https://github.com/jacomyal/sigma.js/tree/e7748c88c861f19cab00be80cb7f836c5fef61e8/packages/website/public/data",
+  "licenses": {
+    "code": "MIT",
+    "openAlexMetadata": "CC0-1.0",
+    "hauora": "OFL-1.1",
+    "publicSans": "OFL-1.1 (see additional upstream notice)"
+  },
+  "files": [
+    {
+      "path": "app.js",
+      "sha256": "794a2eb343ab4e8243a3ffc0a9e6a7dda30b4e35807a3e688495a88f523a42d2"
+    },
+    {
+      "path": "app.js.LEGAL.txt",
+      "sha256": "5892bd18b09789ddf1ee78ca86960e1fc7dd419287bf91293241ac04671a997f"
+    },
+    {
+      "path": "app.js.map",
+      "sha256": "497fa4dbf5accd83e094b9841e9b1ab80f2c722fca4339d59a41f0f404ecb4ca"
+    },
+    {
+      "path": "boot.js",
+      "sha256": "446ccec8ff677cd55eba486927e474ee855d82bb3fd5e53b797fac6788b60bc2"
+    },
+    {
+      "path": "data/demo-edges.csv",
+      "sha256": "29bf6952fab43ec9951494d4bea731cd052a5fb7be6b392fa64820b362235b55"
+    },
+    {
+      "path": "data/demo-nodes.csv",
+      "sha256": "fc50c14ca6fd79bb4acf5c97fc0624ae2c9bbb8347d614274dd4ac689597d2b6"
+    },
+    {
+      "path": "fonts/hauora/Hauora-Bold.woff2",
+      "sha256": "d79e11c83ecef23ece2fc610fe50eb9f1806dbec5c484a3d3d3a160b8de9f735"
+    },
+    {
+      "path": "fonts/hauora/Hauora-Medium.woff2",
+      "sha256": "167934ba6f14161d9d6973358ff88b20f3645256786842bc21a45d08d755d3af"
+    },
+    {
+      "path": "fonts/public-sans/PublicSans-LightItalic.woff2",
+      "sha256": "cbb417e666b8a56de5251971831d6bb1f64e46b1e028456809941be869f6881c"
+    },
+    {
+      "path": "fonts/public-sans/PublicSans-Regular.woff2",
+      "sha256": "bea988eeadc7c0ddf9644c2dce7efb35f1767eac0187c0967f8a2567473cbbfe"
+    },
+    {
+      "path": "fonts/public-sans/PublicSans-SemiBold.woff2",
+      "sha256": "44077e6ceb62b989c9ef0d4659d5b6a261c31fdec49e317e8833a9fb9550e02c"
+    },
+    {
+      "path": "fonts/public-sans/PublicSans-SemiBoldItalic.woff2",
+      "sha256": "89bf32390f3cef4ffc6e582c279dbecaf9d810c9018141700efe894e899beb82"
+    },
+    {
+      "path": "index.html",
+      "sha256": "99357b66b8137f45884c4f3e1a881b53531a5720fa6370c1cb34edee1bb1c08b"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "7036bbeb954c1220102cced5a608198a54f4a19b2d81d96f67997dbb9d7a51f1"
+    },
+    {
+      "path": "licenses/CC0-1.0.txt",
+      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
+    },
+    {
+      "path": "licenses/DEPENDENCIES.md",
+      "sha256": "b5814490291ee737efe6180fc6a3ee79292e53c26dae9aaab24e0c4fddf4b034"
+    },
+    {
+      "path": "licenses/Hauora-OFL.txt",
+      "sha256": "6bd31e5cd14b6d770e5e16eab9095f8952be3fa53e231d472f5755967a665f98"
+    },
+    {
+      "path": "licenses/NOTICE.md",
+      "sha256": "fda1d6e0002ae74998b6024b5a1d912216c9730c16993dbac18dd8ed0a1e9885"
+    },
+    {
+      "path": "licenses/Public-Sans-LICENSE.md",
+      "sha256": "82f0d3cad45f264192db156360b4a710fe7060885f6aa261e6539f13cb9eb0d9"
+    },
+    {
+      "path": "licenses/Public-Sans-OFL.txt",
+      "sha256": "157a9e77f7580246e97c769490e2e977ae94399f9d30f4556015c41fe8c28bac"
+    },
+    {
+      "path": "licenses/Sigma-MIT.txt",
+      "sha256": "7036bbeb954c1220102cced5a608198a54f4a19b2d81d96f67997dbb9d7a51f1"
+    },
+    {
+      "path": "README.md",
+      "sha256": "8bc158fff337b224f8ccaa0a3dea86cb732ceee451b1dbfa4ac7dd810de0e7ce"
+    },
+    {
+      "path": "source/app.ts",
+      "sha256": "3f53eb6f0316c6e7b2a46196ba9b653870a442733f12b9c81bb7fcd6458420d5"
+    },
+    {
+      "path": "source/build-metafile.json",
+      "sha256": "b783b5f81e40b18995b35b53c0f22a7d559f8fec12025d91895e8c64627c35ef"
+    },
+    {
+      "path": "source/font-and-data-license-sources.json",
+      "sha256": "6e7fc55d690d7f413147f51c665b4d084283b23f0578c729dadf287d9bbe31da"
+    },
+    {
+      "path": "source/load-dataset.ts",
+      "sha256": "d9967271caef941cb91c66ddcfbefa41c6bc94bc62fa7c63afc1cc023d8fb3c4"
+    },
+    {
+      "path": "source/package-lock.json",
+      "sha256": "fd697d089cc903533eeff1cbadbe8060ba616a781329209dc6083976cf699683"
+    },
+    {
+      "path": "source/package.json",
+      "sha256": "6fd099fd7a62d53522a340d07f01e1c22e9faf82d58cfe02488cf2b53720f6b7"
+    },
+    {
+      "path": "source/upstream/LICENSE.txt",
+      "sha256": "7036bbeb954c1220102cced5a608198a54f4a19b2d81d96f67997dbb9d7a51f1"
+    },
+    {
+      "path": "source/upstream/package.json",
+      "sha256": "c897c7c8bae1b24abe5798b823370d2120b80a54ba2f6f7f35bf24786d4a87a1"
+    },
+    {
+      "path": "source/upstream/packages/layer-webgl/package.json",
+      "sha256": "dd281d0045513b326f9a8dec6df29beb3c4b4783ef03abab774f1fd5b8b4ab01"
+    },
+    {
+      "path": "source/upstream/packages/node-border/package.json",
+      "sha256": "8624fb6655da8413b0015edc6fb2cdf76df42e295bab43fc7cc319f4d6b62e40"
+    },
+    {
+      "path": "source/upstream/packages/sigma/package.json",
+      "sha256": "4b03864df18dc748906e485cc15751ba3825846b95524996bb7455a10b4eb614"
+    },
+    {
+      "path": "source/upstream/packages/website/package.json",
+      "sha256": "56b63603253c6c1a50dc82b434774d9b4c5cef2d8fa426c0e45496a4d9b45f9d"
+    },
+    {
+      "path": "source/upstream/packages/website/public/data/demo-edges.csv",
+      "sha256": "29bf6952fab43ec9951494d4bea731cd052a5fb7be6b392fa64820b362235b55"
+    },
+    {
+      "path": "source/upstream/packages/website/public/data/demo-nodes.csv",
+      "sha256": "fc50c14ca6fd79bb4acf5c97fc0624ae2c9bbb8347d614274dd4ac689597d2b6"
+    },
+    {
+      "path": "source/upstream/packages/website/src/examples/homepage/demo.astro",
+      "sha256": "57f107cea20fd1c7da5df1674d5f6060399046cab9cf39823e4b8b5631807047"
+    },
+    {
+      "path": "source/upstream/packages/website/src/examples/homepage/load-dataset.ts",
+      "sha256": "5fb2e1a6e16e08138eb27a7eb986b4a54f22a10049e8f89d20b354653ead452a"
+    },
+    {
+      "path": "source/upstream/packages/website/src/styles/base.css",
+      "sha256": "f18d9844ecf8d1ec00638de32e8bd53630a9f6a055f757c5e000ccfc0c854b08"
+    },
+    {
+      "path": "source/upstream/packages/website/src/styles/example-panel.css",
+      "sha256": "b2cb4d37532c905ec64c8913a5ee93af693d127f47209aa0da08d113903637c8"
+    },
+    {
+      "path": "style.css",
+      "sha256": "1997ef0bd6f433dafeeff465ac8424f6c3ec6f8b169382c0e895015b8c0621d4"
+    },
+    {
+      "path": "THIRD-PARTY-NOTICES.txt",
+      "sha256": "cf01e15f116b3984a08e881425c099c629fb25f559cc73e06db825c077f33ef1"
+    }
+  ]
+}

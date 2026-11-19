@@ -2,35 +2,44 @@
 
 **[Open the Atlas](https://runtheworldbetter.github.io/motion-atlas-studio/) · [Read the website guide](https://runtheworldbetter.github.io/motion-atlas-studio/docs/) · [GitHub source](https://github.com/Runtheworldbetter/motion-atlas-studio)**
 
-Motion Atlas is the project you run, edit, and share: interactive explanations, visual experiments, music, and editable animation. Version 0.5.1 restores the original **Editor → Collection** presentation, with **15 explorable studies** and **six Music Lab experiments** following the collection. The existing **50 gallery examples**, **seven recipes**, players, and coaching tools are unchanged.
+Motion Atlas is the project you run, edit, and share: interactive explanations, visual experiments, music, and editable animation. Version **0.6.0** adds **six licensed upstream projects in Originals** and the original **Spectrogram** in Music Lab. The existing **50 gallery examples**, **seven editable recipes**, **15 studies**, players, and coaching tools remain. Music Lab now has **seven tabs**: three Atlas experiments and four Google originals.
 
-**[Explore the studies](https://runtheworldbetter.github.io/motion-atlas-studio/#explore) · [Open Music Lab](https://runtheworldbetter.github.io/motion-atlas-studio/#music-lab) · [Browse the Collection](https://runtheworldbetter.github.io/motion-atlas-studio/#collection)**
+**[Open the Originals](https://runtheworldbetter.github.io/motion-atlas-studio/#originals) · [Explore the studies](https://runtheworldbetter.github.io/motion-atlas-studio/#explore) · [Open Music Lab](https://runtheworldbetter.github.io/motion-atlas-studio/#music-lab) · [Browse the Collection](https://runtheworldbetter.github.io/motion-atlas-studio/#collection)**
 
-The 15 studies include three restored from the earlier New Directions prototype: **Correct one assumption**, **Follow the same object**, and **Words that take shape**, preserving their original illustrations and interactions. [Explore their controls and model notes](explorations.md#the-15-studies).
+Originals includes **Spectrogram**, **LOOPY**, **Setosa Markov chains**, **Sigma's paper network**, **Red Blob Games' plain-grid pathfinding diagrams**, and **Paper's Metaballs and Warp**. Each project opens its own upstream implementation, with source, credits, a dedicated ZIP download, and integration notes. [The Originals guide](originals.md) records exactly what is included and how to reuse it.
 
 | Guide | Use it for |
 | --- | --- |
-| [Explorations and Music Lab](explorations.md) | All 15 studies, six music tabs, repair capability, model notes, deep links, SVG/PNG/state downloads, melody JSON and WAV |
-| [Original Chrome Music Lab experiments](upstream-music-lab.md) | Harmonics, Strings, Sound Waves, pinned source, local integration, and retained licenses |
+| [Originals: source, scope and reuse](originals.md) | The six projects, original interaction, source ZIPs, precise pins, browser requirements, and mixed licenses |
+| [Original Spectrogram](upstream-spectrogram.md) | Instrument samples, drawing, optional local microphone, editable upstream source, isolated build, and notices |
+| [Explorations and Atlas Music Lab](explorations.md) | The 15 studies, existing music controls, model notes, SVG/PNG/state downloads, melody JSON and WAV |
+| [Earlier Chrome Music Lab originals](upstream-music-lab.md) | Harmonics, Strings, Sound Waves, pinned source, local integration, and retained licenses |
 | [Getting started](../README.md#use-the-editor) | Choose a recipe, change inputs, and inspect an explanation |
 | [Cricket coaching inspector](cricket.md) | Full-stroke playback, handedness, cameras, and bat imprints |
 | [Recipe input formats](recipes.md) | JSON, CSV, text, limits, and calculation details |
 | [Run locally](../README.md#run-locally) | Install dependencies and start the editor |
 | [Hosting and embeds](hosting.md) | GitHub Pages, static hosting, and share links |
 | [Data and privacy](privacy.md) | Browser storage, local files, and exported data |
-| [Attribution](attribution.md) | Engines, dependencies, and license notices |
+| [Attribution](attribution.md) | Engines, upstream projects, dependencies, and license notices |
+| [Release history](changelog.md) | What changed in each version |
 | [Contributing](../CONTRIBUTING.md) | Extend the project and validate changes |
 
-## The role of Motion Canvas
+## Choosing a starting point
 
-Atlas uses [Motion Canvas](https://github.com/motion-canvas/motion-canvas) for its editable animation recipes and gallery scenes. React and SVG support most explorable studies and the cricket inspector. The material study uses original WebGL shaders with a Canvas 2D fallback when WebGL is unavailable; its controls and PNG export work in either mode. Music Lab uses Web Audio, Canvas, and the original Sound Waves WebGL renderer. They live in this repository and ship as one static website.
+Use **Originals** to explore a creator's actual implementation and take its source with you. The Setosa package includes the licensed article and interactive diagrams; its separate full playground is an external link. Paper supplies its original renderers and preset values inside Atlas hosting controls. These distinctions and the other package scopes are explicit in the Originals guide.
 
-Music Lab's original **Sound Waves** experiment requires WebGL. If unavailable, it shows an explanatory message and source links, preserving the original renderer instead of replacing it with a simplified animation.
+Use **Explore** for Atlas's 15 original adaptations and small, inspectable models. They include the restored **Correct one assumption**, **Follow the same object**, and **Words that take shape** studies. Each has source/inspiration notes and model boundaries. [The study guide](explorations.md#the-15-studies) covers their controls.
 
-To customize an existing example, start with the Atlas recipe documentation. To change a Motion Canvas scene or write a new one, use the [upstream Motion Canvas documentation](https://motioncanvas.io/docs/) alongside Atlas's `lib/recipes/` and `lib/motion/` source.
+Use **Music Lab** to generate and hear sound. The three Atlas instruments remain alongside original Harmonics, Strings, Sound Waves, and [Spectrogram](https://runtheworldbetter.github.io/motion-atlas-studio/#music-lab/original-spectrogram). Audio starts only through interaction. Switching experiments or hiding the page stops it; use **Start experiment** after an original is stopped. Spectrogram's microphone is optional and explicit. Make a melody retains its JSON import/export and WAV download.
 
-Motion Canvas keeps its own project, documentation, and MIT license. Its full notices ship with Atlas in [third-party-notices.txt](../public/third-party-notices.txt).
+## How the renderers fit
 
-The 15 exploration references are independent projects linked for inspiration and further study. Atlas's studies use original code, geometry, and synthetic examples. Each detail view includes its source and model boundaries; see [Models, source and inspiration](explorations.md#models-source-and-inspiration).
+Atlas uses [Motion Canvas](https://github.com/motion-canvas/motion-canvas) for its editable recipes and gallery scenes. React and SVG support most Atlas studies and the cricket inspector. The Atlas material study has its own WebGL renderer and Canvas 2D fallback. The separately hosted originals preserve their upstream renderers: Spectrogram and Sound Waves use WebGL, Sigma and Paper require WebGL2, and Red Blob's selected diagrams use Canvas 2D. An original whose graphics requirements are unavailable shows an explanatory message and source links.
 
-Music Lab keeps the three Atlas experiments and adds three faithful, self-hosted Chrome Music Lab originals. One experiment is active at a time, with source labels distinguishing Atlas from upstream. The originals retain Apache-2.0 and their third-party notices; see [their provenance guide](upstream-music-lab.md). The removed spacecraft study has no replacement: reuse or embedding permission for the original Voyager experience could not be verified.
+For recipe inputs, start with the Atlas guides. For Motion Canvas scene authoring, use the [upstream documentation](https://motioncanvas.io/docs/) alongside `lib/recipes/` and `lib/motion/`. For an original, begin with its vendor README and source download; it need not use Motion Canvas at all.
+
+## Authorship and licenses
+
+Atlas-authored code and examples are MIT. The upstream originals retain Apache-2.0, MIT, CC0 and their separate dependency, font, and data notices. Keep each project's license and attribution files with redistributed code and assets. [Attribution](attribution.md), [the Originals guide](originals.md), and [the full notice file](../public/third-party-notices.txt) explain the scope.
+
+The mechanical watch, shuttle, and Voyager experiences are not included in this release. The existing Atlas gear train remains an authored teaching model.

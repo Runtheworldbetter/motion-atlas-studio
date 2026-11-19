@@ -1,0 +1,127 @@
+{
+  "name": "Markov Chains \u2014 Explained Visually",
+  "authors": [
+    "Victor Powell",
+    "Lewis Lehe"
+  ],
+  "repository": "https://github.com/vicapow/explained-visually",
+  "commit": "ad30bd277cf31af0cd7cadbd4f9b95981ee011d3",
+  "license": "MIT",
+  "entry": "index.html",
+  "sourceDirectory": "client/explanations/markov-chains",
+  "fontSources": [
+    {
+      "file": "fonts/Lato-100.ttf",
+      "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/lato/Lato-Thin.ttf",
+      "sha256": "663c55bfe9a38270fff44da273bf4d792eafc3e7e1201f62c3064cad80c5d5e7"
+    },
+    {
+      "file": "fonts/Lato-300.ttf",
+      "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/lato/Lato-Light.ttf",
+      "sha256": "cf2a774503baf418d584f49967bd160e1e03f087c13b25602f28024ec7788f08"
+    },
+    {
+      "file": "fonts/Lato-400.ttf",
+      "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/lato/Lato-Regular.ttf",
+      "sha256": "d636e4683231f931eda222d588e944d082bfd3bdba02f928bee461c0f185b251"
+    }
+  ],
+  "noticeSources": [
+    {
+      "name": "D3 3.4.11 \u2014 Mike Bostock \u2014 BSD-3-Clause",
+      "url": "https://raw.githubusercontent.com/d3/d3/v3.4.11/LICENSE",
+      "sha256": "10054db83ace18e5a455749d0d247857ec50508cecda79a5abe66fe4778d7721"
+    },
+    {
+      "name": "AngularJS 1.2.20 \u2014 Google, Inc. \u2014 MIT",
+      "url": "https://raw.githubusercontent.com/angular/angular.js/v1.2.20/LICENSE",
+      "sha256": "90b8af0852fa8fbd5398fa9e93133af2982ce8fc3e3f3b5fa56fed69238cd5f5"
+    },
+    {
+      "name": "Lato \u2014 \u0141ukasz Dziedzic \u2014 SIL Open Font License 1.1",
+      "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/lato/OFL.txt",
+      "sha256": "74ba064d03f1f1c4a952da936c3eb71866c34404916734de3cae73b34357e59e"
+    },
+    {
+      "name": "Facebook shallowEqual helper in upstream common.js \u2014 BSD license",
+      "url": "https://raw.githubusercontent.com/facebook/react/v0.13.2/LICENSE",
+      "sha256": "426ce3c23fa4006e34391ac67170a41ea6eb8bbd4bca2a8b16a7a37cef8b1f86"
+    },
+    {
+      "name": "Facebook shallowEqual helper \u2014 accompanying patent grant",
+      "url": "https://raw.githubusercontent.com/facebook/react/v0.13.2/PATENTS",
+      "sha256": "b3755ec187d97484fa9e3223828fb11057d0c544d6f2fded30a1dc65c6acca4e"
+    }
+  ],
+  "buildTools": {
+    "jade": "1.7.0",
+    "marked": "0.3.2",
+    "less": "2.7.3"
+  },
+  "excluded": [
+    "Separate setosa.io/markov playground: no verified reuse grant",
+    "Analytics, social widgets, comments, mailing-list signup",
+    "Unused STIX font and logo CSS"
+  ],
+  "modifications": [
+    "Scoped Jade/LESS compilation",
+    "Local runtime paths and fonts",
+    "CSP-compatible Angular evaluation",
+    "Unverified playground replaced by external user-initiated link"
+  ],
+  "upstreamFilesSha256": {
+    "LICENSE": "6fe7159b5274fd9a9d1ea5bb7db9879c85fba0a342e3d7c5156a9aef6583f0d9",
+    "README.md": "158e0202302a42bca61f6f12a70afaefc74bc0a38d81ec415c8a783af3887bb5",
+    "locals.json": "af3db10467aadbf71ef20709ddfb6ad439e50c059730f3708eda3d92908928c2",
+    "package.json": "cd0e774773016d14e93463cfd3ad7239a0750318f9f3e6af8352f70d576257d5",
+    "gulpfile.js": "60154d98355d61f35263fc87ee666091d79d53eaa1aa503a779b9cc5b099e9dd",
+    "localsStore.js": "459a7bb03c1cbc2dbbafbc144835431a3b306c0624089ac58786ad088e612b98",
+    "client/explanations/markov-chains/index.jade": "732d70e1acec1b24c4358511c3ea81c3226ec1cb42ec76869b69be5c88f7d6a9",
+    "client/explanations/markov-chains/common.js": "d021f7a1af6348c5d8113475d81962b5184674cc87759c0b98b69313a5006081",
+    "client/explanations/markov-chains/script.js": "b5e3c8812a5d6f09b2e031888df6d44808b29ec60a3266ad499f4c5ce44266a8",
+    "client/explanations/markov-chains/style.less": "7b18ae149ebacac673f46a039cedd4adffa1766e11af63fae1770563c096094d",
+    "client/explanations/markov-chains/fb-thumb.png": "ddc582a89788a8ec62d2deb797c4d77d330c9eaf21acc9c11b47084f50355f19",
+    "client/templates/head.jade": "fa8df5d014000188bc1945ec8f3f375f8c3f19a544a586d3b5c9e472a3d63388",
+    "client/templates/explanation-head.jade": "33d2597a57fe39498ddeaed8772218756198af91cacd10443c647ddd5b4fe2f7",
+    "client/templates/common.jade": "1c17b953ded06dea29f97ce1c8637eeca98abd48609744f37984f7b5b813f6dd",
+    "client/styles/style.less": "f37e3e8b01ab59b560b65b1dacf4e9abc5c9708ef70166412956db353511a1e9",
+    "client/scripts/d3.js": "0447d419a12cedf6c10544e6437bdb086f01fa5f966d60490f5b38cdf46d5fc0",
+    "client/scripts/angular.js": "c7fc08acf8bb1e512cffd8e23bd5d16d818792d008dbe574b7d21ed940e8ebd4",
+    "client/scripts/common.js": "bff4bc6d5a4cc9f809f62bd3654bfa1d3c0100b5a8406e9ee88d7be2b02c4ae6"
+  },
+  "filesSha256": {
+    "LICENSE": "6fe7159b5274fd9a9d1ea5bb7db9879c85fba0a342e3d7c5156a9aef6583f0d9",
+    "README.md": "79281f5f2550fb159cd71b9417db48c99b8acd1aff822107b29cef332939a027",
+    "THIRD-PARTY-NOTICES.txt": "eae5ce886a9ab3cdcc8a5c476729ae836a1440ec9055601198ba0d00e0b971cc",
+    "fb-thumb.png": "ddc582a89788a8ec62d2deb797c4d77d330c9eaf21acc9c11b47084f50355f19",
+    "fonts/Lato-100.ttf": "663c55bfe9a38270fff44da273bf4d792eafc3e7e1201f62c3064cad80c5d5e7",
+    "fonts/Lato-300.ttf": "cf2a774503baf418d584f49967bd160e1e03f087c13b25602f28024ec7788f08",
+    "fonts/Lato-400.ttf": "d636e4683231f931eda222d588e944d082bfd3bdba02f928bee461c0f185b251",
+    "index.html": "44875994885152c1737848d560f9a27ca6f3a75942b20ce593fb68e9411df866",
+    "scripts/angular.js": "c7fc08acf8bb1e512cffd8e23bd5d16d818792d008dbe574b7d21ed940e8ebd4",
+    "scripts/common.js": "bff4bc6d5a4cc9f809f62bd3654bfa1d3c0100b5a8406e9ee88d7be2b02c4ae6",
+    "scripts/d3.js": "0447d419a12cedf6c10544e6437bdb086f01fa5f966d60490f5b38cdf46d5fc0",
+    "source/LICENSE": "6fe7159b5274fd9a9d1ea5bb7db9879c85fba0a342e3d7c5156a9aef6583f0d9",
+    "source/README.md": "158e0202302a42bca61f6f12a70afaefc74bc0a38d81ec415c8a783af3887bb5",
+    "source/build/package-lock.json": "b1e5b9ec481c82e3e519db6be0637826e0136d445f53d4d3f810731b4f65f314",
+    "source/build/package.json": "41fdb65cc0b541b450d2d0c072c03a1f4fc579b66950a45d6867366186cad54f",
+    "source/client/explanations/markov-chains/common.js": "d021f7a1af6348c5d8113475d81962b5184674cc87759c0b98b69313a5006081",
+    "source/client/explanations/markov-chains/fb-thumb.png": "ddc582a89788a8ec62d2deb797c4d77d330c9eaf21acc9c11b47084f50355f19",
+    "source/client/explanations/markov-chains/index.jade": "732d70e1acec1b24c4358511c3ea81c3226ec1cb42ec76869b69be5c88f7d6a9",
+    "source/client/explanations/markov-chains/script.js": "b5e3c8812a5d6f09b2e031888df6d44808b29ec60a3266ad499f4c5ce44266a8",
+    "source/client/explanations/markov-chains/style.less": "7b18ae149ebacac673f46a039cedd4adffa1766e11af63fae1770563c096094d",
+    "source/client/scripts/angular.js": "c7fc08acf8bb1e512cffd8e23bd5d16d818792d008dbe574b7d21ed940e8ebd4",
+    "source/client/scripts/common.js": "bff4bc6d5a4cc9f809f62bd3654bfa1d3c0100b5a8406e9ee88d7be2b02c4ae6",
+    "source/client/scripts/d3.js": "0447d419a12cedf6c10544e6437bdb086f01fa5f966d60490f5b38cdf46d5fc0",
+    "source/client/styles/style.less": "f37e3e8b01ab59b560b65b1dacf4e9abc5c9708ef70166412956db353511a1e9",
+    "source/client/templates/common.jade": "1c17b953ded06dea29f97ce1c8637eeca98abd48609744f37984f7b5b813f6dd",
+    "source/client/templates/explanation-head.jade": "33d2597a57fe39498ddeaed8772218756198af91cacd10443c647ddd5b4fe2f7",
+    "source/client/templates/head.jade": "fa8df5d014000188bc1945ec8f3f375f8c3f19a544a586d3b5c9e472a3d63388",
+    "source/gulpfile.js": "60154d98355d61f35263fc87ee666091d79d53eaa1aa503a779b9cc5b099e9dd",
+    "source/locals.json": "af3db10467aadbf71ef20709ddfb6ad439e50c059730f3708eda3d92908928c2",
+    "source/localsStore.js": "459a7bb03c1cbc2dbbafbc144835431a3b306c0624089ac58786ad088e612b98",
+    "source/package.json": "cd0e774773016d14e93463cfd3ad7239a0750318f9f3e6af8352f70d576257d5",
+    "style.css": "0aa68bcd8b6b487e29c004d2271e8f2191baf212f80140e903abd72ca549fd71",
+    "styles/style.css": "89b3c4bd857c134319bc17e860cb01a7feb619678adffcf4364c960128d577bc"
+  }
+}
