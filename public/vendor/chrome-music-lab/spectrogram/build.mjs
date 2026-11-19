@@ -28,7 +28,7 @@ fs.writeFileSync(to('css/screen.css'), sass.compile(from('src/sass/screen.scss')
 }).css);
 fs.copyFileSync(from('atlas-compat.css'), to('css/atlas-compat.css'));
 fs.copyFileSync(from('atlas-compat.js'), to('js/atlas-compat.js'));
-fs.copyFileSync(from('third-party/jquery-2.1.3.min.js'), to('js/jquery.min.js'));
+fs.copyFileSync(from('third-party/jquery-3.7.1.min.js'), to('js/jquery.min.js'));
 fs.cpSync(from('src/images'), to('img'), {recursive: true});
 fs.cpSync(from('src/bin'), to('bin'), {recursive: true});
 fs.cpSync(from('fonts'), to('bin/fonts'), {recursive: true});
