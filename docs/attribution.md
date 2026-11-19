@@ -6,6 +6,18 @@
 
 RTWB maintains the Motion Atlas editor, gallery scenes, recipes, and examples. That code uses the [MIT license](../LICENSE). Dependencies keep their own licenses, listed below.
 
+## Original Chrome Music Lab experiments
+
+Music Lab includes faithful, self-hosted versions of **Harmonics**, **Strings**, and **Sound Waves** from [Google Creative Lab's Chrome Music Lab](https://github.com/googlecreativelab/chrome-music-lab/tree/e54bb414908da2b6286a6ad6431a5fcf8b68dc3f), pinned to commit `e54bb414908da2b6286a6ad6431a5fcf8b68dc3f`.
+
+These are upstream applications with their original visuals, assets, and instrument interactions. Chrome Music Lab's Apache-2.0 license and bundled third-party notices remain applicable; Atlas's MIT license does not replace them. The vendored files live under `public/vendor/chrome-music-lab/`. [Upstream music provenance and notices](upstream-music-lab.md) records the exact sources, retained copyright and license texts, and compatibility/packaging changes. It is the attribution record for this vendored distribution; the npm notice generator below does not cover those files.
+
+Music Lab labels distinguish these three originals from Atlas's own **Sound & spectrum**, **Build a timbre**, and **Make a melody** experiments. The 15 exploration studies are original Atlas adaptations with linked inspirations and explicit model boundaries; see [Models, source and inspiration](explorations.md#models-source-and-inspiration).
+
+Three studies restore Atlas's own earlier New Directions modules: **Correct one assumption**, **Follow the same object**, and **Words that take shape**. Their original code and illustrative content remain Atlas work under MIT. R2D3 supplies an identity-continuity reference for the reading collection; Codrops supplies a kinetic-typography reference. No source artwork, datasets, GSAP code, or fonts are copied from those references.
+
+The spacecraft study was removed in 0.5.1. Raj Shekhar's Voyager experience is not bundled or embedded because a grant permitting that reuse could not be verified.
+
 ## Direct runtime dependencies
 
 | Package | Version | Declared license |
