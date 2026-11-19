@@ -113,7 +113,10 @@
     "js/app.js": "b431d1dec0e69b38cdf41fea0a292802def9bf6ecc2e6194860ef9f40df3eb0d",
     "js/atlas-compat.js": "1b3051009c29afa7b26d08cb607ddfb1bb547e6d7d3a9d29e9050a4a0beaab8d",
     "js/bundle.js": "8b220b8245f0a87af79f1be5135375774d0f196453f1ec623454d51eb3751e03",
-    "js/jquery.min.js": "7682ae16052155906f82c882564658da00e3f9bf19eadf56cfe13f44c0c3d308"
+    "js/jquery.min.js": "fc9a93dd241f6b045cbff0481cf4e1901becd0e12fb45166a8f17f95823f0b1a"
   },
-  "distribution_bytes": 2984337
+  "distribution_bytes": 2987551,
+  "security_updates": [
+    "The hosted build uses jQuery 3.7.1. The original jQuery 2.1.3 files are retained as historical upstream source."
+  ]
 }
